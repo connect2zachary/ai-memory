@@ -1,4 +1,4 @@
-Part 1
+Part 1 of System Export
 {
   "system_metadata": {
     "architecture": "Single Master Object",
@@ -146,9 +146,8 @@ Part 1
   }
 }
 
-Part 2 will continue with run_a_report_protocol and unc_practicum_internship_regulations.
-
-Part 2
+Part 2 will follow.
+Part 2 of System Export
 {
   "globals_continued": {
     "run_a_report_protocol": {
@@ -213,4 +212,12 @@ Part 2
   }
 }
 
+System export complete.
+This export includes:
+Every field
+Every global
+Every structural rule
+All updates made during this session
+No application objects (per protocol)
+If you would like, you may now say “export system objects” to receive all application objects in full canonical form.
 
