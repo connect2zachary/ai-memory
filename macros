@@ -1,1 +1,38 @@
+{
+  "system": {
+    "description": "Command router for project backups",
+    "rules": [
+      "Commands map to repo paths and object types",
+      "If a command specifies objects, load only those entries",
+      "Commands may be chained to load multiple contexts"
+    ]
+  },
 
+  "commands": {
+    "app system": {
+      "path": "projects/AppTool/system-backup"
+    },
+
+    "app objects": {
+      "path": "projects/AppTool/objects-backup",
+      "type": "objects"
+    },
+
+    "nt system": {
+      "path": "projects/NoteTaker/system-backup"
+    },
+
+    "nt ci": {
+      "path": "projects/NoteTaker/CI-backups",
+      "type": "ci"
+    },
+
+    "editor": {
+      "path": "projects/EditorApp"
+    },
+
+    "lpc": {
+      "path": "projects/LPC-ExamSystem"
+    }
+  }
+}
