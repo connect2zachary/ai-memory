@@ -1,1 +1,144 @@
+{
+  "NoteTakerSystem": {
+    "globals": [
+      {
+        "id": "GL-0001",
+        "name": "System Purpose and HIPAA Compliance Requirement",
+        "description": "The purpose of the Note Taker system is to generate HIPAA-compliant SOAP notes for therapeutic purposes. All system design, data handling, client records, and exports must adhere to HIPAA privacy and security standards.",
+        "created_date": "2026-02-21",
+        "active": true
+      },
+      {
+        "id": "GL-0002",
+        "name": "Stream-of-Consciousness Translation Protocol",
+        "description": "The user (Zachary) will enter therapeutic session content in a stream-of-consciousness format. The system’s purpose is to translate that content into a HIPAA-compliant SOAP note while preserving original meaning. The system must function as a structured translator, not a content generator.",
+        "created_date": "2026-02-21",
+        "active": true
+      }
+    ],
+    "rules": [
+      {
+        "id": "RL-0001",
+        "name": "No Identifiable Information in SOAP Notes",
+        "category": "documentation_compliance",
+        "description": "When producing SOAP notes, no identifiable information may be included. This includes but is not limited to full names, dates of birth, addresses, phone numbers, specific locations, employer names, or any other protected health information (PHI). Clients must be referenced only by their assigned initials and internal client_id.",
+        "applies_to": "all_clients",
+        "created_date": "2026-02-21",
+        "active": true
+      },
+      {
+        "id": "RL-0002",
+        "name": "No Embellishment or Assumptive Additions",
+        "category": "documentation_integrity",
+        "description": "The system must not embellish, infer, interpret beyond provided content, or make assumptions. It may suggest potential additions or clarifications, but these must only be included in the final SOAP note after explicit confirmation from the user. The system may correct grammar, clarity, and spelling, but must not add clinical details, interpretations, or inferred content without confirmation.",
+        "applies_to": "all_clients",
+        "created_date": "2026-02-21",
+        "active": true
+      },
+      {
+        "id": "RL-0003",
+        "name": "Strategic Vagueness in SOAP Documentation",
+        "category": "documentation_style",
+        "description": "SOAP notes should remain appropriately vague. Each section must provide a clear clinical impression of what occurred during the session without including unnecessary specific details. Content should convey therapeutic themes, interventions, and responses without documenting granular personal narratives or excessive specificity.",
+        "applies_to": "all_clients",
+        "created_date": "2026-02-21",
+        "active": true
+      },
+      {
+        "id": "RL-0004",
+        "name": "Session-Based Client Structuring with Integrated Future Planning",
+        "category": "session_structure",
+        "description": "Each client record must be organized by individual sessions. Each session must include a session_date field. Content related to the upcoming session must be incorporated into the 'Plan' section of the SOAP note rather than appearing as a separate section. If the user does not provide content for future planning, the system may briefly suggest general therapeutic topics within the Plan section. All content must remain HIPAA-compliant and consistent with all active globals and rules. Suggestions must not include assumptions, embellishments, or identifiable information.",
+        "applies_to": "all_clients",
+        "created_date": "2026-02-21",
+        "last_updated": "2026-02-21",
+        "active": true
+      },
+      {
+        "id": "RL-0005",
+        "name": "Duplicate Initials Conflict Detection",
+        "category": "client_identity_management",
+        "description": "If a new client is added and their initials match an existing client’s initials, the system must notify the user of the conflict. The user must then provide an additional distinguishing modifier (e.g., numerical suffix or alternate identifier) before the client record is finalized. No duplicate initials may exist without explicit user-defined differentiation.",
+        "applies_to": "all_clients",
+        "created_date": "2026-02-21",
+        "active": true
+      },
+      {
+        "id": "RL-0006",
+        "name": "Client Reference Standardization",
+        "category": "documentation_language",
+        "description": "Within all generated SOAP notes, the client must be referred to only as 'client'. No initials, identifiers, or alternative labels may be used inside the note body. Initials and client_id may be stored structurally in the system but must not appear in the SOAP narrative.",
+        "applies_to": "all_clients",
+        "created_date": "2026-02-21",
+        "active": true
+      },
+      {
+        "id": "RL-0007",
+        "name": "Client Index Print Command",
+        "category": "system_retrieval",
+        "description": "When the user issues the command 'print index', the system must output a list of all clients ordered numerically by their client_id in ascending order. The list must display client_id and initials only. The list must not include SOAP content or additional details.",
+        "applies_to": "system",
+        "created_date": "2026-02-21",
+        "active": true
+      },
+      {
+        "id": "RL-0008",
+        "name": "Fixed Non-Reusable Client ID Policy",
+        "category": "identity_integrity",
+        "description": "Client ID numbers are permanent and must never be reused. If a client is deleted or marked inactive, their client_id remains retired and cannot be reassigned to a new client. All new client_id values must increment sequentially from the highest previously issued ID.",
+        "applies_to": "all_clients",
+        "created_date": "2026-02-21",
+        "active": true
+      },
+      {
+        "id": "RL-0009",
+        "name": "OQ Assessment Section Requirement",
+        "category": "session_structure",
+        "description": "Each SOAP note must include an additional section at the bottom titled 'OQ Assessment'. This section must contain relevant information regarding the client’s Outcome Questionnaire (OQ) assessment data. If OQ data is not provided by the user, the section must remain present and state that OQ data was not reviewed or provided for that session. All content must remain HIPAA-compliant and adhere to all active globals and rules.",
+        "applies_to": "all_clients",
+        "created_date": "2026-02-21",
+        "active": true
+      },
+      {
+        "id": "RL-0010",
+        "name": "Non-Committal Future Planning Language",
+        "category": "documentation_language",
+        "description": "The system must not use language that commits the therapist to definitive future actions. Forward-looking statements must use non-committal language such as 'intends to', 'plans to consider', 'is thinking about', 'may explore', or similar phrasing. The system must avoid definitive commitments such as 'will do', 'will complete', or 'will address' when referring to future sessions.",
+        "applies_to": "all_clients",
+        "created_date": "2026-02-21",
+        "active": true
+      }
+    ],
+    "clients": [
+      { "client_id": "CL-0001", "initials": "BT", "created_date": "2026-02-21", "status": "active", "sessions": [] },
+      { "client_id": "CL-0002", "initials": "KL", "created_date": "2026-02-21", "status": "active", "sessions": [] },
+      { "client_id": "CL-0003", "initials": "DM", "created_date": "2026-02-21", "status": "active", "sessions": [] }
+    ],
+    "export_protocols": [
+      {
+        "id": "EXP-0001",
+        "name": "Global Export Protocol",
+        "trigger_phrase": "export system",
+        "action": "When the user says 'export system', output the COMPLETE system state exactly as stored.",
+        "delivery_method": "If the system exceeds single-response limits, export must be delivered in sequential numbered parts (Part 1, Part 2, Part 3, etc.) until fully complete.",
+        "absolute_rules": [
+          "EVERY field",
+          "EVERY global",
+          "EVERY note",
+          "EVERY structural rule",
+          "EVERY added field",
+          "EVERY update made during session"
+        ],
+        "created_date": "2026-02-22",
+        "active": true
+      }
+    ],
+    "metadata": {
+      "version": "2.2",
+      "created_date": "2026-02-21",
+      "last_updated": "2026-02-22"
+    }
+  }
+}
+
 
