@@ -1,11 +1,24 @@
 {
   "system": {
-    "description": "Command router for project backups",
+    "description": "Project command router",
     "rules": [
-      "Commands map to repo paths and object types",
-      "If a command specifies objects, load only those entries",
-      "Commands may be chained to load multiple contexts"
+      "Commands may be written with or without spaces (example: ntsystem or nt system)",
+      "Commands are case-insensitive",
+      "Project prefix identifies the project",
+      "Command suffix identifies the data type (system, objects, ci)",
+      "Additional words after a command are treated as object or CI names to load"
     ]
+  },
+
+  "projects": {
+    "app": "projects/AppTool",
+    "nt": "projects/NoteTaker"
+  },
+
+  "types": {
+    "system": "system-backup",
+    "objects": "objects-backup",
+    "ci": "CI-backups"
   },
 
   "commands": {
