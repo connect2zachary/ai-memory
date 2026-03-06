@@ -1,1 +1,224 @@
+Part 1 of System Export
+{
+  "system_metadata": {
+    "architecture": "Single Master Object",
+    "application_ids": "Permanently Fixed",
+    "closed_apps_compact": true,
+    "reports_saved": false,
+    "conflicts_saved": true,
+    "email_storage": "Full bodies stored for all non-closed apps",
+    "status_history": "Single current status only (no version history)",
+    "scan_policy": "If a link is provided and scanning is requested, automatically retrieve content. No inference beyond provided data.",
+    "no_inference_rule": "All data must be based strictly on user-provided links or explicitly entered information. No extrapolation or assumption allowed.",
+    "instagram_or_social_media_search": "Not allowed unless explicitly requested.",
+    "format_rule": "Only use object format when user says 'print object' or during canonical export.",
+    "assumption_transparency_rule": {
+      "core_principle": "Do not make assumptions beyond stored system data.",
+      "requirement": "If making analytical connections, contextual inferences, or drawing from general knowledge outside of stored object data, the assistant must explicitly state that it is doing so.",
+      "disclosure_format": "Clearly label the section as 'Outside Stored System Data' before providing the information.",
+      "priority": "Applies to all responses including advisory, interview prep, compliance discussion, and policy interpretation."
+    }
+  },
+  "globals": {
+    "identity": {
+      "name": "Zachary Melman",
+      "veteran_status": "US Navy Veteran",
+      "projected_graduation_date": "Spring 2027",
+      "campus": "University of Northern Colorado – Extended Campus at Lowry"
+    },
+    "academic_calendar": {
+      "unc_calendar_link": "https://www.unco.edu/registrar/calendars-catalogs-forms/calendars/",
+      "summer_2026": {
+        "start": "5/18/26",
+        "end": "8/7/26"
+      },
+      "fall_2026": {
+        "start": "8/24/26",
+        "end": "12/11/26"
+      },
+      "spring_2027": {
+        "start": "1/11/27",
+        "end": "5/7/27"
+      }
+    },
+    "business_to_academic_translation": {
+      "January": "Winter cohort (Business Q1)",
+      "May": "Late May–June start",
+      "August": "Fall internship / co-op, not summer"
+    },
+    "practicum_and_internship_requirements": {
+      "practicum_II": {
+        "total_hours": 100,
+        "direct_minimum": 32,
+        "indirect_minimum": 70,
+        "weekly_expected": "8–12 hours per week"
+      },
+      "internship": {
+        "total_hours": 600,
+        "direct_minimum": 240,
+        "weekly_expected": "Approximately 20 hours per week across two semesters"
+      }
+    },
+    "hour_estimates_side_by_side": {
+      "practicum_II_estimated_weekly_direct": "Approximately 4–5 direct hours per week",
+      "practicum_II_estimated_weekly_indirect": "Approximately 4–7 indirect hours per week",
+      "internship_estimated_weekly_direct": "Approximately 10–12 direct hours per week",
+      "internship_estimated_weekly_indirect": "Approximately 8–10 indirect hours per week"
+    },
+    "deadlines": {
+      "approved_site_agreement_deadline": "April 1, 2026",
+      "unapproved_site_agreement_deadline": "March 1, 2026"
+    },
+    "desired_internship_characteristics": {
+      "prefer_remote": true,
+      "group_and_individual_therapy": true,
+      "within_30_min_of_80220_if_not_remote": true,
+      "flexible_schedule": true,
+      "mentorship_model": true,
+      "post_internship_employment_opportunity": true,
+      "accepts_UNC_students_or_no_school_restrictions": true,
+      "mentions_practicum_and_internship": true,
+      "prefer_adults_18_plus": true,
+      "no_in_home_services": true,
+      "no_school_based_placements": true
+    },
+    "email_signature": {
+      "closing": "Best Regards,\nZachary Melman"
+    },
+    "global_export_protocol": {
+      "primary_command": {
+        "trigger_phrase": "export system",
+        "action": "When the user says 'export system', output the COMPLETE system state EXCEPT application objects.",
+        "excludes": [
+          "applications",
+          "applications_continued"
+        ],
+        "delivery_method": "If the system exceeds single-response limits, export must be delivered in sequential numbered parts (Part 1, Part 2, Part 3, etc.) until fully complete.",
+        "absolute_rules": [
+          "EVERY field",
+          "EVERY global",
+          "EVERY structural rule",
+          "EVERY added field",
+          "EVERY update made during session"
+        ],
+        "no_truncation": true,
+        "no_summarization": true,
+        "no_placeholder_text": true,
+        "no_omissions": true,
+        "no_compaction": true,
+        "canonical_format_only": true,
+        "backup_integrity_priority": "Export must be fully reconstructable with zero data loss across sequential parts."
+      },
+      "objects_only_command": {
+        "trigger_phrase": "export system objects",
+        "action": "When the user says 'export system objects', output ONLY the application objects in full canonical form.",
+        "scope": "applications and applications_continued arrays only.",
+        "delivery_method": "If objects exceed single-response limits, export must be delivered in sequential numbered parts until fully complete.",
+        "absolute_rules": [
+          "EVERY field within each application object",
+          "EVERY contact",
+          "EVERY email body in full",
+          "EVERY note",
+          "EVERY conflict",
+          "EVERY update made during session"
+        ],
+        "closed_object_rule": {
+          "definition": "Objects with a status explicitly marked as 'Closed'.",
+          "export_behavior": "For objects with Closed status, export only object metadata.",
+          "metadata_fields_only": [
+            "id",
+            "title",
+            "status",
+            "approved_site_list",
+            "applied_date",
+            "rejected_date (if applicable)"
+          ]
+        },
+        "no_truncation": true,
+        "no_summarization": true,
+        "no_placeholder_text": true,
+        "no_omissions": true,
+        "no_compaction": true,
+        "canonical_format_only": true,
+        "backup_integrity_priority": "Objects export must be fully reconstructable with zero data loss across sequential parts."
+      }
+    }
+  }
+}
+
+Part 2 will follow.
+Part 2 of System Export
+{
+  "globals_continued": {
+    "run_a_report_protocol": {
+      "trigger_phrase": "run a report",
+      "scope_rule": "User must specify an existing application object by title or id.",
+      "data_source_rule": "Only use website information explicitly attached to the mentioned object OR a user-provided link at time of request.",
+      "scan_policy": "If a website link is attached and scanning is requested, automatically retrieve content. No inference beyond provided data.",
+      "no_inference_rule_enforced": true,
+      "report_sections": [
+        "1. Business Summary and Mission",
+        "2. Therapeutic Approach Summary",
+        "3. Internship / Practicum Information Summary",
+        "4. Conflicts With Desired Internship Characteristics",
+        "5. Conflicts With UNC Practicum / Internship Requirements"
+      ],
+      "conflict_analysis_rules": {
+        "desired_characteristics_source": "globals.desired_internship_characteristics",
+        "school_requirements_source": "globals.practicum_and_internship_requirements",
+        "calendar_source": "globals.academic_calendar",
+        "only_explicit_statements": true,
+        "no_assumptions_if_missing_data": true,
+        "if_information_not_found": "Explicitly state 'Not stated on website.'"
+      },
+      "output_format": {
+        "default": "Structured narrative report with clearly labeled sections.",
+        "object_format_condition": "Only use object format if user says 'print object'."
+      }
+    },
+    "unc_practicum_internship_regulations": {
+      "current_student_link": "https://www.unco.edu/cebs/applied-psychology-counselor-education/professional-counseling/current-students.aspx",
+      "policies_of_note": {
+        "supervision_requirement": "Site must provide 1-hour of individual or triadic supervision with at least one opportunity for direct feedback.",
+        "group_requirement": "Student must lead or co-lead a counseling group during internship.",
+        "employment_restriction": "Student cannot complete Practicum II or Internship at a current or recent place of employment without requesting an exception.",
+        "distance_requirement": "Site must be within 100 miles from home campus.",
+        "onsite_and_inhome_services_policy": {
+          "onsite_rule": "A student CANNOT perform any in-person services on-site without a licensed professional present.",
+          "inhome_rule": "A student CANNOT perform any in-home services without a licensed mental health professional present.",
+          "program_preference": "It is the preference of the program that students do not provide in-home services."
+        }
+      },
+      "hour_regulations": {
+        "practicum_II_weekly_limit": "8-12 hours per week. NO MORE.",
+        "internship_weekly_average": "Approximately 20 hours per week but may vary."
+      },
+      "agreement_rules": {
+        "midterm_requirement": "Agreement cannot be signed until student receives favorable mid-term evaluation in current practicum course.",
+        "semester_structure": "Agreements are signed ONE semester at a time, although student may remain at site for multiple semesters.",
+        "date_requirement": "Agreement dates MUST match official UNC semester dates."
+      },
+      "acceptable_signatures": {
+        "allowed": [
+          "Time-stamped digital signature (certificate-based or DocuSign)",
+          "Hand-drawn digital signature using mouse, trackpad, or finger",
+          "Printed, hand-signed, scanned, and uploaded"
+        ],
+        "not_allowed": [
+          "Font-based signatures mimicking cursive"
+        ]
+      }
+    }
+  }
+}
+
+System export complete.
+This export includes:
+Every field
+Every global
+Every structural rule
+All updates made during this session
+No application objects (per protocol)
+If you would like, you may now say “export system objects” to receive all application objects in full canonical form.
+
 
