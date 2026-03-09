@@ -335,48 +335,48 @@ Part 5
 {
   "applications_continued_part_5": [
    {
-      "id": 13,
-      "title": "Creekside Collaborative Therapy",
-      "status": "Active",
-      "approved_site_list": true,
-      "applied_date": "2.10.26",
-      "website": "https://www.creeksidecollaborativetherapy.net/",
-      "contacts": [
-        {
-          "name": "Meghan Epstein, LPC",
-          "email": "meghan@creeksidecollaborativetherapy.net",
-          "address": "6000 Greenwood Plaza Blvd #105, Greenwood Village, CO 80111"
-        }
-      ],
-      "emails": [
-        {
-          "type": "outbound",
-          "date": "2.10.26",
-          "body": "Good afternoon Meghan,\n\nI hope you are doing well. My name is Zachary Melman, and I am a graduate student in the counseling program at the University of Northern Colorado. I am reaching out to express my strong interest in the Practicum II and Internship opportunities at Creekside Collaborative Therapy.\n\nI am seeking a Practicum II placement beginning in the Summer 2026 semester, with the hope of continuing into an internship thereafter. Creekside’s collaborative private practice model, emphasis on thoughtful supervision, and balance of autonomy and support align very closely with how I hope to continue developing as a clinician. I am particularly drawn to the intentional caseload structure, weekly individual supervision, and the opportunity to grow within a team-based yet flexible environment.\n\nMy approach to therapy is grounded in empathy, congruence, and respect for clients’ lived experiences. I draw from a client-centered foundation while integrating mindfulness-based practices, Acceptance and Commitment Therapy, and Internal Family Systems concepts. I value supervision and consultation as essential to my clinical growth and am excited by training environments that emphasize both professional development and ethical, high-quality care. I am also very interested in the possibility of transitioning into employment following internship, should there be an opportunity.\n\nI have attached my resume for your reference and would welcome the opportunity to connect further to discuss the practicum and internship opportunities at Creekside, including timeline alignment and next steps. I am happy to provide any additional information regarding my program requirements if helpful.\n\nThank you very much for your time and consideration. I look forward to the possibility of connecting.\n\nBest Regards,\nZachary Melman"
-        },
-        {
-          "type": "inbound",
-          "date": "2.16.26",
-          "body": "Hi Zach,\nThanks for reaching out. We are running a little behind this application round due to some personal issues but we will be reaching out ASAP to follow up with applicants.\nMeghan"
-        },
-        {
-          "type": "outbound",
-          "date": "2.16.26",
-          "body": "Good afternoon Meghan,\n\nThank you for the update. I completely understand and appreciate you letting me know.\n\nI remain very interested in Creekside and look forward to connecting whenever you are ready to move forward.\n\nBest Regards,\nZachary Melman"
-        },
-        {
-          "type": "inbound",
-          "date": "2.20.26",
-          "body": "Hi Zachary,\nSo sorry for the delay in responding to you! We'd love to chat with you to see if we'd be a good fit. Would you be available any of these times to meet with myself and the group practice owner over Google Meet? We are sending multiple interview requests today so please let me know ASAP which opening works best for you. \nThurs 2/26 10a, 11a\nMon 3/2 9a\nThurs 3/5 9a\nFri 3/6 11a, 1p\n\nMeghan"
-        },
-        {
-          "type": "outbound",
-          "date": "2.23.26",
-          "body": "Good morning Meghan,\n\nThank you for the opportunity to continue the conversation! I’m truly looking forward to connecting with you and the group practice owner.\n\nThursday, 2/26 at 11:00 a.m. via Google Meet works well for me, if that time is still available.\n\nI look forward to speaking with you both and learning more about Creekside.\n\n\nBest regards,\nZachary Melman"
-        }
-      ],
-      "conflicts": []
+  "id": 13,
+  "title": "Creekside Collaborative Therapy",
+  "status": "Hired",
+  "approved_site_list": true,
+  "applied_date": "2.10.26",
+  "website": "https://www.creeksidecollaborativetherapy.net/",
+  "contacts": [
+    {
+      "name": "Meghan Epstein, LPC",
+      "email": "meghan@creeksidecollaborativetherapy.net",
+      "address": "6000 Greenwood Plaza Blvd #105, Greenwood Village, CO 80111"
+    }
+  ],
+  "emails": [
+    {
+      "type": "outbound",
+      "date": "2.10.26",
+      "body": "Good afternoon Meghan,\n\nI hope you are doing well. My name is Zachary Melman, and I am a graduate student in the counseling program at the University of Northern Colorado. I am reaching out to express my strong interest in the Practicum II and Internship opportunities at Creekside Collaborative Therapy.\n\nI am seeking a Practicum II placement beginning in the Summer 2026 semester, with the hope of continuing into an internship thereafter. Creekside’s collaborative private practice model, emphasis on thoughtful supervision, and balance of autonomy and support align very closely with how I hope to continue developing as a clinician. I am particularly drawn to the intentional caseload structure, weekly individual supervision, and the opportunity to grow within a team-based yet flexible environment.\n\nMy approach to therapy is grounded in empathy, congruence, and respect for clients’ lived experiences. I draw from a client-centered foundation while integrating mindfulness-based practices, Acceptance and Commitment Therapy, and Internal Family Systems concepts. I value supervision and consultation as essential to my clinical growth and am excited by training environments that emphasize both professional development and ethical, high-quality care. I am also very interested in the possibility of transitioning into employment following internship, should there be an opportunity.\n\nI have attached my resume for your reference and would welcome the opportunity to connect further to discuss the practicum and internship opportunities at Creekside, including timeline alignment and next steps. I am happy to provide any additional information regarding my program requirements if helpful.\n\nThank you very much for your time and consideration. I look forward to the possibility of connecting.\n\nBest Regards,\nZachary Melman"
     },
+    {
+      "type": "inbound",
+      "date": "2.16.26",
+      "body": "Hi Zach,\nThanks for reaching out. We are running a little behind this application round due to some personal issues but we will be reaching out ASAP to follow up with applicants.\nMeghan"
+    },
+    {
+      "type": "outbound",
+      "date": "2.16.26",
+      "body": "Good afternoon Meghan,\n\nThank you for the update. I completely understand and appreciate you letting me know.\n\nI remain very interested in Creekside and look forward to connecting whenever you are ready to move forward.\n\nBest Regards,\nZachary Melman"
+    },
+    {
+      "type": "inbound",
+      "date": "2.20.26",
+      "body": "Hi Zachary,\nSo sorry for the delay in responding to you! We'd love to chat with you to see if we'd be a good fit. Would you be available any of these times to meet with myself and the group practice owner over Google Meet? We are sending multiple interview requests today so please let me know ASAP which opening works best for you. \nThurs 2/26 10a, 11a\nMon 3/2 9a\nThurs 3/5 9a\nFri 3/6 11a, 1p\n\nMeghan"
+    },
+    {
+      "type": "outbound",
+      "date": "2.23.26",
+      "body": "Good morning Meghan,\n\nThank you for the opportunity to continue the conversation! I’m truly looking forward to connecting with you and the group practice owner.\n\nThursday, 2/26 at 11:00 a.m. via Google Meet works well for me, if that time is still available.\n\nI look forward to speaking with you both and learning more about Creekside.\n\n\nBest regards,\nZachary Melman"
+    }
+  ],
+  "conflicts": []
+},
     {
       "id": 14,
       "title": "Community Reach Center",
