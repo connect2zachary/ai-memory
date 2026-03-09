@@ -1,0 +1,295 @@
+{
+  "NoteTakerSystem": {
+    "globals": [
+      {
+        "id": "GL-0001",
+        "name": "System Purpose and HIPAA Compliance Requirement",
+        "description": "The purpose of the Note Taker system is to generate HIPAA-compliant SOAP notes for therapeutic purposes. All system design, data handling, client records, and exports must adhere to HIPAA privacy and security standards.",
+        "created_date": "2026-02-21",
+        "active": true
+      },
+      {
+        "id": "GL-0002",
+        "name": "Stream-of-Consciousness Translation Protocol",
+        "description": "The user (Zachary) will enter therapeutic session content in a stream-of-consciousness format. The system’s purpose is to translate that content into a HIPAA-compliant SOAP note while preserving original meaning. The system must function as a structured translator, not a content generator.",
+        "created_date": "2026-02-21",
+        "active": true
+      }
+    ],
+    "rules": [
+      {
+        "id": "RL-0001",
+        "name": "No Identifiable Information in SOAP Notes",
+        "category": "documentation_compliance",
+        "description": "When producing SOAP notes, no identifiable information may be included. This includes but is not limited to full names, dates of birth, addresses, phone numbers, specific locations, employer names, or any other protected health information (PHI). Clients must be referenced only by their assigned initials and internal client_id.",
+        "applies_to": "all_clients",
+        "created_date": "2026-02-21",
+        "active": true
+      },
+      {
+        "id": "RL-0002",
+        "name": "No Embellishment or Assumptive Additions",
+        "category": "documentation_integrity",
+        "description": "The system must not embellish, infer, interpret beyond provided content, or make assumptions. It may suggest potential additions or clarifications, but these must only be included in the final SOAP note after explicit confirmation from the user. The system may correct grammar, clarity, and spelling, but must not add clinical details, interpretations, or inferred content without confirmation.",
+        "applies_to": "all_clients",
+        "created_date": "2026-02-21",
+        "active": true
+      },
+      {
+        "id": "RL-0003",
+        "name": "Strategic Vagueness in SOAP Documentation",
+        "category": "documentation_style",
+        "description": "SOAP notes should remain appropriately vague. Each section must provide a clear clinical impression of what occurred during the session without including unnecessary specific details. Content should convey therapeutic themes, interventions, and responses without documenting granular personal narratives or excessive specificity.",
+        "applies_to": "all_clients",
+        "created_date": "2026-02-21",
+        "active": true
+      },
+      {
+        "id": "RL-0004",
+        "name": "Session-Based Client Structuring with Integrated Future Planning",
+        "category": "session_structure",
+        "description": "Each client record must be organized by individual sessions. Each session must include a session_date field. Content related to the upcoming session must be incorporated into the 'Plan' section of the SOAP note rather than appearing as a separate section. If the user does not provide content for future planning, the system may briefly suggest general therapeutic topics within the Plan section. All content must remain HIPAA-compliant and consistent with all active globals and rules. Suggestions must not include assumptions, embellishments, or identifiable information.",
+        "applies_to": "all_clients",
+        "created_date": "2026-02-21",
+        "last_updated": "2026-02-21",
+        "active": true
+      },
+      {
+        "id": "RL-0005",
+        "name": "Duplicate Initials Conflict Detection",
+        "category": "client_identity_management",
+        "description": "If a new client is added and their initials match an existing client’s initials, the system must notify the user of the conflict. The user must then provide an additional distinguishing modifier (e.g., numerical suffix or alternate identifier) before the client record is finalized. No duplicate initials may exist without explicit user-defined differentiation.",
+        "applies_to": "all_clients",
+        "created_date": "2026-02-21",
+        "active": true
+      },
+      {
+        "id": "RL-0006",
+        "name": "Client Reference Standardization",
+        "category": "documentation_language",
+        "description": "Within all generated SOAP notes, the client must be referred to only as 'client'. No initials, identifiers, or alternative labels may be used inside the note body. Initials and client_id may be stored structurally in the system but must not appear in the SOAP narrative.",
+        "applies_to": "all_clients",
+        "created_date": "2026-02-21",
+        "active": true
+      },
+      {
+        "id": "RL-0007",
+        "name": "Client Index Print Command",
+        "category": "system_retrieval",
+        "description": "When the user issues the command 'print index', the system must output a list of all clients ordered numerically by their client_id in ascending order. The list must display client_id and initials only. The list must not include SOAP content or additional details.",
+        "applies_to": "system",
+        "created_date": "2026-02-21",
+        "active": true
+      },
+      {
+        "id": "RL-0008",
+        "name": "Fixed Non-Reusable Client ID Policy",
+        "category": "identity_integrity",
+        "description": "Client ID numbers are permanent and must never be reused. If a client is deleted or marked inactive, their client_id remains retired and cannot be reassigned to a new client. All new client_id values must increment sequentially from the highest previously issued ID.",
+        "applies_to": "all_clients",
+        "created_date": "2026-02-21",
+        "active": true
+      },
+      {
+        "id": "RL-0009",
+        "name": "OQ Assessment Section Requirement",
+        "category": "session_structure",
+        "description": "Each SOAP note must include an additional section at the bottom titled 'OQ Assessment'. This section must contain relevant information regarding the client’s Outcome Questionnaire (OQ) assessment data. If OQ data is not provided by the user, the section must remain present and state that OQ data was not reviewed or provided for that session. All content must remain HIPAA-compliant and adhere to all active globals and rules.",
+        "applies_to": "all_clients",
+        "created_date": "2026-02-21",
+        "active": true
+      },
+      {
+        "id": "RL-0010",
+        "name": "Non-Committal Future Planning Language",
+        "category": "documentation_language",
+        "description": "The system must not use language that commits the therapist to definitive future actions. Forward-looking statements must use non-committal language such as 'intends to', 'plans to consider', 'is thinking about', 'may explore', or similar phrasing. The system must avoid definitive commitments such as 'will do', 'will complete', or 'will address' when referring to future sessions.",
+        "applies_to": "all_clients",
+        "created_date": "2026-02-21",
+        "active": true
+      },
+      {
+        "id": "RL-0011",
+        "name": "Maximum Five Sentence Limit Per SOAP Section",
+        "category": "documentation_style",
+        "description": "Each section of every SOAP note (Subjective, Objective, Assessment, Plan, and OQ Assessment) must contain no more than five sentences. Sentence count must not exceed five per section under any circumstances. Content must remain clinically sufficient, HIPAA-compliant, strategically vague, and consistent with all other active globals and rules.",
+        "applies_to": "all_clients",
+        "created_date": "2026-02-27",
+        "active": true
+      }
+    ],
+    "clients": [
+      {
+        "client_id": "CL-0001",
+        "initials": "BT",
+        "created_date": "2026-02-21",
+        "status": "active",
+        "sessions": [
+          {
+            "session_id": "S-0001",
+            "session_date": "2026-02-20",
+            "note_type": "SOAP",
+            "subjective": "Client reported three critical items previously identified in intake paperwork: history of suicidal ideation (SI), substance use concerns, and workplace dissatisfaction. Client stated that SI has not occurred in some time and did not present as an immediate concern during session. Client reported previous binge drinking but indicated that for some time alcohol consumption has been limited to approximately one to two drinks per week. Regarding workplace dissatisfaction, client denied any desire to harm others. Client discussed a longstanding history of depressive symptoms, reportedly present since adolescence. Client questioned whether prior medication use during that period may have contributed to mood changes. Client described increased awareness of depressive symptoms after others began noticing changes in mood and affect. Client reported engaging in multiple interventions in the past, including social involvement, medication, and therapy. Client expressed ongoing thoughts related to meaning, personal value, and self-worth, noting that self-worth appears connected to financial success. Client rated current sense of self-worth between 4 and 6 out of 10. Client reported having a supportive network.",
+            "objective": "Client appeared present and willing to engage. Client presented with a positive mood. Client’s attire was clean, and client appeared well groomed and put together.",
+            "assessment": "Client presents with ongoing depressive symptoms of longstanding duration. No immediate safety concerns reported or observed during session. Client demonstrates insight into mood patterns and contributing factors. Themes of existential reflection and self-worth appear clinically relevant.",
+            "plan": "Client reported wanting to further discuss self-worth, thoughts related to death and life meaning, and themes related to sin. Therapist intends to explore client’s values to support meaning-making and self-worth reflections. Therapist is considering further assessment of depressive symptom duration and impact, exploring cognitive connections between self-worth and external achievement, and continuing to monitor safety and substance use patterns.",
+            "oq_assessment": "Client scored 48 on the OQ. Critical items 8, 11, and 44 were discussed. No further concerns at this time.",
+            "created_date": "2026-02-21",
+            "last_updated": "2026-02-21"
+          },
+          {
+            "session_id": "S-0002",
+            "session_date": "2026-02-21",
+            "session_time": "10:00",
+            "note_type": "SOAP",
+            "subjective": "Client discussed difficulty with trust and connection. Client described multiple recent experiences involving illness and death within close relationships. Client described a distressing memory related to father’s death, including being present shortly before father passed and being asked to assist with post-mortem care. Client discussed feelings of isolation and loss of support following conflict within a men’s group, which had previously served as a safe space.",
+            "objective": "Client engaged in detailed reflection regarding recent losses and interpersonal conflict. Client appeared emotionally affected when discussing father’s death and relational dynamics within peer group.",
+            "assessment": "Client presents with grief-related themes, existential reflection, and concerns regarding connection and belonging. Multiple recent losses appear to contribute to increased focus on mortality and meaning.",
+            "plan": "Therapist intends to continue exploring themes of grief, meaning, and relational dynamics. Therapist is thinking about how to broach the possibility of client returning to the men’s group, particularly since the other member no longer attends. Therapist is also thinking about discussing additional ways for client to meet new people. Therapist would like to discuss client’s values, as this may support exploration of existential themes.",
+            "oq_assessment": "OQ assessment was not completed or reviewed during this session.",
+            "created_date": "2026-02-22",
+            "last_updated": "2026-02-22"
+          },
+          {
+            "session_id": "S-0003",
+            "session_date": "2026-02-28",
+            "session_time": "11:00",
+            "note_type": "SOAP",
+            "subjective": "Client reported that a close friend has entered hospice care and appears to be nearing end of life, which client described as emotionally distressing. Client described feeling singled out, attacked, and unsupported during a confrontation within a previously trusted men’s group, noting that the experience eroded foundational trust. Client initially struggled to identify emotions but later identified sadness and anger related to perceived judgment and loss of trust. Client provided feedback requesting more active therapeutic intervention to support emotional depth and conversational focus, while also reporting overall satisfaction with therapy.",
+            "objective": "Client was engaged and verbally active throughout the session. Client demonstrated occasional difficulty maintaining focus and initially avoided direct emotional identification. With facilitation, client was able to articulate specific feelings connected to the interpersonal conflict. Client appeared reflective when discussing themes of trust and relational rupture.",
+            "assessment": "Client presents with grief related to an anticipated loss and relational distress within a valued peer group. Themes of trust, vulnerability, feeling misunderstood, and perceived judgment remain relevant. Mild emotional avoidance is present, though insight and self-awareness appear to be increasing. No immediate safety concerns were reported or observed.",
+            "plan": "This session served as a planned termination due to the structured nature of services. Therapist acknowledged client’s feedback and intends to integrate this input into future clinical practice. Therapist encouraged continued emotional reflection and engagement in ongoing therapeutic work as appropriate. Client was informed of the conclusion of services and expressed appreciation for the therapeutic experience.",
+            "oq_assessment": "OQ data was not reviewed or provided for this session.",
+            "created_date": "2026-02-27",
+            "last_updated": "2026-02-27"
+          }
+        ],
+        "metadata": {}
+      },
+      {
+        "client_id": "CL-0002",
+        "initials": "KL",
+        "created_date": "2026-02-21",
+        "status": "active",
+        "sessions": [
+          {
+            "session_id": "S-0001",
+            "session_date": "2026-02-20",
+            "note_type": "SOAP",
+            "subjective": "Client did not have intake paperwork completed at time of session. Suicidal ideation was assessed, and client denied current SI. Client discussed feelings of shame related to a recent relapse involving stimulant use. Client reported that substance use was associated with a desire to function on 'auto pilot' and increase productivity. Client expressed distress regarding how family members perceived the relapse. Client reported attending AA for substance use support. Client shared a belief that others deserve grace by default but described difficulty extending that same grace to self. Client discussed relational themes involving mother, including perceived difficulty receiving approval. Client expressed pride in professional role and belief that work contributes positively to others.",
+            "objective": "Client engaged in session and openly discussed recent relapse and associated emotional responses. Client appeared reflective when discussing family perceptions and themes related to self-worth. Client appeared upbeat and willing to engage. Client appeared well groomed and put together.",
+            "assessment": "Client presents with substance use relapse and associated shame. No current suicidal ideation reported. Themes of self-criticism, external validation, and relational dynamics appear relevant.",
+            "plan": "Client expressed interest in discussing frustration and fatigue related to work and further exploration of relational themes. Therapist is considering discussion of coping strategies related to stress and relapse prevention.",
+            "oq_assessment": "OQ assessment was not completed or reviewed during this session.",
+            "created_date": "2026-02-21",
+            "last_updated": "2026-02-21"
+          },
+          {
+            "session_id": "S-0002",
+            "session_date": "2026-02-21",
+            "session_time": "12:00",
+            "note_type": "SOAP",
+            "subjective": "Client stated that at times he does not trust his own thinking. Client discussed relationship with food, including periods of restricted eating combined with increased exercise. Client described eating restrictions as stress-related and referred to this pattern as 'stress starving.' Client reported currently working with a therapist specializing in eating disorders and a nutritionist. Client discussed a tendency to feel the need to remain constantly productive. Client acknowledged difficulty engaging in self-care activities and reported challenges setting work boundaries, often feeling obligated to work and perceiving that others are working harder. Client expressed concerns related to work safety. Client discussed anticipatory stress regarding meeting girlfriend’s parents due to political differences and reported preparing arguments in advance, which appears to increase stress. Client described feeling a need to protect personal values while also feeling guarded. Client referenced internal parts work and described a critical part that can be dominant and self-critical, while also viewing this part as protective. Client identified cooking and mountain biking as activities that help with stress.",
+            "objective": "Client engaged in reflective discussion regarding stress patterns, eating behaviors, work-related pressures, and interpersonal stressors. Client appeared thoughtful when discussing internal critical patterns and coping strategies.",
+            "assessment": "Client presents with stress-related eating patterns, perfectionistic tendencies, and elevated work-related stress. Themes of self-criticism, productivity pressure, and anticipatory interpersonal stress appear clinically relevant. Client demonstrates insight into internal patterns and protective mechanisms.",
+            "plan": "Client is interested in further discussing relationship themes and potentially engaging in additional parts work. Therapist would like to accommodate this interest in future sessions.",
+            "oq_assessment": "OQ assessment was not completed or reviewed during this session.",
+            "created_date": "2026-02-22",
+            "last_updated": "2026-02-22"
+          },
+          {
+            "session_id": "S-0003",
+            "session_date": "2026-03-01",
+            "session_time": "12:00",
+            "note_type": "SOAP",
+            "subjective": "Client was informed that this session would serve as termination, with time reserved at the end to process the conclusion of services. Client revisited a prior statement about not trusting his own thinking and described difficulties with follow-through and impulse control. Client discussed childhood instability, including parental alcohol misuse and physical discipline by his mother, which contributed to feeling unsafe and betrayed. Client described patterns of expecting guilt in relationships and difficulty validating his own emotions, often minimizing his struggles in comparison to others. Client reported a history of suicidal ideation approximately four years ago but denied any current ideation, plan, or intent.",
+            "objective": "Client remained engaged and thoughtful throughout the session. Client engaged in reflective discussion regarding childhood experiences and relational patterns. Therapist assessed for current safety concerns and confirmed the absence of suicidal ideation, plan, or intent. Therapist directly assessed for potential ongoing risk to minors and confirmed that no children under the age of 18 are currently living with client’s mother.",
+            "assessment": "Client presents with themes of emotional invalidation, chronic guilt expectation, and difficulty with self-compassion. Early instability and relational unpredictability appear relevant to current interpersonal patterns. Client demonstrates insight into comparison tendencies and self-critical thinking.",
+            "plan": "This session served as a planned termination due to the structured nature of services. Therapist encouraged continued self-reflection and exploration of EMDR to process childhood trauma, as appropriate. Client acknowledged termination and participated in brief processing of the conclusion of services.",
+            "oq_assessment": "OQ data was not reviewed or provided for this session.",
+            "created_date": "2026-02-27",
+            "last_updated": "2026-02-27"
+          }
+        ],
+        "metadata": {}
+      },
+      {
+        "client_id": "CL-0003",
+        "initials": "DM",
+        "created_date": "2026-02-21",
+        "status": "active",
+        "sessions": [
+          {
+            "session_id": "S-0001",
+            "session_date": "2026-02-22",
+            "session_time": "10:00",
+            "note_type": "SOAP",
+            "subjective": "Client discussed concerns regarding boss who also serves as mentor and friend. Client expressed concern about recent behavior changes that feel out of character and speculated that these changes may be related to boss’s advanced age. Client reported working at the company for 12 years and feeling highly invested in its success. Client described feeling responsible for employees under her supervision and conflicted about addressing concerns with boss due to potential professional and relational consequences. Client reported recently establishing boundaries with boss and noted positive impact of these boundaries on family and personal relationships. Client wondered whether boundary setting may have affected boss’s perception of her, describing recent interactions as reactive and brief. Client described feeling caught between remaining silent and initiating a potentially impactful conversation. Client expressed a desire for boss to retire. Client reported appreciating the opportunity to process these concerns in therapy, stating she has limited outlets to discuss this situation.",
+            "objective": "Client engaged in thoughtful discussion regarding workplace dynamics and relational concerns. Client appeared invested in professional role and reflective about interpersonal boundaries.",
+            "assessment": "Client presents with workplace-related stress and relational conflict involving a supervisory figure. Themes of responsibility, boundary setting, loyalty, and fear of interpersonal fallout appear clinically relevant. Client demonstrates insight into competing values and emotional responses.",
+            "plan": "Therapist intends to continue exploring workplace boundaries, relational dynamics, and decision-making processes. Therapist is thinking about discussing communication strategies and potential approaches to navigating conflict while maintaining personal values.",
+            "oq_assessment": "OQ assessment was not completed or reviewed during this session.",
+            "created_date": "2026-02-22",
+            "last_updated": "2026-02-22"
+          },
+          {
+            "session_id": "S-0002",
+            "session_date": "2026-02-28",
+            "session_time": "10:00",
+            "note_type": "SOAP",
+            "subjective": "Client reported recently speaking directly with her boss and stated the conversation went better than expected, though she continues to anticipate potential negative fallout. Client expressed themes of trust, acceptance, and feeling unseen within the relationship. Client described carrying significant responsibility, including managing others’ perceptions, family emotional dynamics, and oversight of employees. Client also reflected on aspects of her work she values, including teaching, innovation, and problem-solving, as well as her desire to leave a meaningful mark within the company.",
+            "objective": "Client was engaged and thoughtful throughout the session. Client appeared reflective when discussing responsibility and relational trust. Affect appeared stable, though mild conversational avoidance was noted, as evidenced by attempts to redirect focus away from herself and toward the therapist.",
+            "assessment": "Client presents with ongoing workplace-related stress centered on relational dynamics with a supervisory figure. Themes of trust, responsibility, acceptance, and fear of relational rupture remain relevant. No safety concerns were reported or observed.",
+            "plan": "Therapist intends to continue exploring relational trust, responsibility patterns, and themes related to acceptance and feeling unseen.",
+            "oq_assessment": "OQ data was not reviewed or provided for this session.",
+            "created_date": "2026-02-27",
+            "last_updated": "2026-02-27"
+          }
+        ],
+        "metadata": {}
+      }
+    ],
+    "export_protocols": [
+      {
+        "id": "EXP-0001",
+        "name": "Global Export Protocol",
+        "trigger_phrase": "export system",
+        "action": "When the user says 'export system', output the COMPLETE system state exactly as stored.",
+        "delivery_method": "If the system exceeds single-response limits, export must be delivered in sequential numbered parts (Part 1, Part 2, Part 3, etc.) until fully complete.",
+        "absolute_rules": [
+          "EVERY field",
+          "EVERY global",
+          "EVERY note",
+          "EVERY structural rule",
+          "EVERY added field",
+          "EVERY update made during session"
+        ],
+        "created_date": "2026-02-22",
+        "active": true
+      },
+      {
+        "id": "EXP-0002",
+        "name": "Client Sessions Export Protocol",
+        "trigger_phrase": "export sessions",
+        "action": "When the user says 'export sessions', output ONLY the complete clients array exactly as stored, including all session data.",
+        "delivery_method": "If the clients array exceeds single-response limits, export must be delivered in sequential numbered parts (Part 1, Part 2, Part 3, etc.) until fully complete.",
+        "absolute_rules": [
+          "EVERY client",
+          "EVERY session",
+          "EVERY field within each session",
+          "NO globals",
+          "NO system rules",
+          "NO metadata",
+          "NO export protocols"
+        ],
+        "created_date": "2026-02-27",
+        "active": true
+      }
+    ],
+    "metadata": {
+      "version": "2.2",
+      "created_date": "2026-02-21",
+      "last_updated": "2026-02-27"
+    }
+  }
+}
