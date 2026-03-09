@@ -1,4 +1,3 @@
-Part 1 of System Export
 {
   "system_metadata": {
     "architecture": "Single Master Object",
@@ -11,13 +10,33 @@ Part 1 of System Export
     "scan_policy": "If a link is provided and scanning is requested, automatically retrieve content. No inference beyond provided data.",
     "no_inference_rule": "All data must be based strictly on user-provided links or explicitly entered information. No extrapolation or assumption allowed.",
     "instagram_or_social_media_search": "Not allowed unless explicitly requested.",
-    "format_rule": "Only use object format when user says 'print object' or during canonical export.",
-    "assumption_transparency_rule": {
-      "core_principle": "Do not make assumptions beyond stored system data.",
-      "requirement": "If making analytical connections, contextual inferences, or drawing from general knowledge outside of stored object data, the assistant must explicitly state that it is doing so.",
-      "disclosure_format": "Clearly label the section as 'Outside Stored System Data' before providing the information.",
-      "priority": "Applies to all responses including advisory, interview prep, compliance discussion, and policy interpretation."
-    }
+    "format_rule": "Only use object format when user says 'print object' or during canonical export",
+    "object_access_enforcement": "Objects may only be accessed when present in loaded_objects",
+    "object_visibility_rule": "The assistant must ignore all application objects stored in external object files unless those objects are explicitly listed in loaded_objects.",
+    "objects_file_upload_policy": "Object storage files exist for persistence only. Their contents must not be accessed unless an object has been explicitly loaded.",
+    "terminology": {
+      "apps": "application objects",
+      "uploaded_apps": "objects present in the objects file",
+      "loaded_apps": "objects currently listed in loaded_objects"
+    },
+    "interpretation_rule": "When the user asks how many apps are uploaded or loaded, the assistant must determine the answer exclusively from loaded_objects unless the user explicitly asks about stored objects in the objects file."
+  },
+  "object_loading_architecture": {
+    "description": "Objects are stored externally and only loaded when explicitly requested.",
+    "purpose": "Prevents exposure of all application objects and allows object isolation.",
+    "storage_model": {
+      "system_file_contains": [
+        "system_metadata",
+        "globals",
+        "application_index",
+        "loaded_objects"
+      ],
+      "objects_file_contains": [
+        "full application objects only"
+      ]
+    },
+    "access_rule": "Only objects listed in loaded_objects may be viewed, modified, reported on, or exported.",
+    "index_rule": "Application index is stored in the system file and used for discovery without accessing full objects."
   },
   "globals": {
     "identity": {
@@ -84,141 +103,51 @@ Part 1 of System Export
     },
     "email_signature": {
       "closing": "Best Regards,\nZachary Melman"
-    },
-    "global_export_protocol": {
-      "primary_command": {
-        "trigger_phrase": "export system",
-        "action": "When the user says 'export system', output the COMPLETE system state EXCEPT application objects.",
-        "excludes": [
-          "applications",
-          "applications_continued"
-        ],
-        "delivery_method": "If the system exceeds single-response limits, export must be delivered in sequential numbered parts (Part 1, Part 2, Part 3, etc.) until fully complete.",
-        "absolute_rules": [
-          "EVERY field",
-          "EVERY global",
-          "EVERY structural rule",
-          "EVERY added field",
-          "EVERY update made during session"
-        ],
-        "no_truncation": true,
-        "no_summarization": true,
-        "no_placeholder_text": true,
-        "no_omissions": true,
-        "no_compaction": true,
-        "canonical_format_only": true,
-        "backup_integrity_priority": "Export must be fully reconstructable with zero data loss across sequential parts."
-      },
-      "objects_only_command": {
-        "trigger_phrase": "export system objects",
-        "action": "When the user says 'export system objects', output ONLY the application objects in full canonical form.",
-        "scope": "applications and applications_continued arrays only.",
-        "delivery_method": "If objects exceed single-response limits, export must be delivered in sequential numbered parts until fully complete.",
-        "absolute_rules": [
-          "EVERY field within each application object",
-          "EVERY contact",
-          "EVERY email body in full",
-          "EVERY note",
-          "EVERY conflict",
-          "EVERY update made during session"
-        ],
-        "closed_object_rule": {
-          "definition": "Objects with a status explicitly marked as 'Closed'.",
-          "export_behavior": "For objects with Closed status, export only object metadata.",
-          "metadata_fields_only": [
-            "id",
-            "title",
-            "status",
-            "approved_site_list",
-            "applied_date",
-            "rejected_date (if applicable)"
-          ]
-        },
-        "no_truncation": true,
-        "no_summarization": true,
-        "no_placeholder_text": true,
-        "no_omissions": true,
-        "no_compaction": true,
-        "canonical_format_only": true,
-        "backup_integrity_priority": "Objects export must be fully reconstructable with zero data loss across sequential parts."
-      }
     }
-  }
-}
-
-Part 2 will follow.
-Part 2 of System Export
-{
-  "globals_continued": {
-    "run_a_report_protocol": {
-      "trigger_phrase": "run a report",
-      "scope_rule": "User must specify an existing application object by title or id.",
-      "data_source_rule": "Only use website information explicitly attached to the mentioned object OR a user-provided link at time of request.",
-      "scan_policy": "If a website link is attached and scanning is requested, automatically retrieve content. No inference beyond provided data.",
-      "no_inference_rule_enforced": true,
-      "report_sections": [
-        "1. Business Summary and Mission",
-        "2. Therapeutic Approach Summary",
-        "3. Internship / Practicum Information Summary",
-        "4. Conflicts With Desired Internship Characteristics",
-        "5. Conflicts With UNC Practicum / Internship Requirements"
+  },
+  "commands": [
+    "app index",
+    "load app [id]",
+    "load app [title]",
+    "loaded objects",
+    "unload app [id]",
+    "run a report",
+    "print object",
+    "export system",
+    "export system objects"
+  ],
+  "object_access_rules": {
+    "only_loaded_objects_accessible": true,
+    "objects_not_loaded_are_inaccessible": true,
+    "index_visible_without_loading_objects": true
+  },
+  "global_export_protocol": {
+    "primary_command": {
+      "trigger_phrase": "export system",
+      "action": "Output complete system state excluding application objects",
+      "delivery_method": "Sequential numbered parts if needed",
+      "absolute_rules": [
+        "EVERY field",
+        "EVERY global",
+        "EVERY structural rule",
+        "EVERY added field",
+        "EVERY update made during session"
       ],
-      "conflict_analysis_rules": {
-        "desired_characteristics_source": "globals.desired_internship_characteristics",
-        "school_requirements_source": "globals.practicum_and_internship_requirements",
-        "calendar_source": "globals.academic_calendar",
-        "only_explicit_statements": true,
-        "no_assumptions_if_missing_data": true,
-        "if_information_not_found": "Explicitly state 'Not stated on website.'"
-      },
-      "output_format": {
-        "default": "Structured narrative report with clearly labeled sections.",
-        "object_format_condition": "Only use object format if user says 'print object'."
-      }
+      "no_truncation": true,
+      "no_summarization": true,
+      "no_placeholder_text": true,
+      "no_omissions": true,
+      "no_compaction": true,
+      "canonical_format_only": true
     },
-    "unc_practicum_internship_regulations": {
-      "current_student_link": "https://www.unco.edu/cebs/applied-psychology-counselor-education/professional-counseling/current-students.aspx",
-      "policies_of_note": {
-        "supervision_requirement": "Site must provide 1-hour of individual or triadic supervision with at least one opportunity for direct feedback.",
-        "group_requirement": "Student must lead or co-lead a counseling group during internship.",
-        "employment_restriction": "Student cannot complete Practicum II or Internship at a current or recent place of employment without requesting an exception.",
-        "distance_requirement": "Site must be within 100 miles from home campus.",
-        "onsite_and_inhome_services_policy": {
-          "onsite_rule": "A student CANNOT perform any in-person services on-site without a licensed professional present.",
-          "inhome_rule": "A student CANNOT perform any in-home services without a licensed mental health professional present.",
-          "program_preference": "It is the preference of the program that students do not provide in-home services."
-        }
-      },
-      "hour_regulations": {
-        "practicum_II_weekly_limit": "8-12 hours per week. NO MORE.",
-        "internship_weekly_average": "Approximately 20 hours per week but may vary."
-      },
-      "agreement_rules": {
-        "midterm_requirement": "Agreement cannot be signed until student receives favorable mid-term evaluation in current practicum course.",
-        "semester_structure": "Agreements are signed ONE semester at a time, although student may remain at site for multiple semesters.",
-        "date_requirement": "Agreement dates MUST match official UNC semester dates."
-      },
-      "acceptable_signatures": {
-        "allowed": [
-          "Time-stamped digital signature (certificate-based or DocuSign)",
-          "Hand-drawn digital signature using mouse, trackpad, or finger",
-          "Printed, hand-signed, scanned, and uploaded"
-        ],
-        "not_allowed": [
-          "Font-based signatures mimicking cursive"
-        ]
+    "objects_only_command": {
+      "trigger_phrase": "export system objects",
+      "action": "Output application objects only",
+      "scope": "applications arrays only",
+      "closed_object_rule": {
+        "definition": "Objects with status Closed",
+        "export_behavior": "Export metadata only"
       }
     }
   }
 }
-
-System export complete.
-This export includes:
-Every field
-Every global
-Every structural rule
-All updates made during this session
-No application objects (per protocol)
-If you would like, you may now say “export system objects” to receive all application objects in full canonical form.
-
-
