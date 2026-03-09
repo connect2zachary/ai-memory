@@ -1,7 +1,7 @@
 {
   "system_metadata": {
     "system_name": "LPC Comprehensive Exam Prep",
-    "version": "1.3",
+    "version": "1.8",
     "state": "Active",
     "user_goal": "Pass Colorado Comprehensive Exam and prepare for LPC pathway",
     "primary_learning_style": "Image-based encoding + contrast discrimination + rapid retrieval",
@@ -10,140 +10,83 @@
 
   "global_training_principles": {
     "encoding_rule": "Image first, label second. Never override initial symbolic association.",
-    "contrast_rule": "Similar theories must be exaggerated and contrasted.",
-    "retrieval_rule": "Rapid recall strengthens consolidation more than rereading.",
-    "error_rule": "Mistakes refine discrimination, not indicate knowledge deficit.",
-    "exam_rule": "Determine whether question tests cause, intervention, diagnosis, or lens.",
+    "contrast_rule": "Similar theories and diagnoses must be exaggerated and contrasted.",
+    "retrieval_rule": "Every training block ends with at least one recall question.",
+    "multi_answer_rule": "Include questions requiring multiple answers when theory discrimination or diagnostic comparison is tested.",
+    "error_rule": "Mistakes refine discrimination rather than indicate knowledge deficit.",
+    "exam_rule": "Determine whether question tests cause, intervention, diagnosis, time rule, or theoretical lens.",
     "trust_rule": "First symbolic image is usually correct. Avoid second-guessing.",
-    "memory_model": "User encodes meaning and pattern first, labels second.",
-    "confidence_model": "Retrieval hesitation does not equal lack of knowledge."
+    "confidence_model": "Retrieval hesitation does not equal lack of knowledge.",
+    "module_alignment_rule": "Questions must primarily assess the current training module.",
+    "precision_rule": "Practice questions should mirror DSM exam wording and include key qualifiers.",
+    "answer_template_rule": "Every question block must include a structured response template."
+  },
+
+  "testing_protocol": {
+    "question_frequency": "At least one exam-style question block at the end of every instructional segment.",
+    "question_types": [
+      "diagnostic scenario",
+      "differential diagnosis",
+      "DSM duration rule",
+      "symptom cluster recognition",
+      "exam trap identification",
+      "theorist quote identification (during theory modules)"
+    ],
+    "answer_format_templates": {
+      "numbered": "1:\n2:\n3:",
+      "diagnosis_rule": "Diagnosis:\nRule used:",
+      "theorist_match": "A:\nB:\nC:",
+      "multi_answer": "List all applicable answers:"
+    },
+    "difficulty_progression": [
+      "recognition",
+      "recall",
+      "differential discrimination",
+      "scenario application"
+    ]
   },
 
   "learning_preferences": {
     "prioritize_high_yield_exam_distinctions": true,
     "flag_exam_traps_explicitly": true,
     "include_differential_comparisons": true,
-    "emphasize_pattern_recognition_over_memorization": true
-  },
-
-  "theory_expansion_protection": {
-    "theory_expansion_priority": true,
-    "instruction": "After diagnosis training, explicitly return to additional theorists (Adler, Jung, Satir, Haley, White, de Shazer).",
-    "preserve_associations_exactly": true,
-    "do_not_overwrite_existing_images": true
+    "emphasize_pattern_recognition_over_memorization": true,
+    "use_name_based_memory_hooks": true,
+    "use_visual_scene_encoding": true
   },
 
   "core_theorist_associations": {
-
     "Bowlby": {
-      "full_name": "John Bowlby",
       "core_word": "Connection",
-      "image": "A baby rolling a bowling ball BY the pins with mom praising her.",
-      "anchors": [
-        "Attachment system activation",
-        "Secure base",
-        "Internal working model",
-        "Proximity seeking",
-        "Anxious attachment",
-        "Avoidant attachment",
-        "Disorganized attachment"
-      ],
-      "trigger_question": "Is the attachment system activated?"
+      "image": "A baby rolling a bowling ball BY the pins with mom praising her."
     },
-
     "Bowen": {
-      "full_name": "Murray Bowen",
       "core_word": "Anxiety Flow Through Generations",
-      "image": "A calm man shooting a bow into the past.",
-      "anchors": [
-        "Differentiation of self",
-        "Triangles",
-        "Genogram",
-        "Multigenerational transmission",
-        "Emotional cutoff"
-      ],
-      "trigger_question": "Where is anxiety moving in this system?"
+      "image": "A calm man shooting a bow into the past."
     },
-
     "Minuchin": {
-      "full_name": "Salvador Minuchin",
       "core_word": "Structure",
-      "image": "Solid chin = solid structure.",
-      "anchors": [
-        "Boundaries",
-        "Hierarchy",
-        "Enmeshment",
-        "Disengagement",
-        "Enactments"
-      ],
-      "trigger_question": "Who is in charge? How are the boundaries?"
+      "image": "Solid chin = solid structure."
     },
-
     "Beck": {
-      "full_name": "Aaron Beck",
       "core_word": "Evidence",
-      "image": "Check mark.",
-      "anchors": [
-        "Automatic thoughts",
-        "Cognitive distortions",
-        "Core beliefs",
-        "Socratic questioning"
-      ],
-      "trigger_question": "What evidence supports this thought?"
+      "image": "Check mark."
     },
-
     "Ellis": {
-      "full_name": "Albert Ellis",
       "core_word": "Irrational Musts",
       "images": [
         "Yell-iss — loud philosopher yelling about irrational beliefs.",
         "Ill Is — holding a sign that says 'ILL IS what happens when you demand irrationally.'"
-      ],
-      "anchors": [
-        "Must",
-        "Should",
-        "Ought",
-        "Demandingness",
-        "Self-disturbance",
-        "Disputation"
-      ],
-      "trigger_question": "Are you disturbing yourself with rigid demands?"
+      ]
     },
-
     "Rogers": {
-      "full_name": "Carl Rogers",
       "core_word": "Acceptance",
-      "image": "Warm cardigan and glowing heart.",
-      "anchors": [
-        "Unconditional positive regard",
-        "Empathy",
-        "Congruence",
-        "Non-directive therapy"
-      ],
-      "trigger_question": "Does the client feel deeply understood?"
+      "image": "Warm cardigan and glowing heart."
     },
-
     "Freud": {
-      "full_name": "Sigmund Freud",
       "core_word": "Unconscious Conflict",
-      "image": "Couch and iceberg.",
-      "anchors": [
-        "Defense mechanisms",
-        "Transference",
-        "Repression",
-        "Id",
-        "Ego",
-        "Superego"
-      ],
-      "trigger_question": "What is being defended against?"
+      "image": "Couch and iceberg."
     }
-  },
-
-  "theory_core_distinctions": {
-    "Freud_vs_Bowlby": "Conflict vs Connection",
-    "Bowen_vs_Minuchin": "Anxiety Flow vs Structure",
-    "Beck_vs_Ellis": "Evidence vs Irrational Demands",
-    "CBT_vs_Attachment": "Thought distortion vs Relational template"
   },
 
   "diagnosis_modules_completed": [
@@ -156,14 +99,68 @@
     "Psychotic Features",
     "Somatic Delusion",
     "Delusional Disorder (Somatic Type)",
-    "Borderline vs Bipolar Differential"
+    "Borderline vs Bipolar Differential",
+    "Generalized Anxiety Disorder",
+    "Panic Disorder",
+    "Specific Phobia",
+    "Social Anxiety Disorder",
+    "Agoraphobia",
+    "Obsessive Compulsive Disorder",
+    "Separation Anxiety Disorder",
+    "Acute Stress Disorder vs PTSD",
+    "Adjustment Disorder vs GAD"
   ],
 
-  "continuation_marker": {
-    "last_topic": "Borderline vs Bipolar high-yield differentiation",
-    "next_topic": "Anxiety Disorders — high-yield exam distinctions",
-    "training_mode": "Pattern recognition + exam traps + differential diagnosis emphasis",
-    "resume_instruction": "Begin with differentiation of GAD, Panic Disorder, Social Anxiety Disorder, Specific Phobia, OCD."
-  }
-}
+  "diagnosis_modules_in_progress": [
+    "Personality Disorders"
+  ],
 
+  "personality_disorder_memory_hooks": {
+    "Schizoid": {
+      "hook": "VOID",
+      "image": "Person alone in an empty void.",
+      "core_trait": "detachment from relationships"
+    },
+    "Schizotypal": {
+      "hook": "ODD TYPE",
+      "image": "Eccentric psychic wearing crystals.",
+      "core_trait": "odd beliefs and eccentric behavior"
+    },
+    "Histrionic": {
+      "hook": "THEATER",
+      "image": "Overdramatic actor demanding attention.",
+      "core_trait": "attention seeking"
+    },
+    "Narcissistic": {
+      "hook": "Narcissus mirror",
+      "image": "Person staring at their reflection.",
+      "core_trait": "grandiosity and admiration seeking"
+    },
+    "Avoidant": {
+      "hook": "AVOID",
+      "image": "Person hiding behind a door labeled rejection.",
+      "core_trait": "fear of rejection"
+    },
+    "Dependent": {
+      "hook": "DEPEND",
+      "image": "Person clinging to another person.",
+      "core_trait": "needs others to make decisions"
+    }
+  },
+
+  "continuation_marker": {
+    "last_completed_module": "Anxiety Disorders",
+    "current_module": "Personality Disorders",
+    "last_topic_studied": "Cluster A and Cluster B personality disorder recognition",
+    "next_topic": "Cluster C Personality Disorders and high-yield personality disorder differentials",
+    "training_mode": "Pattern recognition + name-based memory hooks + exam vignette diagnosis"
+  },
+
+  "future_modules": [
+    "Full Psychotic Disorders Module",
+    "Substance Use Disorders",
+    "Neurodevelopmental Disorders",
+    "Trauma and Stressor Disorders Expansion",
+    "Counseling Theory Expansion (Adler, Jung, Satir, Haley, White, de Shazer)"
+  ]
+}
