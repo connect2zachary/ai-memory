@@ -413,45 +413,55 @@ Part 6 will continue with Objects 15–20 (final segment).
 Part 6 (Final Segment)
 {
   "applications_continued_part_6": [
+{
+  "id": 15,
+  "title": "Entrust Counseling",
+  "status": "Requested Decision Time",
+  "approved_site_list": true,
+  "applied_date": "2.16.26",
+  "website": "https://entrustcounseling.com/",
+  "address": "1776 S Jackson St Suite 901-6 Denver CO 80210",
+  "phone": "(720) 435-0147",
+  "contacts": [
     {
-      "id": 15,
-      "title": "Entrust Counseling",
-      "status": "Awaiting Second Review Request",
-      "approved_site_list": true,
-      "applied_date": "2.16.26",
-      "website": "https://entrustcounseling.com/",
-      "address": "1776 S Jackson St Suite 901-6 Denver CO 80210",
-      "phone": "(720) 435-0147",
-      "contacts": [
-        {
-          "name": "Trisha Swinton"
-        },
-        {
-          "email": "info@entrustcounseling.com"
-        }
-      ],
-      "notes": [
-        "Had a really positive interview with Trisha."
-      ],
-      "emails": [
-        {
-          "type": "outbound",
-          "date": "2.16.26",
-          "body": "Good afternoon,\n\nMy name is Zachary Melman, and I am a graduate student in the Clinical Mental Health Counseling program at the University of Northern Colorado. I am reaching out to inquire about potential Practicum II and Internship opportunities with Entrust Counseling for the Summer and Fall 2026 semesters.\n\nI am particularly drawn to Entrust’s integrative and client-centered approach to therapy, as well as the opportunity to work with individuals, couples, and families within a collaborative private practice setting. My own approach is grounded in empathy, congruence, and respect for clients’ lived experiences. I am especially interested in continuing to learn more about modalities such as Acceptance and Commitment Therapy, Internal Family Systems, and mindfulness-based approaches, and I would welcome the opportunity to develop familiarity with these and other evidence-based frameworks under thoughtful supervision.\n\nI noticed that Entrust Counseling is listed on UNC’s approved site list, and I am very interested in learning more about your training opportunities. I am seeking to begin Practicum II in Summer 2026, with the intention of continuing into Internship in Fall 2026.\n\nFor Practicum II, my program requires a minimum of 100 total hours over the semester, including at least 32 direct client contact hours, typically completed at 8–12 hours per week. For Internship, the requirement is 600 total hours, including at least 240 direct client contact hours, generally completed at approximately 20 hours per week across two semesters. Weekly licensed supervision is also required.\n\nI would be grateful for any information regarding whether Entrust Counseling is currently accepting practicum or internship students for that timeframe, and whom I might connect with to discuss next steps.\n\nThank you very much for your time and consideration.\n\nBest Regards,\nZachary Melman"
-        },
-        {
-          "type": "inbound",
-          "date": "2.16.26",
-          "body": "Hi Zachary,\nThank you so much for your email and for your interest in the practicum/internship opportunity.\nI currently have a practicum student this semester who will most likely transition into internship afterward. I typically take only one student per semester, but I am hoping to accept one additional student, which would bring the total to two. I truly wish I could accommodate more students; however, at this time we are limited by office space and the number of available supervisors.\nI have already connected with two other individuals who are very interested in moving forward, and I plan to set up interviews with them. I would absolutely be open to scheduling an interview with you as well.\nOne important factor I like to discuss upfront is that, unlike some larger practices, we are not currently able to offer paid internship positions. I understand that some students require a paid placement, so I want to be transparent about that from the beginning.\nIf you are still interested in being considered, I would be happy to arrange a virtual interview. I look forward to connecting with you soon.\n\nWarmly,\nTrisha Swinton"
-        },
-        {
-          "type": "outbound",
-          "date": "2.16.26",
-          "body": "Good afternoon Trisha,\n\nI’m grateful for the opportunity to be considered and to continue the conversation. I truly appreciate your transparency and the opportunity to interview. I remain very interested in learning more about Entrust, and I would love to connect virtually at a time that works best for you.\n\nMy availability is:\n• Friday (2/20): anytime before 1:00 pm\n• Monday (2/23): anytime after 2:00 pm\n• Tuesday (2/24): anytime before 12:00 pm\n• Wednesday (2/25): anytime before 12:00 pm\n\nIf none of those times work for you, please let me know, and I would be happy to offer additional availability.\n\nI look forward to hearing from you!\n\nBest Regards,\nZachary Melman"
-        }
-      ],
-      "conflicts": []
+      "name": "Trisha Swinton"
     },
+    {
+      "email": "info@entrustcounseling.com"
+    }
+  ],
+  "notes": [
+    "Had a really positive interview with Trisha."
+  ],
+  "emails": [
+    {
+      "type": "outbound",
+      "date": "2.16.26",
+      "body": "Good afternoon,\n\nMy name is Zachary Melman, and I am a graduate student in the Clinical Mental Health Counseling program at the University of Northern Colorado. I am reaching out to inquire about potential Practicum II and Internship opportunities with Entrust Counseling for the Summer and Fall 2026 semesters.\n\nI am particularly drawn to Entrust’s integrative and client-centered approach to therapy, as well as the opportunity to work with individuals, couples, and families within a collaborative private practice setting. My own approach is grounded in empathy, congruence, and respect for clients’ lived experiences. I am especially interested in continuing to learn more about modalities such as Acceptance and Commitment Therapy, Internal Family Systems, and mindfulness-based approaches, and I would welcome the opportunity to develop familiarity with these and other evidence-based frameworks under thoughtful supervision.\n\nI noticed that Entrust Counseling is listed on UNC’s approved site list, and I am very interested in learning more about your training opportunities. I am seeking to begin Practicum II in Summer 2026, with the intention of continuing into Internship in Fall 2026.\n\nFor Practicum II, my program requires a minimum of 100 total hours over the semester, including at least 32 direct client contact hours, typically completed at 8–12 hours per week. For Internship, the requirement is 600 total hours, including at least 240 direct client contact hours, generally completed at approximately 20 hours per week across two semesters. Weekly licensed supervision is also required.\n\nI would be grateful for any information regarding whether Entrust Counseling is currently accepting practicum or internship students for that timeframe, and whom I might connect with to discuss next steps.\n\nThank you very much for your time and consideration.\n\nBest Regards,\nZachary Melman"
+    },
+    {
+      "type": "inbound",
+      "date": "2.16.26",
+      "body": "Hi Zachary,\nThank you so much for your email and for your interest in the practicum/internship opportunity.\nI currently have a practicum student this semester who will most likely transition into internship afterward. I typically take only one student per semester, but I am hoping to accept one additional student, which would bring the total to two. I truly wish I could accommodate more students; however, at this time we are limited by office space and the number of available supervisors.\nI have already connected with two other individuals who are very interested in moving forward, and I plan to set up interviews with them. I would absolutely be open to scheduling an interview with you as well.\nOne important factor I like to discuss upfront is that, unlike some larger practices, we are not currently able to offer paid internship positions. I understand that some students require a paid placement, so I want to be transparent about that from the beginning.\nIf you are still interested in being considered, I would be happy to arrange a virtual interview. I look forward to connecting with you soon.\n\nWarmly,\nTrisha Swinton"
+    },
+    {
+      "type": "outbound",
+      "date": "2.16.26",
+      "body": "Good afternoon Trisha,\n\nI’m grateful for the opportunity to be considered and to continue the conversation. I truly appreciate your transparency and the opportunity to interview. I remain very interested in learning more about Entrust, and I would love to connect virtually at a time that works best for you.\n\nMy availability is:\n• Friday (2/20): anytime before 1:00 pm\n• Monday (2/23): anytime after 2:00 pm\n• Tuesday (2/24): anytime before 12:00 pm\n• Wednesday (2/25): anytime before 12:00 pm\n\nIf none of those times work for you, please let me know, and I would be happy to offer additional availability.\n\nI look forward to hearing from you!\n\nBest Regards,\nZachary Melman"
+    },
+    {
+      "type": "inbound",
+      "date": "3.11.26",
+      "body": "I hope you’re doing well. I wanted to follow up and apologize for the delay in getting back to you. I enjoyed our conversation and appreciate the time you took to meet with me. I’m in the process of finalizing decisions for the internship and wanted to check in to see if you’re still interested and whether you may have committed to another practice. Thank you again for your patience, and I look forward to hearing from you.\n\nWarmly,\nTrisha Swinton"
+    },
+    {
+      "type": "outbound",
+      "date": "3.11.26",
+      "body": "Good afternoon Trisha,\n\nThank you for checking in, and I appreciate your patience. I also want to apologize for taking a couple of days to get back to you.\n\nI truly enjoyed our conversation and remain very interested in the opportunity to complete my internship with Entrust. I’m currently in the process of weighing a couple of options and making sure I’m thoughtful about the decision.\n\nWould it be alright if I took another few days to finalize things on my end and get back to you? I really appreciate the opportunity to be considered and the time you took to meet with me.\n\nThank you again, and I look forward to connecting soon.\n\nBest Regards,\nZachary Melman"
+    }
+  ],
+  "conflicts": []
+},
     {
       "id": 16,
       "title": "Bee Counseling and Consulting",
