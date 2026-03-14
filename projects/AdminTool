@@ -1,0 +1,171 @@
+{
+"metadata": {
+"snapshot_date": "2026-03-13",
+"snapshot_type": "Manual configuration backup",
+"system": "Microsoft 365 Business Standard",
+"tenant_stage": "Initial secure configuration completed"
+},
+
+"organization": {
+"public_name": "Branchpoint Therapy",
+"tenant_identity": "BranchpointCo",
+"environment_type": "Solo professional / therapy practice setup"
+},
+
+"licensing": {
+"plan": "Microsoft 365 Business Standard",
+"copilot_business": false,
+"notes": [
+"Copilot Chat treated as non-PHI only",
+"No tenant-grounded agents enabled",
+"No PHI uploaded to Copilot Chat"
+]
+},
+
+"accounts": {
+"daily_user_account": {
+"role": "Standard user",
+"purpose": "Daily work, email, Teams, documents",
+"mfa_enabled": true
+},
+
+```
+"admin_account": {
+  "username": "bpadmin@tenant.onmicrosoft.com",
+  "role": "Global Administrator",
+  "license_assigned": false,
+  "purpose": "Tenant administration only",
+  "mfa_enabled": true
+},
+
+"admin_structure_policy": {
+  "rule": "Daily account not used for administration",
+  "principle": "Least privilege"
+}
+```
+
+},
+
+"security_configuration": {
+"multi_factor_authentication": {
+"status": "Enabled",
+"applies_to": [
+"daily user",
+"admin account"
+],
+"method": "Microsoft Authenticator"
+},
+
+```
+"external_sharing_policy": {
+  "sharepoint": "Only people in your organization",
+  "onedrive": "Only people in your organization",
+  "default_link_permission": "View"
+},
+
+"teams_meeting_policy": {
+  "meeting_recording": "Disabled",
+  "transcription": "Disabled",
+  "reason": "Avoid accidental recording of therapy sessions"
+},
+
+"audit_logging": {
+  "status": "Enabled or provisioning",
+  "location": "Microsoft Purview Audit",
+  "purpose": [
+    "Track file access",
+    "Track login activity",
+    "Track administrative changes"
+  ]
+},
+
+"session_security": {
+  "idle_session_timeout": {
+    "enabled": true,
+    "signout_after": "1 hour",
+    "warning_time": "55 minutes"
+  },
+  "keep_user_signed_in_prompt": "Disabled"
+},
+
+"user_capabilities": {
+  "users_can_create_tenants": false,
+  "users_can_register_apps": false
+}
+```
+
+},
+
+"email_configuration": {
+"service": "Exchange Online",
+"mailbox_size": "50GB",
+"current_domain": "tenant.onmicrosoft.com",
+"custom_domain": "Not yet configured"
+},
+
+"compliance_posture": {
+"hipaa_note": "Microsoft DPA covers HIPAA-supporting services when configured correctly",
+"phi_policy": [
+"No real PHI stored yet",
+"Tenant currently used for planning and templates",
+"Internship client data not stored"
+]
+},
+
+"workspace_structure_plan": {
+"planned_root_folders": [
+"Compliance",
+"Templates",
+"Hours Tracking",
+"Internship",
+"Practice Planning",
+"Clients_TEST",
+"Policies",
+"Training"
+]
+},
+
+"ai_usage_policy": {
+"copilot_chat_policy": "Non-PHI only",
+"file_upload_policy": "No client or sensitive documents uploaded to Copilot Chat",
+"future_review_required_if": [
+"Copilot Business license added",
+"Tenant-grounded agents enabled"
+]
+},
+
+"future_configuration_tasks": [
+{
+"task": "Confirm audit logging fully active",
+"location": "Microsoft Purview"
+},
+{
+"task": "Create SharePoint / OneDrive folder structure",
+"phase": "Workspace setup"
+},
+{
+"task": "Create therapy documentation templates",
+"examples": [
+"SOAP notes",
+"Intake forms",
+"Treatment plans",
+"Session notes"
+]
+},
+{
+"task": "Create hours tracking system",
+"purpose": "Internship supervision tracking"
+},
+{
+"task": "Evaluate telehealth workflow using Teams",
+"recording_policy": "Off by default"
+}
+],
+
+"operational_rules": [
+"Admin account used only for system configuration",
+"Daily account used for normal work",
+"No PHI stored until tenant policies and workflow finalized",
+"Copilot Chat treated as external AI system"
+]
+}
