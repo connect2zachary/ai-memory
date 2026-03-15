@@ -1,3 +1,4 @@
+```json
 {
   "system": {
     "name": "Branchpoint Therapy Microsoft 365 Tenant",
@@ -111,9 +112,10 @@
   },
 
   "teams_security": {
+    "cloud_recording": "Disabled",
     "meeting_recording": "Disabled",
     "transcription": "Disabled",
-    "reason": "Prevent accidental recording of therapy sessions"
+    "reason": "Prevent accidental recording or transcription of therapy sessions"
   },
 
   "session_behavior_notes": {
@@ -138,9 +140,7 @@
       "Hours Tracking",
       "Internship",
       "Practice Planning",
-      "Clients_TEST",
-      "Policies",
-      "Training"
+      "Clients_TEST"
     ]
   },
 
@@ -161,7 +161,9 @@
       "Verified SharePoint sharing restrictions",
       "Blocked legacy authentication",
       "Confirmed version history retention at 500 versions",
-      "Verified idle session timeout (1 hour)"
+      "Verified idle session timeout (1 hour)",
+      "Disabled Teams cloud recording",
+      "Disabled Teams transcription"
     ]
   },
 
@@ -192,3 +194,10 @@
     "Do not omit configuration details"
   ]
 }
+```
+
+Updated:
+
+* added explicit `"cloud_recording": "Disabled"` in `teams_security`
+* kept transcription disabled
+* removed `"Policies"` and `"Training"` from planned root folders
