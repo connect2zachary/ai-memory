@@ -1,171 +1,194 @@
 {
-"metadata": {
-"snapshot_date": "2026-03-13",
-"snapshot_type": "Manual configuration backup",
-"system": "Microsoft 365 Business Standard",
-"tenant_stage": "Initial secure configuration completed"
-},
-
-"organization": {
-"public_name": "Branchpoint Therapy",
-"tenant_identity": "BranchpointCo",
-"environment_type": "Solo professional / therapy practice setup"
-},
-
-"licensing": {
-"plan": "Microsoft 365 Business Standard",
-"copilot_business": false,
-"notes": [
-"Copilot Chat treated as non-PHI only",
-"No tenant-grounded agents enabled",
-"No PHI uploaded to Copilot Chat"
-]
-},
-
-"accounts": {
-"daily_user_account": {
-"role": "Standard user",
-"purpose": "Daily work, email, Teams, documents",
-"mfa_enabled": true
-},
-
-```
-"admin_account": {
-  "username": "bpadmin@tenant.onmicrosoft.com",
-  "role": "Global Administrator",
-  "license_assigned": false,
-  "purpose": "Tenant administration only",
-  "mfa_enabled": true
-},
-
-"admin_structure_policy": {
-  "rule": "Daily account not used for administration",
-  "principle": "Least privilege"
-}
-```
-
-},
-
-"security_configuration": {
-"multi_factor_authentication": {
-"status": "Enabled",
-"applies_to": [
-"daily user",
-"admin account"
-],
-"method": "Microsoft Authenticator"
-},
-
-```
-"external_sharing_policy": {
-  "sharepoint": "Only people in your organization",
-  "onedrive": "Only people in your organization",
-  "default_link_permission": "View"
-},
-
-"teams_meeting_policy": {
-  "meeting_recording": "Disabled",
-  "transcription": "Disabled",
-  "reason": "Avoid accidental recording of therapy sessions"
-},
-
-"audit_logging": {
-  "status": "Enabled or provisioning",
-  "location": "Microsoft Purview Audit",
-  "purpose": [
-    "Track file access",
-    "Track login activity",
-    "Track administrative changes"
-  ]
-},
-
-"session_security": {
-  "idle_session_timeout": {
-    "enabled": true,
-    "signout_after": "1 hour",
-    "warning_time": "55 minutes"
+  "system": {
+    "name": "Branchpoint Therapy Microsoft 365 Tenant",
+    "environment_type": "Solo professional therapy practice",
+    "tenant_stage": "Initial secure configuration completed",
+    "date_of_last_full_verification": "2026-03-14"
   },
-  "keep_user_signed_in_prompt": "Disabled"
-},
 
-"user_capabilities": {
-  "users_can_create_tenants": false,
-  "users_can_register_apps": false
-}
-```
+  "system_export_metadata": {
+    "export_date": "2026-03-14",
+    "export_format": "JSON",
+    "export_location": "chat",
+    "export_scope": "full_system_state",
+    "export_rule": "System must always be exported in full JSON in chat before other export formats",
+    "export_integrity_requirement": "Nothing omitted including user instructions and policies"
+  },
 
-},
+  "system_export_policy": {
+    "format": "JSON",
+    "location": "chat",
+    "scope": "full",
+    "rules": [
+      "Always export system state as JSON",
+      "Export must occur in chat, not as download",
+      "Export must include entire system state",
+      "Nothing may be summarized or omitted",
+      "Include all remembered instructions and policies",
+      "Include configuration verification results",
+      "Include change record information",
+      "Include pending tasks"
+    ]
+  },
 
-"email_configuration": {
-"service": "Exchange Online",
-"mailbox_size": "50GB",
-"current_domain": "tenant.onmicrosoft.com",
-"custom_domain": "Not yet configured"
-},
+  "organization": {
+    "name": "Branchpoint Therapy",
+    "tenant_identity": "BranchpointCo",
+    "environment_type": "Solo therapy practice",
+    "intended_use": [
+      "practice planning",
+      "documentation templates",
+      "internship tracking",
+      "future clinical documentation"
+    ]
+  },
 
-"compliance_posture": {
-"hipaa_note": "Microsoft DPA covers HIPAA-supporting services when configured correctly",
-"phi_policy": [
-"No real PHI stored yet",
-"Tenant currently used for planning and templates",
-"Internship client data not stored"
-]
-},
+  "licensing": {
+    "microsoft_365_plan": "Microsoft 365 Business Standard",
+    "entra_conditional_access_available": false,
+    "copilot_business_enabled": false
+  },
 
-"workspace_structure_plan": {
-"planned_root_folders": [
-"Compliance",
-"Templates",
-"Hours Tracking",
-"Internship",
-"Practice Planning",
-"Clients_TEST",
-"Policies",
-"Training"
-]
-},
+  "accounts": {
+    "daily_user_account": {
+      "role": "Standard user",
+      "purpose": "Daily work and documents",
+      "mfa_enabled": true
+    },
+    "admin_account": {
+      "role": "Global Administrator",
+      "purpose": "Tenant administration only",
+      "mfa_enabled": true,
+      "license_assigned": false
+    },
+    "admin_policy": "Daily account not used for administration"
+  },
 
-"ai_usage_policy": {
-"copilot_chat_policy": "Non-PHI only",
-"file_upload_policy": "No client or sensitive documents uploaded to Copilot Chat",
-"future_review_required_if": [
-"Copilot Business license added",
-"Tenant-grounded agents enabled"
-]
-},
+  "security_configuration": {
+    "multi_factor_authentication": {
+      "enabled": true,
+      "method": "Microsoft Authenticator"
+    },
 
-"future_configuration_tasks": [
-{
-"task": "Confirm audit logging fully active",
-"location": "Microsoft Purview"
-},
-{
-"task": "Create SharePoint / OneDrive folder structure",
-"phase": "Workspace setup"
-},
-{
-"task": "Create therapy documentation templates",
-"examples": [
-"SOAP notes",
-"Intake forms",
-"Treatment plans",
-"Session notes"
-]
-},
-{
-"task": "Create hours tracking system",
-"purpose": "Internship supervision tracking"
-},
-{
-"task": "Evaluate telehealth workflow using Teams",
-"recording_policy": "Off by default"
-}
-],
+    "tenant_creation": {
+      "restrict_non_admin_users_from_creating_tenants": true
+    },
 
-"operational_rules": [
-"Admin account used only for system configuration",
-"Daily account used for normal work",
-"No PHI stored until tenant policies and workflow finalized",
-"Copilot Chat treated as external AI system"
-]
+    "app_registration": {
+      "users_can_register_applications": false
+    },
+
+    "security_groups": {
+      "users_can_create_security_groups": false
+    }
+  },
+
+  "sharepoint_security": {
+    "external_sharing": {
+      "sharepoint": "Only people in organization",
+      "onedrive": "Only people in organization"
+    },
+
+    "default_link_settings": {
+      "default_link_type": "Specific people",
+      "default_permission": "View"
+    },
+
+    "idle_session_timeout": {
+      "enabled": true,
+      "timeout": "1 hour"
+    },
+
+    "legacy_authentication": {
+      "apps_that_do_not_use_modern_authentication": "Blocked"
+    },
+
+    "version_history": {
+      "mode": "Manual",
+      "major_versions_retained": 500,
+      "time_limit": "None"
+    }
+  },
+
+  "teams_security": {
+    "meeting_recording": "Disabled",
+    "transcription": "Disabled",
+    "reason": "Prevent accidental recording of therapy sessions"
+  },
+
+  "session_behavior_notes": {
+    "sharepoint_idle_logout": "1 hour",
+    "global_authentication_token": "Not controlled due to lack of Entra ID P1",
+    "bookmark_auto_login_behavior": "Expected due to authentication cookie reuse"
+  },
+
+  "audit_logging": {
+    "location": "Microsoft Purview",
+    "ui_status_message": "Sorry, we're having trouble figuring out if activity is being recorded",
+    "turn_on_auditing_button_present": false,
+    "most_likely_status": "Enabled but UI unable to confirm",
+    "reason_for_uncertainty": "New tenant / Purview provisioning behavior",
+    "verification_pending": true
+  },
+
+  "workspace_structure_plan": {
+    "planned_root_folders": [
+      "Compliance",
+      "Templates",
+      "Hours Tracking",
+      "Internship",
+      "Practice Planning",
+      "Clients_TEST",
+      "Policies",
+      "Training"
+    ]
+  },
+
+  "ai_usage_policy": {
+    "copilot_chat_policy": "Non-PHI only",
+    "phi_policy": [
+      "No real PHI stored yet",
+      "Tenant currently used for planning and templates",
+      "Internship client data not stored"
+    ]
+  },
+
+  "change_record_summary": {
+    "major_security_actions_taken": [
+      "Disabled user app registration",
+      "Disabled user security group creation",
+      "Confirmed tenant creation restriction",
+      "Verified SharePoint sharing restrictions",
+      "Blocked legacy authentication",
+      "Confirmed version history retention at 500 versions",
+      "Verified idle session timeout (1 hour)"
+    ]
+  },
+
+  "pending_tasks": [
+    {
+      "task": "Recheck audit logging",
+      "location": "Microsoft Purview Audit",
+      "scheduled_timeframe": "Tomorrow",
+      "reason": "UI unable to determine status"
+    },
+    {
+      "task": "If audit logging confirmed, add entry 'Tenant Security Baseline Completed' to change record"
+    }
+  ],
+
+  "reminders": [
+    {
+      "task": "Re-check audit logging status",
+      "scheduled": "2026-03-15"
+    }
+  ],
+
+  "operational_rules_user_requested": [
+    "Always export system as JSON first",
+    "Export must appear in chat",
+    "System export must be full and complete",
+    "Include all remembered instructions and policies",
+    "Do not omit configuration details"
+  ]
 }
