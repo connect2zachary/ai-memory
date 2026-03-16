@@ -1,4 +1,3 @@
-```json
 {
   "system": {
     "name": "Branchpoint Therapy Microsoft 365 Tenant",
@@ -8,7 +7,7 @@
   },
 
   "system_export_metadata": {
-    "export_date": "2026-03-14",
+    "export_date": "2026-03-15",
     "export_format": "JSON",
     "export_location": "chat",
     "export_scope": "full_system_state",
@@ -171,7 +170,7 @@
     {
       "task": "Recheck audit logging",
       "location": "Microsoft Purview Audit",
-      "scheduled_timeframe": "Tomorrow",
+      "scheduled_timeframe": "Next session / tomorrow",
       "reason": "UI unable to determine status"
     },
     {
@@ -194,10 +193,3 @@
     "Do not omit configuration details"
   ]
 }
-```
-
-Updated:
-
-* added explicit `"cloud_recording": "Disabled"` in `teams_security`
-* kept transcription disabled
-* removed `"Policies"` and `"Training"` from planned root folders
