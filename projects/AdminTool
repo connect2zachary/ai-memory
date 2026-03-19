@@ -1,706 +1,383 @@
-{
-  "export_type": "full_system_state",
-  "export_format": "JSON",
-  "export_location": "chat",
-  "export_timestamp": "2026-03-16",
-  "export_purpose": "Continue in a new chat from the exact current working state",
-  "source_context": {
-    "baseline_system_file_loaded": true,
-    "baseline_system_file_reference": "Admin-System.txt",
-    "baseline_system_file_citation": ":contentReference[oaicite:0]{index=0}",
-    "conversation_scope": [
-      "Microsoft 365 practice operations buildout",
-      "SharePoint / Microsoft Lists architecture",
-      "Power Apps SharePoint form customization",
-      "Excel tracking workbook structure",
-      "future Power Automate workflow design"
-    ]
-  },
-  "system": {
-    "name": "Branchpoint Therapy Microsoft 365 Tenant",
-    "environment_type": "Solo professional therapy practice",
-    "tenant_stage": "Initial secure configuration completed; practice operations build in progress",
-    "date_of_last_full_verification": "2026-03-14",
-    "current_project_focus": "Build internship/practice operations system in Microsoft 365 using SharePoint, Power Apps, Excel, and later Power Automate"
-  },
-  "system_export_metadata": {
-    "export_date": "2026-03-16",
-    "export_format": "JSON",
-    "export_location": "chat",
-    "export_scope": "full_system_state_with_current_build_state",
-    "export_rule": "System must always be exported in full JSON in chat before other export formats",
-    "export_integrity_requirement": "Nothing omitted including user instructions, policies, design decisions, build progress, and next-step recommendations"
-  },
-  "system_export_policy": {
-    "format": "JSON",
-    "location": "chat",
-    "scope": "full",
-    "rules": [
-      "Always export system state as JSON",
-      "Export must occur in chat, not as download",
-      "Export must include entire system state",
-      "Nothing may be summarized or omitted",
-      "Include all remembered instructions and policies",
-      "Include configuration verification results",
-      "Include change record information",
-      "Include pending tasks",
-      "Include current Microsoft 365 build architecture and implementation status"
-    ]
-  },
-  "organization": {
-    "name": "Branchpoint Therapy",
-    "tenant_identity": "BranchpointCo",
-    "environment_type": "Solo therapy practice",
-    "intended_use": [
-      "practice planning",
-      "documentation templates",
-      "internship tracking",
-      "future clinical documentation",
-      "practice operations system",
-      "hours tracking",
-      "future billing support"
-    ]
-  },
-  "licensing": {
-    "microsoft_365_plan": "Microsoft 365 Business Standard",
-    "entra_conditional_access_available": false,
-    "copilot_business_enabled": false,
-    "power_platform_design_note": "Power Apps + SharePoint Lists + Power Automate are being used within Microsoft 365 workflow design",
-    "word_template_population_status": "Not yet verified in tenant; must be tested later in Power Automate before relying on it"
-  },
-  "accounts": {
-    "daily_user_account": {
-      "role": "Standard user",
-      "purpose": "Daily work and documents",
-      "mfa_enabled": true
-    },
-    "admin_account": {
-      "role": "Global Administrator",
-      "purpose": "Tenant administration only",
-      "mfa_enabled": true,
-      "license_assigned": false
-    },
-    "admin_policy": "Daily account not used for administration"
-  },
-  "security_configuration": {
-    "multi_factor_authentication": {
-      "enabled": true,
-      "method": "Microsoft Authenticator"
-    },
-    "tenant_creation": {
-      "restrict_non_admin_users_from_creating_tenants": true
-    },
-    "app_registration": {
-      "users_can_register_applications": false
-    },
-    "security_groups": {
-      "users_can_create_security_groups": false
-    }
-  },
-  "sharepoint_security": {
-    "external_sharing": {
-      "sharepoint": "Only people in organization",
-      "onedrive": "Only people in organization"
-    },
-    "default_link_settings": {
-      "default_link_type": "Specific people",
-      "default_permission": "View"
-    },
-    "idle_session_timeout": {
-      "enabled": true,
-      "timeout": "1 hour"
-    },
-    "legacy_authentication": {
-      "apps_that_do_not_use_modern_authentication": "Blocked"
-    },
-    "version_history": {
-      "mode": "Manual",
-      "major_versions_retained": 500,
-      "time_limit": "None"
-    }
-  },
-  "teams_security": {
-    "cloud_recording": "Disabled",
-    "meeting_recording": "Disabled",
-    "transcription": "Disabled",
-    "reason": "Prevent accidental recording or transcription of therapy sessions"
-  },
-  "session_behavior_notes": {
-    "sharepoint_idle_logout": "1 hour",
-    "global_authentication_token": "Not controlled due to lack of Entra ID P1",
-    "bookmark_auto_login_behavior": "Expected due to authentication cookie reuse"
-  },
-  "audit_logging": {
-    "location": "Microsoft Purview",
-    "ui_status_message": "Sorry, we're having trouble figuring out if activity is being recorded",
-    "turn_on_auditing_button_present": false,
-    "most_likely_status": "Enabled but UI unable to confirm",
-    "reason_for_uncertainty": "New tenant / Purview provisioning behavior",
-    "verification_pending": true
-  },
-  "workspace_structure_plan": {
-    "planned_root_folders": [
-      "Compliance",
-      "Templates",
-      "Hours Tracking",
-      "Internship",
-      "Practice Planning",
-      "Clients_TEST"
-    ]
-  },
-  "ai_usage_policy": {
-    "copilot_chat_policy": "Non-PHI only",
-    "phi_policy": [
-      "No real PHI stored yet",
-      "Tenant currently used for planning and templates",
-      "Internship client data not stored",
-      "System design currently uses only unidentifiable client information",
-      "Current client data design uses first name, last initial, and system-generated client ID",
-      "User wants clear boundaries about where PHI is and is not held"
-    ]
-  },
-  "change_record_summary": {
-    "major_security_actions_taken": [
-      "Disabled user app registration",
-      "Disabled user security group creation",
-      "Confirmed tenant creation restriction",
-      "Verified SharePoint sharing restrictions",
-      "Blocked legacy authentication",
-      "Confirmed version history retention at 500 versions",
-      "Verified idle session timeout (1 hour)",
-      "Disabled Teams cloud recording",
-      "Disabled Teams transcription"
-    ],
-    "current_build_actions_taken": [
-      "Created SharePoint site 'Practice Operations'",
-      "Created SharePoint/Microsoft List 'Clients'",
-      "Created SharePoint/Microsoft List 'Activity Log'",
-      "Created document library 'Clinical Documents'",
-      "Created document library 'Templates'",
-      "Created Excel tracking workbook structure with multiple tables",
-      "Customized SharePoint Activity Log entry form in Power Apps",
-      "Implemented conditional New Client toggle behavior in Power Apps"
-    ]
-  },
-  "pending_tasks": [
-    {
-      "task": "Recheck audit logging",
-      "location": "Microsoft Purview Audit",
-      "scheduled_timeframe": "Next session / tomorrow",
-      "reason": "UI unable to determine status"
-    },
-    {
-      "task": "If audit logging confirmed, add entry 'Tenant Security Baseline Completed' to change record"
-    },
-    {
-      "task": "Verify Word Online (Business) 'Populate a Microsoft Word template' capability in tenant licensing context"
-    },
-    {
-      "task": "Build first Power Automate flow for Activity Log -> Excel logging and status updates"
-    },
-    {
-      "task": "Add Notes field to visible Power Apps form if not yet present in live published form"
-    },
-    {
-      "task": "Decide whether to keep Activity Date as date+time in long-term UI or simplify later"
-    },
-    {
-      "task": "Later build client creation automation for New Client submissions"
-    },
-    {
-      "task": "Later build SOAP/conceptualization document generation flow"
-    }
-  ],
-  "reminders": [
-    {
-      "task": "Re-check audit logging status",
-      "scheduled": "2026-03-15"
-    }
-  ],
-  "operational_rules_user_requested": [
-    "Always export system as JSON first",
-    "Export must appear in chat",
-    "System export must be full and complete",
-    "Include all remembered instructions and policies",
-    "Do not omit configuration details",
-    "When exporting for continuation, leave nothing out that would be needed to resume exactly where work stopped"
-  ],
-  "current_project": {
-    "name": "Practice Operations / Internship Tracking System",
-    "goal": "Single-entry-point Microsoft 365 system where user enters data once and downstream processing happens automatically",
-    "primary_design_pattern": "Power App front door -> SharePoint Lists as system of record -> Power Automate as logic engine -> Excel and documents as outputs",
-    "design_principle_summary": [
-      "Power Apps is the screen",
-      "SharePoint Lists is the database/system of record",
-      "Power Automate is the logic engine",
-      "Word/Excel/document libraries are outputs"
-    ],
-    "status": "Foundation built; Power Apps form working; Power Automate not yet started"
-  },
-  "architecture_decisions": {
-    "accepted_decisions": [
-      "Use one main SharePoint site named 'Practice Operations'",
-      "Use one master activity list first instead of many specialized lists",
-      "Use SharePoint as source of truth and Excel as tracking/reporting layer",
-      "Keep Excel workbook automatically populated and verify records against SharePoint",
-      "Use Power Apps as the entry point rather than Microsoft Forms",
-      "Use searchable dropdown for existing client selection",
-      "Use New Client toggle to reveal extra fields only when needed",
-      "Do not create a separate Create SOAP checkbox",
-      "Infer SOAP requirement from Activity Type = Direct Session",
-      "Keep Create Conceptualization checkbox because conceptualization cannot always be inferred",
-      "Keep SOAP Status and Conceptualization Status on Activity Log",
-      "Use Workflow Status with values In Progress / Complete / Error",
-      "Keep SOAP and Conceptualization actual documents in a document library, not in list columns",
-      "Track links to documents in Activity Log",
-      "Use a single Clinical Documents library for version 1",
-      "Keep default SharePoint system libraries/lists; do not delete them",
-      "Separate Excel tabs for Direct Hours, Indirect Hours, and Supervision"
-    ],
-    "rejected_or_deferred_decisions": [
-      "Do not use Excel as the primary system of record",
-      "Do not build full document generation in first automation flow",
-      "Do not add Create SOAP field",
-      "Do not overdesign final business-owner state now",
-      "Do not split everything into many separate SharePoint lists yet",
-      "Do not delete default SharePoint site contents during early build"
-    ]
-  },
-  "sharepoint_site": {
-    "site_name": "Practice Operations",
-    "site_type": "Team site",
-    "status": "Created",
-    "description_used_or_intended": "Operational workspace for internship tracking, templates, activity logging, and practice systems",
-    "site_contents_created": [
-      "Clients list",
-      "Activity Log list",
-      "Clinical Documents library",
-      "Templates library"
-    ],
-    "default_site_contents_preserved": [
-      "Documents",
-      "Form Templates",
-      "Site Assets",
-      "Style Library",
-      "Site Pages"
-    ]
-  },
-  "data_model": {
-    "clients_list": {
-      "name": "Clients",
-      "status": "Created",
-      "purpose": "Lookup source for client dropdown in Power Apps and future client record storage",
-      "columns": [
-        {
-          "name": "Display Name",
-          "type": "Single line of text",
-          "notes": "Renamed from Title; used for dropdown/search display"
-        },
-        {
-          "name": "Client ID",
-          "type": "Single line of text",
-          "notes": "Will eventually be system-generated"
-        },
-        {
-          "name": "First Name",
-          "type": "Single line of text"
-        },
-        {
-          "name": "Last Initial",
-          "type": "Single line of text"
-        },
-        {
-          "name": "Active",
-          "type": "Yes/No",
-          "default": "Yes"
-        }
-      ],
-      "display_name_format_intended": "FirstName L",
-      "client_id_strategy": {
-        "manual_now": true,
-        "target_state": "System-generated later via automation",
-        "example_format": "CL-1 or CL-0001"
-      }
-    },
-    "activity_log_list": {
-      "name": "Activity Log",
-      "status": "Created",
-      "purpose": "Main tracking list; one record per submission from Power App",
-      "columns": [
-        {
-          "name": "Activity ID",
-          "type": "Single line of text",
-          "notes": "Renamed from Title; intended as display ID later; can be populated from SharePoint built-in ID via automation"
-        },
-        {
-          "name": "Activity Type",
-          "type": "Choice",
-          "choices": [
-            "Direct Session",
-            "Indirect Activity",
-            "Supervision",
-            "Admin",
-            "Training"
-          ]
-        },
-        {
-          "name": "Activity Date",
-          "type": "Date and Time",
-          "include_time": true
-        },
-        {
-          "name": "Duration",
-          "type": "Number",
-          "notes": "Minutes"
-        },
-        {
-          "name": "Client",
-          "type": "Lookup",
-          "source_list": "Clients",
-          "source_column_used": "Display Name or underlying Title field if Display Name not surfaced in UI"
-        },
-        {
-          "name": "Workflow Status",
-          "type": "Choice",
-          "choices": [
-            "In Progress",
-            "Complete",
-            "Error"
-          ]
-        },
-        {
-          "name": "SOAP Status",
-          "type": "Choice",
-          "choices": [
-            "Not Needed",
-            "Pending",
-            "Created",
-            "Completed"
-          ]
-        },
-        {
-          "name": "SOAP Link",
-          "type": "Hyperlink"
-        },
-        {
-          "name": "Conceptualization Status",
-          "type": "Choice",
-          "choices": [
-            "Not Needed",
-            "Pending",
-            "Created",
-            "Completed"
-          ]
-        },
-        {
-          "name": "Conceptualization Link",
-          "type": "Hyperlink"
-        },
-        {
-          "name": "Excel Logged",
-          "type": "Yes/No",
-          "default": "No"
-        },
-        {
-          "name": "Notes",
-          "type": "Multiple lines of text"
-        },
-        {
-          "name": "New Client",
-          "type": "Yes/No",
-          "default": "No",
-          "notes": "Helper field for Power Apps form logic"
-        },
-        {
-          "name": "New Client First Name",
-          "type": "Single line of text",
-          "notes": "Helper field for Power Apps form logic"
-        },
-        {
-          "name": "New Client Last Initial",
-          "type": "Single line of text",
-          "notes": "Helper field for Power Apps form logic"
-        },
-        {
-          "name": "Create Conceptualization",
-          "type": "Yes/No",
-          "default": "No",
-          "notes": "Helper field for Power Apps form logic and later automation"
-        }
-      ],
-      "workflow_logic_intended": {
-        "direct_session": "SOAP implied automatically",
-        "non_direct_session": "SOAP Status should be Not Needed",
-        "create_conceptualization_checkbox": "Controls conceptualization workflow"
-      }
-    },
-    "clinical_documents_library": {
-      "name": "Clinical Documents",
-      "status": "Created",
-      "purpose": "Stores actual generated SOAP and conceptualization files",
-      "default_columns_retained": [
-        "Name",
-        "Modified",
-        "Modified By"
-      ],
-      "metadata_columns_added": [
-        {
-          "name": "Document Type",
-          "type": "Choice",
-          "choices": [
-            "SOAP",
-            "Conceptualization"
-          ]
-        },
-        {
-          "name": "Client",
-          "type": "Single line of text"
-        },
-        {
-          "name": "Client ID",
-          "type": "Single line of text"
-        },
-        {
-          "name": "Activity Date",
-          "type": "Date and Time",
-          "include_time": true
-        },
-        {
-          "name": "Related Activity ID",
-          "type": "Single line of text"
-        },
-        {
-          "name": "Status",
-          "type": "Choice",
-          "choices": [
-            "Created",
-            "Completed"
-          ]
-        }
-      ]
-    },
-    "templates_library": {
-      "name": "Templates",
-      "status": "Created",
-      "purpose": "Stores SOAP and future conceptualization template documents",
-      "metadata_columns": [],
-      "target_contents": [
-        "SOAP Template.docx",
-        "Conceptualization Template.docx (later)"
-      ],
-      "current_upload_status": "Library created; template upload not explicitly confirmed in conversation"
-    }
-  },
-  "excel_tracking_workbook": {
-    "name": "Internship Tracking.xlsx",
-    "location": "Documents library in Practice Operations site",
-    "status": "Created",
-    "sheets": [
-      {
-        "name": "Direct Hours",
-        "status": "Created as Excel table",
-        "table_required": true,
-        "table_name_intended": "DirectHoursTable",
-        "columns": [
-          "Activity Date",
-          "Client",
-          "Client ID",
-          "Activity Type",
-          "Duration",
-          "SOAP Status",
-          "Conceptualization Status",
-          "Activity ID"
-        ]
-      },
-      {
-        "name": "Indirect Hours",
-        "status": "Created as Excel table",
-        "table_required": true,
-        "table_name_intended": "IndirectHoursTable",
-        "columns": [
-          "Activity Date",
-          "Client",
-          "Client ID",
-          "Activity Type",
-          "Duration",
-          "Activity ID"
-        ]
-      },
-      {
-        "name": "Supervision",
-        "status": "Created as Excel table",
-        "table_required": true,
-        "table_name_intended": "SupervisionTable",
-        "columns": [
-          "Activity Date",
-          "Client",
-          "Client ID",
-          "Activity Type",
-          "Duration",
-          "Activity ID"
-        ]
-      },
-      {
-        "name": "Summary",
-        "status": "Created",
-        "table_required": false,
-        "notes": "Left blank for now"
-      }
-    ],
-    "design_decision": "Excel is tracking/reporting output only, not source of truth"
-  },
-  "power_apps": {
-    "type": "Customized SharePoint form for Activity Log",
-    "status": "Working and tested",
-    "entry_point_strategy": "Use SharePoint list-integrated Power Apps form rather than a separate standalone app for version 1",
-    "current_visible_fields": [
-      "Activity Type",
-      "Activity Date",
-      "Duration",
-      "New Client",
-      "Client",
-      "New Client First Name",
-      "New Client Last Initial",
-      "Create Conceptualization"
-    ],
-    "current_hidden_or_removed_fields": [
-      "Title / Activity ID removed from visible form"
-    ],
-    "notes_field_status": "Needs confirmation whether Notes was added to visible form; it was intended but not confirmed in final screenshots",
-    "conditional_visibility_logic": {
-      "toggle_control_name": "DataCardValue4",
-      "client_card_name": "Client_DataCard1",
-      "new_client_first_name_card": "New Client First Name_DataCard...",
-      "new_client_last_initial_card": "New Client Last Initial_DataCard...",
-      "formulas": {
-        "Client.Visible": "!DataCardValue4.Value",
-        "New Client First Name.Visible": "DataCardValue4.Value",
-        "New Client Last Initial.Visible": "DataCardValue4.Value"
-      }
-    },
-    "testing_status": {
-      "editor_alt_test": "Passed",
-      "live_sharepoint_test": "User reported 'looks good' after publishing/testing",
-      "new_client_behavior": "Working"
-    },
-    "current_form_behavior": {
-      "new_client_toggle_off": "Existing client dropdown visible; new-client text fields hidden",
-      "new_client_toggle_on": "Existing client dropdown hidden; new-client text fields visible"
-    }
-  },
-  "power_automate_plan": {
-    "status": "Not yet built",
-    "recommended_build_sequence": [
-      "Flow 1: Status updates + Excel logging",
-      "Flow 2: New client creation logic",
-      "Flow 3: SOAP and conceptualization document generation and link writeback"
-    ],
-    "flow_1_recommended_goal": "When a new Activity Log item is created, set Workflow Status to In Progress, log to correct Excel table, set status fields, then set Workflow Status to Complete",
-    "flow_1_recommended_trigger": {
-      "type": "Automated cloud flow",
-      "trigger": "When an item is created",
-      "site": "Practice Operations",
-      "list": "Activity Log"
-    },
-    "flow_1_recommended_logic": {
-      "common": [
-        "Set Workflow Status = In Progress",
-        "Route based on Activity Type",
-        "Log row to correct Excel table",
-        "Set status fields",
-        "Set Workflow Status = Complete"
-      ],
-      "direct_session": [
-        "Write to Direct Hours table",
-        "Set SOAP Status = Pending or Created",
-        "If Create Conceptualization = Yes, set Conceptualization Status accordingly"
-      ],
-      "indirect_activity": [
-        "Write to Indirect Hours table",
-        "Set SOAP Status = Not Needed",
-        "Set Conceptualization Status based on checkbox or Not Needed per eventual chosen logic"
-      ],
-      "supervision": [
-        "Write to Supervision table",
-        "Set SOAP Status = Not Needed",
-        "Set Conceptualization Status based on checkbox or Not Needed per eventual chosen logic"
-      ]
-    },
-    "deferred_automation": [
-      "Automatic client record creation when New Client = Yes",
-      "SOAP file generation from template",
-      "Conceptualization file generation from template",
-      "Write back SOAP Link and Conceptualization Link",
-      "Generate pretty Client ID and Activity ID formats"
-    ]
-  },
-  "id_generation_strategy": {
-    "activity_id": {
-      "current_state": "Field exists; not yet automated",
-      "recommended_base": "Use SharePoint built-in ID",
-      "future_format_examples": [
-        "ACT-1",
-        "ACT-0001"
-      ]
-    },
-    "client_id": {
-      "current_state": "Field exists; not yet automated",
-      "future_generation": "Create automatically when new client record is created",
-      "future_format_examples": [
-        "CL-1",
-        "CL-0001"
-      ]
-    }
-  },
-  "ui_and_build_notes": {
-    "site_creation_issue_resolved": "Accidentally created a separate site named Activity Log instead of a list; site was deleted and correct list was created inside Practice Operations",
-    "sharepoint_default_content_guidance": "Do not delete default site libraries/lists at this stage",
-    "activity_date_guidance": "Use Date and Time with Include time = Yes in structure, even if time may not be emphasized in UI later",
-    "excel_guidance": "All first three tracking sheets were converted into actual Excel tables; Summary was intentionally left non-table",
-    "power_apps_testing_note": "Preview sometimes showed 'No item to display'; correct test path is Alt test or testing from live SharePoint form after save/publish"
-  },
-  "user_preferences_and_constraints": {
-    "automation_preference": "Primary process should be automated after form entry",
-    "entry_experience_preference": "Searchable dropdowns to minimize entry headache",
-    "data_minimization_preference": "Use unidentifiable client information only",
-    "growth_preference": "Start with one master activity system now and create/split new lists later as needs evolve from intern to worker to business owner",
-    "excel_preference": "Keep automatic Excel tracking and verify against SharePoint",
-    "status_tracking_preference": [
-      "Keep SOAP Status",
-      "Keep Conceptualization Status",
-      "Use Workflow Status",
-      "Do not require separate Create SOAP field"
-    ],
-    "form_logic_preference": [
-      "Direct Session should imply SOAP automatically",
-      "Create Conceptualization should remain an explicit checkbox/toggle",
-      "New Client toggle should reveal associated fields only when selected"
-    ]
-  },
-  "immediate_next_steps_for_new_chat": [
-    {
-      "priority": 1,
-      "task": "Confirm current live Power Apps form includes Notes field; add if missing"
-    },
-    {
-      "priority": 2,
-      "task": "Open Power Automate and build Flow 1 for Activity Log -> Excel logging + status updates"
-    },
-    {
-      "priority": 3,
-      "task": "Map exact Excel table names in workbook if not already renamed"
-    },
-    {
-      "priority": 4,
-      "task": "Verify whether SOAP Template.docx has been uploaded to Templates library"
-    },
-    {
-      "priority": 5,
-      "task": "Later verify Word template population action availability in tenant"
-    }
-  ],
-  "resume_prompt_for_new_chat": {
-    "purpose": "Paste this into a new chat to resume work immediately",
-    "text": "We are continuing a Microsoft 365 build for my Branchpoint Therapy tenant. The current state is: SharePoint site 'Practice Operations' exists; Clients list, Activity Log list, Clinical Documents library, Templates library, and Internship Tracking.xlsx workbook are created. The workbook has Direct Hours, Indirect Hours, and Supervision as Excel tables plus a Summary sheet. The Activity Log SharePoint form has been customized in Power Apps and the New Client toggle behavior is already working live. Continue from this state and help me build the first Power Automate flow for Activity Log -> Excel logging + status updates, while keeping SharePoint as source of truth and Excel as tracking output."
-  }
-}
+Admin System Export — Current State
+Date exported: 2026-03-18
+
+PROJECT OVERVIEW
+This project is a SharePoint + Power Apps + Power Automate admin system for practice operations.
+
+CURRENT SHAREPOINT SITE
+- Site name: Practice Operations
+
+CURRENT SHAREPOINT COMPONENTS
+1. Activity Log list
+2. Clients list
+3. Clinical Documents library
+4. Templates library
+5. Internship Tracking.xlsx workbook in Documents
+
+WORKBOOK STATUS
+Workbook: Internship Tracking.xlsx
+Location: SharePoint Documents library
+Excel tables exist and are being used in Power Automate:
+- Direct_Hours
+- Indirect_Hours
+- Supervision
+- Summary sheet exists but is not used as a table in flow logic
+
+ACTIVITY LOG COLUMNS CURRENTLY PRESENT
+From SharePoint list settings:
+- Title
+- Activity Type (Choice)
+- Activity Date (Date and Time)
+- Duration (Number)
+- Client (Lookup)
+- Workflow Status (Choice)
+- SOAP Status (Choice)
+- SOAP Link (Hyperlink or Picture)
+- Conceptualization Status (Choice)
+- Conceptualization Link (Hyperlink or Picture)
+- Excel Logged (Yes/No)
+- Notes (Multiple lines of text)
+- New Client (Yes/No)
+- New Client First Name (Single line of text)
+- New Client Last Initial (Single line of text)
+- Create Conceptualization (Yes/No)
+
+ACTIVITY TYPE CHOICES (EXACT TEXT)
+Verified in SharePoint column settings:
+- Direct Service
+- Indirect Service
+- Supervision
+
+CLIENT LOOKUP COLUMN STATUS
+Activity Log > Client column settings:
+- Type: Lookup
+- Get information from: Clients
+- In this column: Title
+Important note:
+- In the Clients list UI, the renamed Title field appears as “Display Name”
+- SharePoint lookup settings still refer to that internal field as “Title”
+- Therefore Activity Log lookup using Title is correct
+
+CLIENTS LIST STATUS
+Clients list exists
+Visible columns in view:
+- Display Name
+- Client ID
+- First Name
+- Last Initial
+- Active
+
+Important current status:
+- At one point the list appeared empty because no records existed
+- A test record was later created:
+  - Display Name: joe shmoe
+  - Client ID: 1
+  - First Name: joe
+  - Last Initial: shmoe
+  - Active: true/checkmarked
+
+POWER APPS STATUS
+Custom SharePoint form exists for Activity Log and is being edited via:
+SharePoint > Activity Log > Integrate > Power Apps > Customize forms
+
+FORM STATUS
+Visible fields in form currently include:
+- Activity Type
+- Activity Date
+- Duration
+- New Client toggle
+- Client lookup combo box
+- Create Conceptualization toggle
+- Notes
+- New Client First Name
+- New Client Last Initial
+
+KNOWN POWER APPS FIXES ALREADY MADE
+1. Notes field was successfully added to the form and tested
+2. Client combo box display issue was partially fixed:
+   - It previously showed fake values like Item 1, Item 2
+   - Cause was mismatched display settings
+   - Current combo box settings were corrected to use Value
+3. Clients data source was added to the app
+4. Client combo box config that was being worked toward:
+   - Items = Choices([@'Activity Log'].'Client')
+   - DisplayFields = ["Value"]
+   - SearchFields = ["Value"]
+   - Primary text = Value
+   - SearchField = Value
+
+IMPORTANT POWER APPS CLIENT LOOKUP STATUS
+- The client dropdown appears to be functioning better than before
+- The “Item 1 / Item 2” issue was fixed
+- The dropdown had been blank when there were no clients
+- After adding the Clients data source and correcting display/search bindings, it appeared to be working again
+- User stated: “the drop down appears to be working. but the add client feature is not.”
+
+POWER AUTOMATE FLOW STATUS
+Flow name: Activity Log Processing
+
+FLOW OVERALL STRUCTURE
+1. Trigger: SharePoint — When an item is created
+2. First Update item action:
+   - sets Workflow Status = In Progress
+   - sets Excel Logged = No
+   - passes through other mapped fields
+3. First Condition:
+   - compares Activity Type Value to Direct Service
+   - True branch = Direct_Hours logging
+   - False branch goes to second condition
+4. Second Condition inside first False branch:
+   - compares Activity Type Value to Indirect Service
+   - True branch = Indirect_Hours logging
+   - False branch = Supervision logging
+5. Each branch has:
+   - Add a row into Excel table
+   - Final Update item action
+6. Final Update item actions set:
+   - Workflow Status = Complete
+   - Excel Logged = Yes
+
+IMPORTANT FLOW CORRECTIONS ALREADY DISCOVERED
+1. The left side of conditions must use:
+   - When an item is created → Activity Type Value
+2. The right side of condition text must use exact SharePoint choice text:
+   - Direct Service
+   - Indirect Service
+3. Table names are NOT used in conditions
+4. Excel table names ARE used only in Add a row into a table actions:
+   - Direct_Hours
+   - Indirect_Hours
+   - Supervision
+
+EXCEL BRANCH MAPPING INTENDED
+Branch 1:
+- Condition: Activity Type Value = Direct Service
+- Excel table: Direct_Hours
+
+Branch 2:
+- Condition: Activity Type Value = Indirect Service
+- Excel table: Indirect_Hours
+
+Else:
+- Excel table: Supervision
+
+UPDATE ITEM FIELD MAPPING PATTERN
+For Update item actions, intended mapping pattern was:
+
+Use When an item is created for:
+- Id -> ID
+- Title -> Title
+- Activity Type Value -> Activity Type Value
+- Activity Date -> Activity Date
+- Duration -> Duration
+- Client Id -> Client Id
+- SOAP Status Value -> SOAP Status Value
+- SOAP Link -> SOAP Link
+- Conceptualization Status Value -> Conceptualization Status Value
+- Notes -> Notes
+- New Client -> New Client
+- Create Conceptualization -> Create Conceptualization
+
+Leave blank unless needed:
+- Conceptualization Link
+- New Client First Name
+- New Client Last Initial
+- Content type Id
+
+Manual values:
+First Update item:
+- Workflow Status Value = In Progress
+- Excel Logged = No
+
+Final branch Update item actions:
+- Workflow Status Value = Complete
+- Excel Logged = Yes
+
+EXCEL ADD ROW MAPPING PATTERN
+For each Add a row into a table action, intended mappings were:
+- Activity Date -> Activity Date
+- Client -> Client Value
+- Client ID -> Client Id
+- Activity Type -> Activity Type Value
+- Duration -> Duration
+- Activity ID -> ID
+If the table exposed additional fields such as SOAP Status / Conceptualization Status, those were mapped too where available.
+
+FLOW DESIGNER QUIRK
+Power Automate condition cards kept auto-adding a second blank line that could not always be deleted.
+Important note:
+- This was treated as a designer bug
+- If the flow saved successfully, the extra line was being ignored
+- This behavior happened in both conditions
+
+FLOW TESTING STATUS
+A test Activity Log item was created earlier.
+Observed issue:
+- Workflow Status showed In Progress instead of Complete
+This led to investigation of:
+- wrong condition left token (it had incorrectly become Update item at one point)
+- wrong condition right text
+- branch logic issues
+
+Those condition issues were later corrected:
+- Condition 1 should be:
+  - When an item is created → Activity Type Value
+  - is equal to
+  - Direct Service
+- Condition 2 should be:
+  - When an item is created → Activity Type Value
+  - is equal to
+  - Indirect Service
+
+LATEST POWER AUTOMATE STATUS
+Flow structure appears complete.
+Key thing to verify in next chat:
+- The conditions should still be checked one last time after reopening:
+  1. Condition 1 left field = When an item is created → Activity Type Value
+  2. Condition 1 right field = Direct Service
+  3. Condition 2 left field = When an item is created → Activity Type Value
+  4. Condition 2 right field = Indirect Service
+
+POWER APPS NEW CLIENT LOGIC STATUS
+This is the main current blocker.
+
+Goal:
+- If New Client toggle is on, creating an Activity Log entry should also create a new record in the Clients list
+
+What was found:
+- SharePointIntegration.OnSave originally only contained:
+  SubmitForm(SharePointForm1)
+- That only saves the Activity Log item
+- It does NOT create a Clients record
+
+Work started to add Patch logic to SharePointIntegration.OnSave.
+
+CURRENT KNOWN STATUS OF ONSAVE
+- A Patch formula was being added
+- There were syntax/name errors at various points
+- Later the user reported that the red X disappeared, suggesting the formula eventually became syntactically acceptable
+- However, the final exact OnSave formula was not captured in the conversation after the syntax issue cleared
+- Therefore the exact current saved formula in OnSave must be re-opened and verified at the start of the next chat
+
+IMPORTANT POWER APPS NAMES / CONTROLS
+Known control/card names seen in the editor:
+- SharePointForm1 (main form control name previously used)
+- Client_DataCard1
+- DataCardValue5 = Client combo box
+- New_Client_DataCard1 exists
+- There are DataCardValue controls under the new client related cards, but exact final control-to-field mapping for first name / last initial was not fully locked down in a stable final formula
+
+CLIENT AUTO-CREATION PARTIAL RESULT
+At one point user reported:
+- “looks like it added, but it didn’t autogenerate a client ID”
+This means:
+- at least once, a new client record WAS successfully added to Clients
+- but Client ID generation logic was missing or incomplete
+
+CLIENT ID DISCUSSION / DECISION
+Preferred format chosen:
+- C-001
+- C-002
+- C-003
+etc.
+
+Behavior after C-999:
+- continue to C-1000
+
+Clients list column type for Client ID:
+- Single line of text
+
+IMPORTANT NOTE ABOUT CLIENT ID GENERATION
+A sequential generator formula was proposed, but it triggered Power Apps syntax/control-name problems during implementation.
+Because of that, the exact working client-ID Patch formula was NOT finalized yet.
+This remains unfinished and should be solved in the next chat AFTER verifying the current OnSave formula.
+
+WHAT WAS PROPOSED FOR CLIENT ID LOGIC
+Desired behavior:
+- read the largest existing Client ID
+- strip the “C-”
+- convert to number
+- add 1
+- write back as C-001, C-002, etc.
+
+BUT:
+- This was not fully implemented successfully yet
+- Control names / locale separators / field names were causing formula errors
+- Next chat should rebuild this carefully using the actual current control names and the exact Power Apps locale syntax
+
+VERY IMPORTANT CURRENT BLOCKERS
+1. Need to inspect the exact current SharePointIntegration.OnSave formula
+2. Need to confirm whether new client creation is currently:
+   - working
+   - partially working
+   - or broken after latest changes
+3. Need to add/fix Client ID generation in Clients creation logic
+4. Need to re-test full flow:
+   - Direct Service
+   - Indirect Service
+   - Supervision
+5. Need to verify that final Update item actions change:
+   - Workflow Status to Complete
+   - Excel Logged to Yes
+6. Need to verify rows land in:
+   - Direct_Hours
+   - Indirect_Hours
+   - Supervision
+
+MOST RECENT VERIFIED FACTS
+- Activity Type choices are exactly:
+  - Direct Service
+  - Indirect Service
+  - Supervision
+- First condition had been corrected to use:
+  - When an item is created → Activity Type Value = Direct Service
+- Second condition had been corrected to use:
+  - When an item is created → Activity Type Value = Indirect Service
+- Clients data source was added to Power Apps
+- Client combo box display settings were corrected away from Value1 to Value
+- Activity Log Client lookup column points to Clients / Title, and that is correct because Title was renamed to Display Name in the list UI
+- There is at least one client record now in Clients list
+- Main unresolved issue at the end was new-client auto creation / Client ID generation formula work
+
+BEST NEXT-CHAT STARTING POINT
+Start by doing these exact checks in order:
+
+1. Open SharePoint > Activity Log > Integrate > Power Apps > Customize forms
+2. Click SharePointIntegration
+3. Inspect the exact OnSave formula currently stored
+4. Confirm exact control names for:
+   - New Client toggle control
+   - New Client First Name text control
+   - New Client Last Initial text control
+5. Rebuild/fix the Patch(Clients, Defaults(Clients), ...) formula using the actual exact control names
+6. After client creation works again, add sequential Client ID generation in format C-001
+7. Save and publish Power Apps form
+8. Test New Client creation from Activity Log form
+9. Then go to Power Automate and test one Activity Log item for each type:
+   - Direct Service
+   - Indirect Service
+   - Supervision
+10. Verify:
+   - Workflow Status becomes Complete
+   - Excel Logged becomes Yes
+   - Row inserted into proper Excel table
+
+KEY WARNINGS FOR NEXT CHAT
+- Always specify whether a token should come from:
+  - When an item is created
+  - or Update item
+  The user explicitly asked for this distinction to always be included.
+- In conditions, always use:
+  - When an item is created → Activity Type Value
+- In Update item actions, use:
+  - When an item is created for pass-through values unless there is a reason otherwise
+- In Excel actions, also prefer:
+  - When an item is created
+- Table names are:
+  - Direct_Hours
+  - Indirect_Hours
+  - Supervision
+- Condition comparison values are:
+  - Direct Service
+  - Indirect Service
+  - Supervision is handled by the second False branch, not by a third condition
