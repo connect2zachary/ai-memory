@@ -1,30 +1,61 @@
 Admin System Export — Current State
 Date exported: 2026-03-18
+Purpose: complete handoff for restarting in a new chat without losing context
 
-PROJECT OVERVIEW
-This project is a SharePoint + Power Apps + Power Automate admin system for practice operations.
+==================================================
+1. PROJECT OVERVIEW
+==================================================
 
-CURRENT SHAREPOINT SITE
-- Site name: Practice Operations
+Project name:
+Practice Operations / Internship Tracking System
 
-CURRENT SHAREPOINT COMPONENTS
+Overall design pattern:
+Power Apps front door -> SharePoint Lists as system of record -> Power Automate as logic engine -> Excel and documents as outputs
+
+Core principles already agreed:
+- Power Apps is the screen
+- SharePoint Lists are the database / source of truth
+- Power Automate is the logic engine
+- Excel and Word/document libraries are outputs
+- Keep SharePoint as source of truth and Excel as a tracking/reporting layer
+- Start with one master activity system now and split later only if needed
+- Do not overbuild the final business-owner state yet
+- Keep data minimally identifying
+- Searchable dropdowns are preferred
+- New Client toggle should reveal the extra fields only when needed
+- Keep SOAP Status and Conceptualization Status
+- Use Workflow Status with values like In Progress / Complete / Error
+- Do not create a separate Create SOAP field
+- Create Conceptualization should remain an explicit toggle
+- Keep default SharePoint site contents/libraries unless there is a strong reason to remove them
+
+==================================================
+2. CURRENT MICROSOFT 365 STRUCTURE
+==================================================
+
+SharePoint site:
+- Practice Operations
+
+Current main components:
 1. Activity Log list
 2. Clients list
 3. Clinical Documents library
 4. Templates library
 5. Internship Tracking.xlsx workbook in Documents
 
-WORKBOOK STATUS
-Workbook: Internship Tracking.xlsx
-Location: SharePoint Documents library
-Excel tables exist and are being used in Power Automate:
-- Direct_Hours
-- Indirect_Hours
-- Supervision
-- Summary sheet exists but is not used as a table in flow logic
+Workbook status:
+- Workbook name: Internship Tracking.xlsx
+- Tables created:
+  - Direct_Hours
+  - Indirect_Hours
+  - Supervision
+- Summary sheet exists but was intentionally not converted into a table
 
-ACTIVITY LOG COLUMNS CURRENTLY PRESENT
-From SharePoint list settings:
+==================================================
+3. SHAREPOINT DATA MODEL
+==================================================
+
+Activity Log list columns:
 - Title
 - Activity Type (Choice)
 - Activity Date (Date and Time)
@@ -42,46 +73,67 @@ From SharePoint list settings:
 - New Client Last Initial (Single line of text)
 - Create Conceptualization (Yes/No)
 
-ACTIVITY TYPE CHOICES (EXACT TEXT)
-Verified in SharePoint column settings:
+Activity Type exact choices:
 - Direct Service
 - Indirect Service
 - Supervision
 
-CLIENT LOOKUP COLUMN STATUS
-Activity Log > Client column settings:
+Client lookup column:
 - Type: Lookup
-- Get information from: Clients
-- In this column: Title
+- Source list: Clients
+- Source field: Title
 Important note:
-- In the Clients list UI, the renamed Title field appears as “Display Name”
-- SharePoint lookup settings still refer to that internal field as “Title”
-- Therefore Activity Log lookup using Title is correct
+- In the Clients list UI, Title was renamed to Display Name
+- Internally, SharePoint still uses Title
+- Therefore Activity Log lookup pointing to Clients / Title is correct
 
-CLIENTS LIST STATUS
-Clients list exists
-Visible columns in view:
+Clients list visible columns:
 - Display Name
 - Client ID
 - First Name
 - Last Initial
 - Active
 
-Important current status:
-- At one point the list appeared empty because no records existed
-- A test record was later created:
+Clients list field notes:
+- Display Name is the renamed Title field
+- Client ID is intended to auto-populate
+- Client ID column type is Single line of text
+- First Name is Single line of text
+- Last Initial is Single line of text
+- Active is Yes/No
+
+Known existing test/client records:
+- At least one test record previously existed
+- Example seen in the UI:
   - Display Name: joe shmoe
-  - Client ID: 1
   - First Name: joe
   - Last Initial: shmoe
-  - Active: true/checkmarked
+  - Active: checked
+- At one point Client ID was shown as 1 on a test record
+- Latest status in this chat became unstable during testing, so current live contents should be rechecked at start of next chat
 
-POWER APPS STATUS
-Custom SharePoint form exists for Activity Log and is being edited via:
+==================================================
+4. POWER APPS CURRENT STATE
+==================================================
+
+Editing path:
 SharePoint > Activity Log > Integrate > Power Apps > Customize forms
 
-FORM STATUS
-Visible fields in form currently include:
+Main form control:
+- SharePointForm1
+
+Known relevant controls:
+- DataCardValue4 = New Client toggle
+- DataCardValue5 = Client combo box
+- DataCardValue6 was being used for New Client First Name input
+- DataCardValue7 was being used for New Client Last Initial input
+
+Important caution:
+- The user believes the syntax insights are more important than debating whether logic should live in OnSave or OnSuccess
+- Do not re-litigate that first in the next chat
+- First establish the exact current formulas and restore reliable behavior
+
+Visible fields currently in the form:
 - Activity Type
 - Activity Date
 - Duration
@@ -92,79 +144,219 @@ Visible fields in form currently include:
 - New Client First Name
 - New Client Last Initial
 
-KNOWN POWER APPS FIXES ALREADY MADE
-1. Notes field was successfully added to the form and tested
-2. Client combo box display issue was partially fixed:
-   - It previously showed fake values like Item 1, Item 2
-   - Cause was mismatched display settings
-   - Current combo box settings were corrected to use Value
-3. Clients data source was added to the app
-4. Client combo box config that was being worked toward:
+Known Power Apps fixes already made:
+1. Notes field was added successfully and tested
+2. Clients data source was added to the app
+3. Client combo box display issue was fixed away from fake values like Item 1 / Item 2
+4. Client combo box was being configured toward:
    - Items = Choices([@'Activity Log'].'Client')
    - DisplayFields = ["Value"]
    - SearchFields = ["Value"]
    - Primary text = Value
    - SearchField = Value
 
-IMPORTANT POWER APPS CLIENT LOOKUP STATUS
-- The client dropdown appears to be functioning better than before
-- The “Item 1 / Item 2” issue was fixed
-- The dropdown had been blank when there were no clients
-- After adding the Clients data source and correcting display/search bindings, it appeared to be working again
-- User stated: “the drop down appears to be working. but the add client feature is not.”
+Current understanding of locale / syntax:
+THIS IS IMPORTANT.
+The app is using STANDARD syntax, not semicolon-locale syntax.
 
-POWER AUTOMATE FLOW STATUS
-Flow name: Activity Log Processing
+That means:
+- Function arguments use commas
+- Chained commands use single semicolons
 
-FLOW OVERALL STRUCTURE
-1. Trigger: SharePoint — When an item is created
+In other words:
+- Standard locale:
+  - If(a, b, c)
+  - Action1; Action2
+- Alternative locale:
+  - If(a; b; c)
+  - Action1;; Action2
+
+Important lesson learned:
+- Earlier troubleshooting incorrectly assumed semicolon-locale syntax
+- That was wrong for this app
+- New chat should treat comma syntax + single-semicolon action chaining as the correct starting assumption unless the live editor proves otherwise
+
+==================================================
+5. ONSAVE / ONSUCCESS HISTORY AND LESSONS
+==================================================
+
+Original simple OnSave formula:
+SubmitForm(SharePointForm1)
+
+This version:
+- saved the Activity Log successfully
+- had no red X
+- was the known rollback-safe formula
+
+Very important:
+- When SharePointIntegration.OnSave was rolled back to only SubmitForm(SharePointForm1), the Activity Log save worked
+- During different tests, the user at one point also reported that new clients still seemed to be getting added somehow even with only SubmitForm(SharePointForm1)
+- Later testing became inconsistent and unstable
+- Final current state at end of this chat: "no client list item now"
+
+Therefore:
+- Do not assume the client creation path is understood
+- In next chat, directly inspect the live formulas instead of inferring from memory
+
+Formulas that were tried and caused problems because they were built with the wrong syntax assumption:
+Example attempted in OnSave:
+If(
+    DataCardValue4.Value;
+    Patch(
+        Clients;
+        Defaults(Clients);
+        {
+            Title: DataCardValue6.Text & " " & DataCardValue7.Text;
+            'First Name': DataCardValue6.Text;
+            'Last Initial': DataCardValue7.Text;
+            Active: true
+        }
+    )
+);
+SubmitForm(SharePointForm1)
+
+And a variant with:
+);;
+SubmitForm(SharePointForm1)
+
+Those versions were based on the wrong locale assumption.
+
+Important correction later learned:
+A syntactically consistent STANDARD-locale formula looked like this:
+
+If(
+    DataCardValue4.Value = true,
+    Patch(
+        Clients,
+        Defaults(Clients),
+        {
+            Title: DataCardValue6.Text & " " & DataCardValue7.Text,
+            'First Name': DataCardValue6.Text,
+            'Last Initial': DataCardValue7.Text,
+            'Client ID': DataCardValue6.Text & Left(DataCardValue7.Text, 1) & Text(Now(), "mmss"),
+            Active: true
+        }
+    )
+);
+ResetForm(Self);
+RequestHide()
+
+Important interpretation of that formula:
+- The punctuation style itself appeared valid for this app
+- The bigger issue became behavior/runtime placement and data outcomes, not just syntax
+
+Another test formula used to isolate the Client ID field:
+If(
+    DataCardValue4.Value = true,
+    Patch(
+        Clients,
+        Defaults(Clients),
+        {
+            Title: DataCardValue6.Text & " " & DataCardValue7.Text,
+            'First Name': DataCardValue6.Text,
+            'Last Initial': DataCardValue7.Text,
+            'Client ID': "TEST123",
+            Active: true
+        }
+    )
+);
+ResetForm(SharePointForm1);
+RequestHide()
+
+What happened during testing:
+- A version passed syntactically
+- A client-side behavior test suggested the Activity Log was not populated when SubmitForm was absent
+- Later the user reported there was now no client list item either
+- Net result: system behavior is currently unclear and needs to be revalidated from the live app, not memory
+
+Key lesson:
+- There were two separate issues mixed together:
+  1. syntax / punctuation
+  2. behavior based on which property the formula lived in and whether SubmitForm was included
+
+Do not assume one without checking the other.
+
+==================================================
+6. CLIENT AUTO-CREATION + CLIENT ID STATUS
+==================================================
+
+Goal:
+When New Client is toggled on while creating an Activity Log entry:
+- a new item should be created in the Clients list
+- Client ID should auto-populate
+- Activity Log should still save normally
+- ideally no red X and no broken behavior
+
+What was attempted:
+- Patch(Clients, Defaults(Clients), ...) formulas using DataCardValue6 / DataCardValue7
+- Client ID generation using:
+  DataCardValue6.Text & Left(DataCardValue7.Text, 1) & Text(Now(), "mmss")
+- Hardcoded Client ID test:
+  'Client ID': "TEST123"
+
+What was learned:
+- Semicolon syntax guidance was wrong for this app
+- Standard syntax is likely correct
+- A formula can be syntactically valid but still fail behaviorally if it is in the wrong property or missing SubmitForm
+- At one point client creation appeared to work but Client ID was blank
+- At another point client creation itself appeared broken again
+- The current end-of-chat status is not reliable enough to assume anything is fixed
+
+Preferred Client ID format decision:
+- Earlier preferred format for eventual polished IDs was sequential:
+  - C-001
+  - C-002
+  - C-003
+  - continue after C-999 to C-1000
+- During this chat, a temporary generated text approach using first name + last initial + mmss was tested only as a practical interim method
+
+Important constraint from user:
+- User does not want a whole separate flow created just because Power Apps code was difficult
+- User wants strong awareness of syntax lessons and wants future help grounded in what the live formula editor actually accepts
+
+==================================================
+7. POWER AUTOMATE STATUS
+==================================================
+
+Flow name:
+- Activity Log Processing
+
+Overall intended structure:
+1. Trigger: SharePoint - When an item is created
 2. First Update item action:
-   - sets Workflow Status = In Progress
-   - sets Excel Logged = No
-   - passes through other mapped fields
+   - Workflow Status = In Progress
+   - Excel Logged = No
+   - pass through the rest of the required fields
 3. First Condition:
-   - compares Activity Type Value to Direct Service
-   - True branch = Direct_Hours logging
-   - False branch goes to second condition
-4. Second Condition inside first False branch:
-   - compares Activity Type Value to Indirect Service
-   - True branch = Indirect_Hours logging
-   - False branch = Supervision logging
-5. Each branch has:
-   - Add a row into Excel table
-   - Final Update item action
-6. Final Update item actions set:
+   - When an item is created -> Activity Type Value
+   - equals Direct Service
+   - True -> Add row to Direct_Hours
+   - False -> go to second condition
+4. Second Condition:
+   - When an item is created -> Activity Type Value
+   - equals Indirect Service
+   - True -> Add row to Indirect_Hours
+   - False -> Add row to Supervision
+5. Final Update item in each branch:
    - Workflow Status = Complete
    - Excel Logged = Yes
 
-IMPORTANT FLOW CORRECTIONS ALREADY DISCOVERED
-1. The left side of conditions must use:
-   - When an item is created → Activity Type Value
-2. The right side of condition text must use exact SharePoint choice text:
-   - Direct Service
-   - Indirect Service
-3. Table names are NOT used in conditions
-4. Excel table names ARE used only in Add a row into a table actions:
-   - Direct_Hours
-   - Indirect_Hours
-   - Supervision
+Important Power Automate corrections already discovered:
+- Conditions must use:
+  - When an item is created -> Activity Type Value
+- Right-side comparison text must be exact choice text:
+  - Direct Service
+  - Indirect Service
+- Table names are not used in the conditions
+- Table names are used only in the Excel actions:
+  - Direct_Hours
+  - Indirect_Hours
+  - Supervision
 
-EXCEL BRANCH MAPPING INTENDED
-Branch 1:
-- Condition: Activity Type Value = Direct Service
-- Excel table: Direct_Hours
+Update item mapping pattern intended:
+Use "When an item is created" tokens for pass-through fields unless a specific reason exists not to.
 
-Branch 2:
-- Condition: Activity Type Value = Indirect Service
-- Excel table: Indirect_Hours
-
-Else:
-- Excel table: Supervision
-
-UPDATE ITEM FIELD MAPPING PATTERN
-For Update item actions, intended mapping pattern was:
-
-Use When an item is created for:
+Common pass-through pattern:
 - Id -> ID
 - Title -> Title
 - Activity Type Value -> Activity Type Value
@@ -189,195 +381,153 @@ First Update item:
 - Workflow Status Value = In Progress
 - Excel Logged = No
 
-Final branch Update item actions:
+Final Update item in each branch:
 - Workflow Status Value = Complete
 - Excel Logged = Yes
 
-EXCEL ADD ROW MAPPING PATTERN
-For each Add a row into a table action, intended mappings were:
+Excel add-row mapping pattern intended:
 - Activity Date -> Activity Date
 - Client -> Client Value
 - Client ID -> Client Id
 - Activity Type -> Activity Type Value
 - Duration -> Duration
 - Activity ID -> ID
-If the table exposed additional fields such as SOAP Status / Conceptualization Status, those were mapped too where available.
 
-FLOW DESIGNER QUIRK
-Power Automate condition cards kept auto-adding a second blank line that could not always be deleted.
-Important note:
-- This was treated as a designer bug
-- If the flow saved successfully, the extra line was being ignored
-- This behavior happened in both conditions
+Power Automate designer quirk:
+- Condition cards auto-added a blank second line that could not always be removed
+- This was treated as a designer bug if the flow still saved successfully
 
-FLOW TESTING STATUS
-A test Activity Log item was created earlier.
-Observed issue:
-- Workflow Status showed In Progress instead of Complete
-This led to investigation of:
-- wrong condition left token (it had incorrectly become Update item at one point)
-- wrong condition right text
-- branch logic issues
+Testing status:
+- A test Activity Log item had shown Workflow Status = In Progress instead of Complete
+- That triggered debugging of wrong tokens / wrong condition sides
+- Those condition issues were believed corrected, but should still be checked first thing when resuming
 
-Those condition issues were later corrected:
-- Condition 1 should be:
-  - When an item is created → Activity Type Value
-  - is equal to
-  - Direct Service
-- Condition 2 should be:
-  - When an item is created → Activity Type Value
-  - is equal to
-  - Indirect Service
+==================================================
+8. USER PREFERENCES / INSTRUCTIONS FOR FUTURE HELP
+==================================================
 
-LATEST POWER AUTOMATE STATUS
-Flow structure appears complete.
-Key thing to verify in next chat:
-- The conditions should still be checked one last time after reopening:
-  1. Condition 1 left field = When an item is created → Activity Type Value
-  2. Condition 1 right field = Direct Service
-  3. Condition 2 left field = When an item is created → Activity Type Value
-  4. Condition 2 right field = Indirect Service
-
-POWER APPS NEW CLIENT LOGIC STATUS
-This is the main current blocker.
-
-Goal:
-- If New Client toggle is on, creating an Activity Log entry should also create a new record in the Clients list
-
-What was found:
-- SharePointIntegration.OnSave originally only contained:
-  SubmitForm(SharePointForm1)
-- That only saves the Activity Log item
-- It does NOT create a Clients record
-
-Work started to add Patch logic to SharePointIntegration.OnSave.
-
-CURRENT KNOWN STATUS OF ONSAVE
-- A Patch formula was being added
-- There were syntax/name errors at various points
-- Later the user reported that the red X disappeared, suggesting the formula eventually became syntactically acceptable
-- However, the final exact OnSave formula was not captured in the conversation after the syntax issue cleared
-- Therefore the exact current saved formula in OnSave must be re-opened and verified at the start of the next chat
-
-IMPORTANT POWER APPS NAMES / CONTROLS
-Known control/card names seen in the editor:
-- SharePointForm1 (main form control name previously used)
-- Client_DataCard1
-- DataCardValue5 = Client combo box
-- New_Client_DataCard1 exists
-- There are DataCardValue controls under the new client related cards, but exact final control-to-field mapping for first name / last initial was not fully locked down in a stable final formula
-
-CLIENT AUTO-CREATION PARTIAL RESULT
-At one point user reported:
-- “looks like it added, but it didn’t autogenerate a client ID”
-This means:
-- at least once, a new client record WAS successfully added to Clients
-- but Client ID generation logic was missing or incomplete
-
-CLIENT ID DISCUSSION / DECISION
-Preferred format chosen:
-- C-001
-- C-002
-- C-003
-etc.
-
-Behavior after C-999:
-- continue to C-1000
-
-Clients list column type for Client ID:
-- Single line of text
-
-IMPORTANT NOTE ABOUT CLIENT ID GENERATION
-A sequential generator formula was proposed, but it triggered Power Apps syntax/control-name problems during implementation.
-Because of that, the exact working client-ID Patch formula was NOT finalized yet.
-This remains unfinished and should be solved in the next chat AFTER verifying the current OnSave formula.
-
-WHAT WAS PROPOSED FOR CLIENT ID LOGIC
-Desired behavior:
-- read the largest existing Client ID
-- strip the “C-”
-- convert to number
-- add 1
-- write back as C-001, C-002, etc.
-
-BUT:
-- This was not fully implemented successfully yet
-- Control names / locale separators / field names were causing formula errors
-- Next chat should rebuild this carefully using the actual current control names and the exact Power Apps locale syntax
-
-VERY IMPORTANT CURRENT BLOCKERS
-1. Need to inspect the exact current SharePointIntegration.OnSave formula
-2. Need to confirm whether new client creation is currently:
-   - working
-   - partially working
-   - or broken after latest changes
-3. Need to add/fix Client ID generation in Clients creation logic
-4. Need to re-test full flow:
-   - Direct Service
-   - Indirect Service
-   - Supervision
-5. Need to verify that final Update item actions change:
-   - Workflow Status to Complete
-   - Excel Logged to Yes
-6. Need to verify rows land in:
-   - Direct_Hours
-   - Indirect_Hours
-   - Supervision
-
-MOST RECENT VERIFIED FACTS
-- Activity Type choices are exactly:
-  - Direct Service
-  - Indirect Service
-  - Supervision
-- First condition had been corrected to use:
-  - When an item is created → Activity Type Value = Direct Service
-- Second condition had been corrected to use:
-  - When an item is created → Activity Type Value = Indirect Service
-- Clients data source was added to Power Apps
-- Client combo box display settings were corrected away from Value1 to Value
-- Activity Log Client lookup column points to Clients / Title, and that is correct because Title was renamed to Display Name in the list UI
-- There is at least one client record now in Clients list
-- Main unresolved issue at the end was new-client auto creation / Client ID generation formula work
-
-BEST NEXT-CHAT STARTING POINT
-Start by doing these exact checks in order:
-
-1. Open SharePoint > Activity Log > Integrate > Power Apps > Customize forms
-2. Click SharePointIntegration
-3. Inspect the exact OnSave formula currently stored
-4. Confirm exact control names for:
-   - New Client toggle control
-   - New Client First Name text control
-   - New Client Last Initial text control
-5. Rebuild/fix the Patch(Clients, Defaults(Clients), ...) formula using the actual exact control names
-6. After client creation works again, add sequential Client ID generation in format C-001
-7. Save and publish Power Apps form
-8. Test New Client creation from Activity Log form
-9. Then go to Power Automate and test one Activity Log item for each type:
-   - Direct Service
-   - Indirect Service
-   - Supervision
-10. Verify:
-   - Workflow Status becomes Complete
-   - Excel Logged becomes Yes
-   - Row inserted into proper Excel table
-
-KEY WARNINGS FOR NEXT CHAT
-- Always specify whether a token should come from:
+High-priority user preferences:
+- Exports should be full and complete
+- Leave nothing out that would be needed to resume exactly where work stopped
+- Do not hand-wave or guess when debugging formulas
+- Use the actual syntax the live app accepts
+- The distinction between syntax problems and behavior/property-placement problems matters
+- User is frustrated by repeated guessing around Power Apps formula errors
+- When talking about tokens or mappings in Power Automate, clearly specify whether a token is from:
   - When an item is created
   - or Update item
-  The user explicitly asked for this distinction to always be included.
-- In conditions, always use:
-  - When an item is created → Activity Type Value
-- In Update item actions, use:
-  - When an item is created for pass-through values unless there is a reason otherwise
-- In Excel actions, also prefer:
-  - When an item is created
-- Table names are:
-  - Direct_Hours
-  - Indirect_Hours
-  - Supervision
-- Condition comparison values are:
-  - Direct Service
-  - Indirect Service
-  - Supervision is handled by the second False branch, not by a third condition
+- Do not casually propose building whole extra automations as a substitute for understanding the current code path
+
+==================================================
+9. CURRENT RISK / UNKNOWN STATUS AT END OF THIS CHAT
+==================================================
+
+At the end of this chat, the state is NOT stable enough to assume the following are working:
+- Activity Log save
+- new client creation
+- Client ID population
+
+Because the latest user report was:
+- a test earlier suggested the client patch may have gone through while the Activity Log did not
+- later user reported: "no client list item now"
+
+That means the live app needs to be checked directly in the next chat before any more design advice.
+
+==================================================
+10. REQUIRED FIRST STEPS IN THE NEXT CHAT
+==================================================
+
+Start with these exact checks in this order:
+
+1. Open SharePoint > Activity Log > Integrate > Power Apps > Customize forms
+2. Click SharePointIntegration and read the exact current OnSave formula verbatim
+3. Click SharePointForm1 and read the exact current OnSuccess formula verbatim
+4. Confirm exact control names for:
+   - New Client toggle
+   - New Client First Name text input
+   - New Client Last Initial text input
+5. Confirm exact current formula locale by observing what the editor accepts:
+   - commas in functions
+   - single semicolons for action chaining
+6. Run one controlled test:
+   - save an Activity Log item without New Client
+   - verify Activity Log item saves
+7. Run second controlled test:
+   - save an Activity Log item with New Client on
+   - verify whether Activity Log saves
+   - verify whether Clients item is created
+   - verify whether Client ID populates
+8. Only after current behavior is re-confirmed, rebuild/fix the client Patch logic
+9. Only after client creation is reliably working again, revisit polished Client ID generation
+10. Then return to Power Automate and re-verify:
+   - Condition 1 uses When an item is created -> Activity Type Value = Direct Service
+   - Condition 2 uses When an item is created -> Activity Type Value = Indirect Service
+   - Workflow Status becomes Complete
+   - Excel Logged becomes Yes
+   - rows land in correct table
+
+==================================================
+11. SAFE ROLLBACK REFERENCES
+==================================================
+
+Known rollback-safe OnSave formula:
+SubmitForm(SharePointForm1)
+
+Known standard-locale candidate formula that was syntactically consistent, but behavior was not fully validated:
+If(
+    DataCardValue4.Value = true,
+    Patch(
+        Clients,
+        Defaults(Clients),
+        {
+            Title: DataCardValue6.Text & " " & DataCardValue7.Text,
+            'First Name': DataCardValue6.Text,
+            'Last Initial': DataCardValue7.Text,
+            'Client ID': DataCardValue6.Text & Left(DataCardValue7.Text, 1) & Text(Now(), "mmss"),
+            Active: true
+        }
+    )
+);
+ResetForm(SharePointForm1);
+RequestHide()
+
+Known client-ID field isolation test:
+If(
+    DataCardValue4.Value = true,
+    Patch(
+        Clients,
+        Defaults(Clients),
+        {
+            Title: DataCardValue6.Text & " " & DataCardValue7.Text,
+            'First Name': DataCardValue6.Text,
+            'Last Initial': DataCardValue7.Text,
+            'Client ID': "TEST123",
+            Active: true
+        }
+    )
+);
+ResetForm(SharePointForm1);
+RequestHide()
+
+Important note:
+These formulas are included as history/reference, not as confirmed-current-working formulas.
+
+==================================================
+12. RESUME PROMPT FOR A NEW CHAT
+==================================================
+
+Paste this into a new chat:
+
+We are continuing a Microsoft 365 build for my Practice Operations system. Current stack: SharePoint site "Practice Operations", Activity Log list, Clients list, Clinical Documents library, Templates library, and Internship Tracking.xlsx workbook. Excel tables are Direct_Hours, Indirect_Hours, and Supervision. The immediate blocker is Power Apps new-client creation and Client ID generation. Important syntax lesson: this app appears to use STANDARD Power Apps syntax, meaning commas for function arguments and single semicolons for chained actions. We previously wasted time by assuming semicolon-locale syntax. Start by helping me inspect the exact live formulas in SharePointIntegration.OnSave and SharePointForm1.OnSuccess, confirm the real control names for the New Client fields, and then restore reliable behavior so Activity Log saves correctly, new client creation works again, and Client ID can be added without breaking the form. Also keep in mind that Power Automate Flow 1 already has a mostly built structure using When an item is created, two conditions on Activity Type Value, and Excel tables Direct_Hours / Indirect_Hours / Supervision, but those conditions should be rechecked after the Power Apps issue is stabilized.
+
+==================================================
+13. LAST CRITICAL CORRECTION TO CARRY FORWARD
+==================================================
+
+Do not start the next chat by assuming:
+- semicolon-locale syntax
+- that OnSave vs OnSuccess is already settled
+- that client creation is currently working
+- that Client ID is the only remaining issue
+
+Do start the next chat by confirming the exact live formulas and rebuilding from verified current state.
