@@ -46,20 +46,24 @@
       "campus": "University of Northern Colorado – Extended Campus at Lowry"
     },
     "academic_calendar": {
-      "unc_calendar_link": "https://www.unco.edu/registrar/calendars-catalogs-forms/calendars/",
-      "summer_2026": {
-        "start": "5/18/26",
-        "end": "8/7/26"
-      },
-      "fall_2026": {
-        "start": "8/24/26",
-        "end": "12/11/26"
-      },
-      "spring_2027": {
-        "start": "1/11/27",
-        "end": "5/7/27"
-      }
-    },
+  "unc_calendar_link": "https://www.unco.edu/registrar/calendars-catalogs-forms/calendars/",
+  "summer_2026": {
+    "start": "5/18/26",
+    "end": "8/7/26"
+  },
+  "fall_2026": {
+    "start": "8/24/26",
+    "end": "12/11/26"
+  },
+  "winter_interim_2026_2027": {
+    "start": "12/15/26",
+    "end": "1/11/27"
+  },
+  "spring_2027": {
+    "start": "1/11/27",
+    "end": "5/7/27"
+  }
+},
     "business_to_academic_translation": {
       "January": "Winter cohort (Business Q1)",
       "May": "Late May–June start",
