@@ -64,6 +64,63 @@
     "end": "5/7/27"
   }
 },
+"timeline_analysis": {
+  "internship_timeline_comparison": {
+    "source_dates": {
+      "fall_2026": {
+        "start": "8/24/26",
+        "end": "12/11/26"
+      },
+      "winter_interim_2026_2027": {
+        "start": "12/15/26",
+        "end": "1/11/27"
+      },
+      "spring_2027": {
+        "start": "1/11/27",
+        "end": "5/7/27"
+      }
+    },
+    "week_estimates": {
+      "fall_2026_weeks": 15.7,
+      "winter_interim_weeks": 4.0,
+      "fall_plus_winter_weeks": 19.7,
+      "fall_plus_spring_weeks": 32.4
+    },
+    "internship_requirements_reference": {
+      "total_hours_required": 600,
+      "direct_hours_minimum": 240,
+      "expected_weekly_total": "Approximately 20 hours per week across two semesters",
+      "estimated_weekly_direct": "Approximately 10–12 direct hours per week",
+      "estimated_weekly_indirect": "Approximately 8–10 indirect hours per week"
+    },
+    "hour_load_calculations": {
+      "fall_plus_winter": {
+        "hours_per_week_for_600_total": 30.4,
+        "direct_hours_per_week_for_240_minimum": 12.2
+      },
+      "fall_plus_spring": {
+        "hours_per_week_for_600_total": 18.5,
+        "direct_hours_per_week_for_240_minimum": 7.4
+      }
+    },
+    "scenario_estimates": {
+      "assuming_20_hours_per_week": {
+        "weekly_structure": "10 direct + 10 indirect",
+        "fall_plus_winter_total_hours": 394,
+        "fall_plus_spring_total_hours": 649
+      },
+      "assuming_30_hours_per_week": {
+        "weekly_structure": "10 direct + 20 indirect",
+        "fall_plus_winter_total_hours": 591,
+        "fall_plus_spring_total_hours": 973
+      }
+    },
+    "working_conclusion": {
+      "fall_plus_winter": "Likely too compressed to safely complete 600 internship hours unless winter hours are explicitly approved and average weekly hours exceed 30.",
+      "fall_plus_spring": "Aligns much more closely with stated program expectations."
+    }
+  }
+},
     "business_to_academic_translation": {
       "January": "Winter cohort (Business Q1)",
       "May": "Late May–June start",
