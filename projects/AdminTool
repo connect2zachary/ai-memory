@@ -1,579 +1,463 @@
-Below are the two items.
+UPDATED SYSTEM EXPORT — CURRENT LIVE STATE
 
-⸻
+Date updated: 2026-04-03
 
-1. UPDATED SYSTEM EXPORT — FULL CURRENT STATE
+OVERVIEW
 
-Date updated: 2026-03-30
-Purpose: full backup of current design, troubleshooting results, and current intended rebuild direction
+This system is built in Microsoft 365 using:
+- SharePoint lists
+- SharePoint document libraries
+- Power Apps customized forms
+- Power Automate
+- Excel Online tables
 
-⸻
+Purpose:
+- Manage clients
+- Log activities
+- Auto-generate SOAP and Conceptualization documents
+- Save those documents into the correct client folder
+- Write document links back to the Activity Log
+- Log hours into Excel
 
-A. SYSTEM OVERVIEW
+--------------------------------------------------
+1. CURRENT ARCHITECTURE
+--------------------------------------------------
 
-Platform
-	•	Microsoft 365
-	•	SharePoint
-	•	Power Apps customized forms
-	•	Power Automate
-	•	SharePoint document libraries and lists
+The system is now split into two separate processes.
 
-Original goal
+A. CLIENT PROCESS
+Handles:
+- creating the client record
+- normalizing/storing client naming data
+- creating the client folder in Clinical Documents
+- storing folder-related data back on the Clients list
 
-When an Activity Log entry is created:
-	1.	Save the Activity Log row
-	2.	Handle new vs existing client
-	3.	Create or reuse client folder in Clinical Documents
-	4.	Generate:
-	•	SOAP document
-	•	Conceptualization document
-	5.	Save docs in that client folder
-	6.	Write links back to the Activity Log row
-	7.	Update workflow fields
-	8.	Log hours to Excel
+B. ACTIVITY LOG PROCESS
+Handles:
+- using an existing client if one is selected
+- generating SOAP and Conceptualization docs when appropriate
+- saving those docs into the client folder
+- writing links back to Activity Log
+- logging activity to Excel
 
-Current strategic conclusion
+Important architectural rule:
+- Activity Log does NOT create clients
+- Activity Log does NOT create folders
+- Activity Log only uses existing client/folder data if a client is selected
 
-The biggest instability came from combining:
-	•	new-client creation
-	•	old-client lookup
-	•	folder existence logic
-	•	document generation
+--------------------------------------------------
+2. SHAREPOINT STRUCTURE
+--------------------------------------------------
 
-inside one Activity Log automation.
+Site:
+- Practice Operations
 
-The system is now being re-modeled so that:
-	•	Clients are created separately
-	•	Client folders are created separately
-	•	Activity Log only uses existing clients
-	•	Activity Log automation assumes the client folder already exists
+Main components:
+1. Clients list
+2. Activity Log list
+3. Clinical Documents library
+4. Templates library
+5. Internship Tracking.xlsx
 
-⸻
+Excel workbook:
+- Internship Tracking.xlsx
 
-B. CURRENT SHAREPOINT STRUCTURE
+Excel tables:
+- Direct_Hours
+- Indirect_Hours
+- Supervision
 
-Site
-	•	Practice Operations
+--------------------------------------------------
+3. CLIENTS LIST — CURRENT STATE
+--------------------------------------------------
 
-Main data/file components
-	1.	Clients list
-	2.	Activity Log list
-	3.	Clinical Documents library
-	4.	Templates library
-	5.	Internship Tracking.xlsx
+Current visible/useful columns include:
+- Display Name
+- First Name
+- Last Initial
+- Active
+- Folder Name
+- Folder Path
+- Folder Created
+- Folder URL
 
-Excel workbook
-	•	Internship Tracking.xlsx
+Important notes:
+- Folder URL is the correct usable link column
+- Folder Link / older hyperlink logic is deprecated
+- Client ID exists as a column but is not being used and may be deleted
+- IDScore is not needed if Client ID is not being used
+
+Current design decision:
+- Do not add separate client numbering logic unless there is a strong future need
+- Using SharePoint ID as a fake client number was rejected as pointless
+- Client ID may be removed entirely
+
+--------------------------------------------------
+4. CLIENT FLOW — CURRENT STATE
+--------------------------------------------------
+
+Flow name:
+- Client - Create Folder
+
+Purpose:
+- when a new client is created, create the matching client folder and write folder details back to the Clients list
+
+Current working behavior:
+1. Trigger on new client item
+2. Build standardized display/folder name
+3. Create folder in Clinical Documents
+4. Save folder-related fields back to the client record
+
+Key outputs stored on client:
+- Folder Name
+- Folder Path
+- Folder Created
+- Folder URL
+
+Important:
+- The client folder system is working
+- Activity Log depends on this client folder data already existing
+
+--------------------------------------------------
+5. ACTIVITY LOG LIST — CURRENT STATE
+--------------------------------------------------
+
+Current columns in use:
+- Activity ID
+- Client
+- Activity Type
+- Duration
+- Notes
+- SOAP Link
+- Conceptualization Link
+- Workflow Status
+- Activity Date
+- Excel Logged
+- Generate Conceptualization
+
+Removed columns:
+- SOAP Status
+- Conceptualization Status
+- New Client logic
+- new-client-related fields
+
+Important note about Activity ID:
+- Activity ID is the renamed SharePoint Title column
+- It is not the real SharePoint ID
+- The real SharePoint ID is used for unique file naming and Excel logging
+- The renamed Title/Activity ID column can remain, but it is not the true system ID
+
+Important design rule:
+- Client is now allowed to be blank for activities like Indirect Service
+- Client should only be selected when needed
+
+--------------------------------------------------
+6. POWER APPS — CURRENT STATE
+--------------------------------------------------
+
+The Activity Log Power Apps customized form has been cleaned up.
+
+Completed changes:
+- removed old new-client fields
+- removed broken visibility references tied to deleted controls
+- fixed the save logic by replacing old OnSave code with a direct form submit
+- form now saves correctly again
+
+Important fix:
+Old SharePointIntegration.OnSave logic still contained deleted-control references and old new-client branching.
+That was replaced with:
+
+SubmitForm(SharePointForm1)
+
+Important lesson:
+- if fields are removed from the form, check Visible formulas and OnSave logic for broken references
+
+--------------------------------------------------
+7. ACTIVITY LOG FLOW — CURRENT LIVE FLOW
+--------------------------------------------------
+
+Flow name:
+- Activity Log - Process Documents
+
+Purpose:
+- process new Activity Log entries
+- create docs when applicable
+- write links back
+- log to Excel
+
+Current high-level order:
+1. Trigger - When an item is created
+2. Get Item - Activity Log
+3. Initialize Variable - SOAP URL
+4. Initialize Variable - Concept URL
+5. Condition - Client selected check
+6. If client exists:
+   - Get Item - Client
+   - Update Item - Workflow Processing
+   - Compose - Client Display Name
+   - Compose - Client Folder Path
+   - Compose - Activity Date
+   - Compose - Activity ID
+   - Compose - SOAP File Name
+   - Compose - Concept File Name
+   - Condition - Is Direct Service
+   - Condition - Generate Conceptualization
+7. Excel logging conditions
+8. Update Item - Activity Log Final
+
+--------------------------------------------------
+8. CLIENT-SELECTION CONDITION — IMPORTANT FINAL FIX
+--------------------------------------------------
+
+This was the key troubleshooting breakthrough.
+
+Working condition:
+- Client Value
+- is not equal to
+- null
+
+Important:
+- using blank checks was unreliable
+- numeric comparisons were unreliable
+- this exact null-based check was the solution that worked
+
+Purpose:
+- if a client is selected, run client-dependent/document steps
+- if no client is selected, skip those steps and continue the rest of the flow
+
+This is critical for:
+- Indirect Service entries with no client selected
+- avoiding Get Item - Client failures on blank client records
+
+--------------------------------------------------
+9. DOCUMENT GENERATION LOGIC — CURRENT STATE
+--------------------------------------------------
+
+SOAP:
+- only generated when Activity Type = Direct Service
+
+Conceptualization:
+- only generated when Generate Conceptualization = Yes
+
+Important:
+- file names are built before conditions
+- actual file creation only happens inside the relevant condition branches
+
+SOAP file name pattern:
+- SOAP - [Client Display Name] - [yyyy-MM-dd] - ID [SharePoint ID].docx
+
+Concept file name pattern:
+- Conceptualization - [Client Display Name] - [yyyy-MM-dd] - ID [SharePoint ID].docx
+
+Real unique ID source:
+- SharePoint item ID from Activity Log
+- not the renamed Activity ID/Title column
+
+--------------------------------------------------
+10. FOLDER PATH FIX — IMPORTANT
+--------------------------------------------------
+
+The key folder-path issue in the new flow was:
+
+Wrong:
+- using Get Item - Client body/path
+
+That returned the SharePoint list-item path, something like:
+- Lists/Clients/
+
+Correct:
+- use the actual custom folder path value for the client
+- or otherwise use the properly derived client folder path
+
+This fix was required for successful file creation in the correct client folder.
+
+--------------------------------------------------
+11. SOAP / CONCEPT LINK FIX — IMPORTANT
+--------------------------------------------------
+
+Another major working fix:
+
+The original saved document links were wrong and produced 404 errors.
+
+Bad link example:
+- missing /sites/PracticeOperations
+
+Correct solution:
+- build the document URL using:
+  - https://branchpointco.sharepoint.com/sites/PracticeOperations
+  - plus the correct metadata Path from the created file
+
+Correct SOAP URL compose expression:
+
+replace(
+  concat(
+    'https://branchpointco.sharepoint.com/sites/PracticeOperations',
+    outputs('Get_File_Metadata_-SOAP')?['body/Path']
+  ),
+  ' ',
+  '%20'
+)
+
+Correct Concept URL compose expression:
+
+replace(
+  concat(
+    'https://branchpointco.sharepoint.com/sites/PracticeOperations',
+    outputs('Get_File_Metadata-_Concept')?['body/Path']
+  ),
+  ' ',
+  '%20'
+)
+
+Important result:
+- SOAP link now works
+- Conceptualization link now works
+
+--------------------------------------------------
+12. TABLET / MOBILE FINDINGS
+--------------------------------------------------
+
+Key findings:
+- files were being created correctly
+- links were initially wrong because of bad URL construction
+- once corrected, document creation worked
+- on tablet, opening behavior may differ depending on whether SharePoint/browser or Word app is used
+- Word app opening was confirmed to work
+
+Important conclusion:
+- document generation itself is fine
+- bad links were the real issue, not file corruption
+
+--------------------------------------------------
+13. EXCEL LOGGING — CURRENT STATE
+--------------------------------------------------
+
+Excel workbook:
+- Internship Tracking.xlsx
 
 Tables:
-	•	Direct_Hours
-	•	Indirect_Hours
-	•	Supervision
-
-⸻
-
-C. CLIENTS LIST — CURRENT / INTENDED
-
-Core columns
-	•	Display Name (renamed Title)
-	•	Client ID
-	•	First Name
-	•	Last Initial
-	•	Active
-
-Likely future columns
-
-User wants the system to remain easy to expand later with things like:
-	•	insurance company
-	•	policy/member ID
-	•	group number
-	•	DOB
-	•	phone
-	•	notes
-	•	attachments such as insurance card images
-
-Attachments
-
-Client list should remain capable of holding attachments or images later if needed.
-
-Important direction
-
-Clients should be created outside the Activity Log workflow.
-
-That means:
-	•	no more “new client” handling inside Activity Log
-	•	no more client-creation branching inside the Activity Log flow
-
-⸻
-
-D. ACTIVITY LOG — CURRENT / INTENDED
-
-Original design
-
-Activity Log included:
-	•	new client toggle
-	•	new client first name
-	•	new client last initial
-	•	client lookup
-	•	activity info
-	•	statuses
-	•	generated document links
-
-New intended design
-
-Activity Log should be simplified to:
-	•	existing client lookup only
-	•	activity date
-	•	activity type
-	•	duration
-	•	notes
-	•	SOAP status
-	•	Conceptualization status
-	•	SOAP link
-	•	Conceptualization link
-	•	workflow status
-	•	Excel Logged
-
-New conclusion
-
-The new-client fields should be removed from Activity Log.
-
-User will create the client first in the separate client process.
-Then any Activity Log row will always point to an already-existing client.
-
-⸻
-
-E. POWER APPS — CURRENT STATE
-
-Current cleaned formulas now in use
-
-Last Initial
-
-Upper(Substitute(Trim(DataCardValue7.Text), ".", ""))
-
-First Name
-
-Upper(Trim(DataCardValue6.Text))
-
-Purpose of those formulas
-
-They normalize user input so:
-	•	T
-	•	t
-	•	T.
-	•	t.
-
-all become:
-	•	T
-
-And first names are trimmed and uppercased for consistency.
-
-Current conclusion
-
-These formulas appear to be working.
-
-User reported that after applying them:
-	•	Clients list names
-	•	Activity Log names
-	•	Clinical Documents folder names
-
-were matching much more consistently.
-
-⸻
-
-F. FLOW HISTORY — WHAT WAS TROUBLESHOOTED
-
-Major issue cluster
-
-The biggest instability in the original design was:
-	•	new client vs old client
-	•	folder missing vs folder already exists
-	•	path differences between SharePoint actions
-	•	old-client Create file failures
-
-Real issues that were encountered and partially/fully fixed
-	1.	Period mismatch
-	•	JIMMY T. vs JIMMY T
-	•	fixed by input cleanup and safe folder name logic
-	2.	Folder-path differences
-	•	different SharePoint actions expected different path formats
-	•	heavily tested
-	3.	Link-writing issues
-	•	links were being built manually at one point
-	•	better pattern was to use metadata-driven “Link to item”
-	4.	Branching/routing issues
-	•	Get folder metadata using path
-	•	Create new folder
-	•	Get file content
-	•	Run-after logic needed repeated correction
-
-Important compose step introduced
-
-A flow step called:
-	•	Compose - Safe Folder Name
-
-Used this expression:
-
-replace(outputs('Compose_-_Folder_Name'),'.','')
-
-This was kept as a flow-level safety net.
-
-⸻
-
-G. KEY TEST RESULTS
-
-Test 1 — Create folder only
-
-A minimal isolated flow was built:
-	•	manual trigger
-	•	Create new folder
-	•	Site = Practice Operations
-	•	Library = Clinical Documents
-	•	Folder Path = FolderTest123
-
-Result:
-	•	Succeeded
-
-Test 2 — Create file in existing folder
-
-A minimal isolated flow was built:
-	•	manual trigger
-	•	Get file content
-	•	Create file
-	•	Folder Path = /Clinical Documents/Jeff M
-
-Result:
-	•	Succeeded
-
-Test 3 — Create file in specific old-client folder
-
-A minimal isolated flow was built:
-	•	manual trigger
-	•	Get file content
-	•	Create file
-	•	Folder Path = /Clinical Documents/JIMMY T
-	•	File Name = TEST-JIMMY-OLDCLIENT.docx
-
-Result:
-	•	Succeeded
-
-What those tests proved
-	•	SharePoint environment is capable of:
-	•	creating folders
-	•	creating files in existing client folders
-	•	the platform itself is not completely blocking the design
-	•	the failure was specifically in the combined main flow logic, especially around old-client handling
-
-⸻
-
-H. WHAT WAS RULED OUT
-
-These were investigated and are not the main remaining cause:
-	•	trailing period alone
-	•	capitalization alone
-	•	missing slash in metadata path
-	•	weird SharePoint display symbol in folder list
-	•	different SharePoint connection
-	•	dynamic filename alone
-	•	folder path being fundamentally invalid
-
-Important note
-
-The weird symbol visible in SharePoint next to some folder names was not the actual folder name.
-
-⸻
-
-I. WHAT STILL DID NOT FULLY WORK
-
-Old-client behavior
-
-Even after many fixes:
-	•	folder lookup could succeed
-	•	existing folder could be confirmed
-	•	isolated manual file creation into that exact folder could succeed
-
-but the main Activity Log flow still failed or hung on Create file for old clients in some cases.
-
-Practical conclusion
-
-The biggest architectural problem was not document generation itself.
-
-It was trying to do all of these at once inside the Activity Log flow:
-	•	determine whether client is new
-	•	create client if needed
-	•	determine whether folder exists
-	•	create folder if needed
-	•	then generate documents
-
-⸻
-
-J. UPDATED ARCHITECTURAL DECISION
-
-New design direction
-
-Split the system into two separate automations/processes:
-
-1. Client creation system
-Handles:
-	•	creating a new client in the Clients list
-	•	normalizing first name / last initial
-	•	generating display name
-	•	creating the client folder in Clinical Documents
-
-2. Activity Log system
-Handles:
-	•	selecting an existing client only
-	•	generating SOAP / Conceptualization docs
-	•	saving them into the already-existing client folder
-	•	writing links back to Activity Log
-	•	optional Excel logging
-
-Why this change
-
-Because it removes the hardest unstable branch:
-	•	new client vs old client
-	•	folder missing vs folder existing
-
-from the Activity Log flow.
-
-New intended assumption
-
-By the time an Activity Log row is created:
-	•	the client already exists
-	•	the client folder already exists
-
-That should make the Activity Log automation much simpler and more reliable.
-
-⸻
-
-K. DESIRED NEW CLIENT PROCESS
-
-Intended behavior
-
-There should be a separate Power App or client-entry mechanism for the Clients list.
-
-When a new client is created:
-	1.	Add row to Clients list
-	2.	Normalize first name and last initial
-	3.	Build display name
-	4.	Create the client folder in Clinical Documents
-	5.	Stop there
-
-Important note
-
-This should be a simple, separate automation.
-
-No activity generation should happen here.
-
-⸻
-
-L. DESIRED NEW ACTIVITY LOG PROCESS
-
-Intended behavior
-
-The Activity Log should:
-	1.	Select an existing client from dropdown/lookup
-	2.	Save the row
-	3.	Generate SOAP doc in that client’s folder
-	4.	Generate Conceptualization doc in that client’s folder, if required
-	5.	Write links back to the Activity Log row
-	6.	Update statuses
-	7.	Optionally log to Excel
-
-Important simplification
-
-Activity Log should no longer have to:
-	•	create clients
-	•	create folders
-	•	decide new vs old client
-
-⸻
-
-M. COST / PLATFORM CONSTRAINTS
-
-Important user constraint
-
-User does not want to pay for full Dataverse.
-
-What was discussed
-	•	Full Dataverse likely costs extra
-	•	User is already paying for Microsoft 365
-	•	User may have Dataverse for Teams, but does not want a paid Dataverse rebuild right now
-
-Current platform intent
-
-User is still in Microsoft 365 and wants the system to function there if possible.
-
-⸻
-
-N. CURRENT USER PRIORITIES
-
-User wants:
-	•	auto-generating documents
-	•	auto-linking documents
-	•	one folder per client
-	•	clients created separately
-	•	activity log simplified
-	•	easy future expansion of client data
-	•	less fragile automation
-	•	fewer guesses, more evidence-based help
-	•	a system that reduces work, not creates more work
-
-User does not want:
-	•	suggestions to make SOAP / Conceptualization manual
-	•	suggestions that remove auto-generation / auto-linking
-	•	guesses presented as certainty
-
-⸻
-
-O. CURRENT LIVE FORMULAS TO KEEP
-
-Last Initial
-
-Upper(Substitute(Trim(DataCardValue7.Text), ".", ""))
-
-First Name
-
-Upper(Trim(DataCardValue6.Text))
-
-Flow safety net
-
-replace(outputs('Compose_-_Folder_Name'),'.','')
-
-
-⸻
-
-P. CURRENT MOST IMPORTANT REBUILD DECISION
-
-The remodel
-
-The system should be rebuilt around this split:
-
-Client creation
-	•	separate client-entry app/form
-	•	separate client-folder creation automation
-
-Activity logging
-	•	existing client only
-	•	document generation into pre-existing folder
-	•	no new/old logic
-
-This is the most important architectural change now.
-
-⸻
-
-2. SUMMARY FOR THE NEXT CHAT
-
-Paste this into the next chat:
-
-⸻
-
-I need help remodeling my Microsoft 365 system. Do not start from the old mixed design.
-
-What I want now
-
-I want to keep:
-	•	SharePoint
-	•	Power Apps
-	•	Power Automate
-	•	auto-generating SOAP and Conceptualization docs
-	•	auto-linking those docs back to the Activity Log row
-	•	one folder per client in the Clinical Documents library
-
-I do not want:
-	•	the Activity Log flow to handle new clients
-	•	the Activity Log flow to decide new vs old client
-	•	the Activity Log flow to decide whether a client folder already exists
-
-New architecture I want
-
-Split the system into two separate processes.
-
-Process 1 — Clients
-
-I have a separate Clients list.
-I want a separate Power App or client-entry form for that list.
-
-When a new client is created:
-	1.	save the Clients row
-	2.	normalize first name and last initial
-	3.	build the display name
-	4.	create the client folder in Clinical Documents
-	5.	stop there
-
-The Clients list should be easy to expand later with more columns, such as insurance info or insurance card attachments.
-
-Process 2 — Activity Log
-
-The Activity Log should only allow selecting an existing client.
-Remove the new-client fields from the Activity Log design.
-
-When an Activity Log row is created:
-	1.	use the selected existing client
-	2.	generate the SOAP doc into that client’s already-existing folder
-	3.	generate the Conceptualization doc into that folder if needed
-	4.	write the links back to the Activity Log row
-	5.	update statuses
-	6.	optionally log to Excel later
-
-Important formulas already in use
-
-Power Apps cleanup formulas now used:
-
-Upper(Substitute(Trim(DataCardValue7.Text), ".", ""))
-Upper(Trim(DataCardValue6.Text))
-
-These normalize names so T, t, T., and t. all become T.
-
-Important troubleshooting results already proven
-
-Do not repeat old guesses without using this evidence.
-
-Proven by isolated tests
-	1.	SharePoint Create new folder works in isolation
-	2.	SharePoint Create file into an existing client folder works in isolation
-	3.	Creating a file into /Clinical Documents/JIMMY T works in an isolated test flow
-
-What failed in the old design
-
-The mixed Activity Log flow that tried to do all of this at once:
-	•	new client vs old client
-	•	folder exists vs folder missing
-	•	create client if needed
-	•	create folder if needed
-	•	then generate docs
-
-That architecture became the main problem.
-
-What is no longer the issue
-
-These were investigated already:
-	•	trailing period mismatch
-	•	capitalization mismatch
-	•	weird SharePoint display symbol
-	•	missing metadata slash
-	•	different SharePoint connection
-	•	dynamic filename alone
-
-What I need from you
-
-Help me redesign this system around the new split architecture.
-
-I want:
-	1.	a recommended SharePoint structure
-	2.	a recommended Clients list structure
-	3.	a recommended Activity Log structure
-	4.	how to build the separate client-entry Power App / form
-	5.	how to build the separate client-folder creation automation
-	6.	how to simplify the Activity Log flow so it assumes the client folder already exists
-	7.	how to keep auto-generating and auto-linking SOAP and Conceptualization docs
-	8.	how to make the system easy to expand later
-
-Do not suggest removing document auto-generation.
-Do not suggest making SOAP / Conceptualization manual.
-Do not guess.
-Use the evidence above and design the remodel around it.
-
-⸻
-
-If you want, I can also turn this into a clean plain-text handoff block with no headings so it is easier to paste into a fresh chat.
+- Direct_Hours
+- Indirect_Hours
+- Supervision
+
+Table columns:
+
+Direct_Hours
+- Activity ID
+- Activity Date
+- Client
+- Duration
+- SOAP Status
+- Conceptualization Status
+
+Indirect_Hours
+- Activity ID
+- Activity Date
+- Notes
+- Duration
+
+Supervision
+- Activity ID
+- Activity Date
+- Supervisor
+- Notes
+- Duration
+
+Routing logic:
+- Direct Service -> Direct_Hours
+- Indirect Service -> Indirect_Hours
+- Supervision -> Supervision
+
+Supervision mapping:
+- Supervisor column uses the selected Client value from Activity Log
+
+Important Excel fix:
+- Excel Activity ID columns should use the real SharePoint ID from Get Item - Activity Log
+- not the renamed Activity ID / Title field
+
+Direct_Hours Conceptualization Status fix:
+Use actual creation result, not the toggle alone.
+
+Working expression:
+if(
+  empty(variables('varConceptUrl')),
+  'Not Created',
+  'Created'
+)
+
+Current final behavior:
+- Direct Service logs to Direct_Hours
+- Indirect Service logs to Indirect_Hours
+- Supervision logs to Supervision
+- Excel Logged is set to Yes in the final update
+
+--------------------------------------------------
+14. FINAL UPDATE STEP — CURRENT STATE
+--------------------------------------------------
+
+Update Item - Activity Log Final should occur after:
+- document generation logic
+- Excel logging conditions
+
+Final update sets:
+- SOAP Link
+- Conceptualization Link
+- Workflow Status = Completed
+- Excel Logged = Yes
+
+Important:
+- final update should use values that are safe even when no client was selected
+- URL variables are initialized before the client-selection condition so the final step can still run safely
+
+--------------------------------------------------
+15. OLD FLOW STATUS
+--------------------------------------------------
+
+The old Activity Log flow has been turned off.
+
+Current live flow:
+- Activity Log - Process Documents
+
+Important:
+- keep using the new flow only
+- the old flow is no longer active
+
+--------------------------------------------------
+16. CURRENT LIVE RULES TO PRESERVE
+--------------------------------------------------
+
+Do not reintroduce:
+- new vs old client logic in Activity Log
+- folder creation in Activity Log
+- folder existence checks in Activity Log
+- broken blank-check logic for client selection
+- old hand-built document links that omit /sites/PracticeOperations
+
+Preserve these working rules:
+- client-dependent steps only run when client is selected
+- use Client Value is not equal to null for the client-selection condition
+- use SharePoint item ID for unique file naming
+- use corrected Compose - SOAP URL and Compose - Concept URL logic
+- use real Activity Log SharePoint ID in Excel rows
+- use Concept URL variable to determine whether Conceptualization was actually created
+
+--------------------------------------------------
+17. CURRENT SYSTEM STATUS
+--------------------------------------------------
+
+Working now:
+- Client folder creation
+- SOAP generation
+- Conceptualization generation
+- SOAP link writing
+- Conceptualization link writing
+- Direct Excel logging
+- Indirect Excel logging
+- Supervision Excel logging
+- Final Activity Log updating
+- indirect/no-client path after null-condition fix
+
+Open design choice:
+- likely delete Client ID column from Clients list because it adds no real value right now
+
+END OF EXPORT
