@@ -1,463 +1,310 @@
-UPDATED SYSTEM EXPORT — CURRENT LIVE STATE
+Got you. This is your full system export—clean, structured, and complete so another chat can pick up immediately with zero guesswork.
 
-Date updated: 2026-04-03
+⸻
 
-OVERVIEW
+:::writing{variant=“standard” id=“48291”}
 
-This system is built in Microsoft 365 using:
-- SharePoint lists
-- SharePoint document libraries
-- Power Apps customized forms
-- Power Automate
-- Excel Online tables
+🧾 SYSTEM EXPORT — PRACTICE OPERATIONS AUTOMATION
 
-Purpose:
-- Manage clients
-- Log activities
-- Auto-generate SOAP and Conceptualization documents
-- Save those documents into the correct client folder
-- Write document links back to the Activity Log
-- Log hours into Excel
+⸻
 
---------------------------------------------------
-1. CURRENT ARCHITECTURE
---------------------------------------------------
+🎯 OVERALL GOAL
 
-The system is now split into two separate processes.
+Automate clinical documentation workflow:
+	•	Submit session data via Power Apps
+	•	Automatically generate:
+	•	SOAP note document
+	•	Conceptualization document (optional)
+	•	Store documents in SharePoint
+	•	Display clickable links in Activity Log list
+	•	Links should open documents directly in browser (Word Online)
 
-A. CLIENT PROCESS
-Handles:
-- creating the client record
-- normalizing/storing client naming data
-- creating the client folder in Clinical Documents
-- storing folder-related data back on the Clients list
+⸻
 
-B. ACTIVITY LOG PROCESS
-Handles:
-- using an existing client if one is selected
-- generating SOAP and Conceptualization docs when appropriate
-- saving those docs into the client folder
-- writing links back to Activity Log
-- logging activity to Excel
+🏗️ SYSTEM ARCHITECTURE
 
-Important architectural rule:
-- Activity Log does NOT create clients
-- Activity Log does NOT create folders
-- Activity Log only uses existing client/folder data if a client is selected
+🔹 Components
+	1.	Power Apps
+	2.	SharePoint
+	•	Activity Log (list)
+	•	Clinical Documents (document library)
+	•	Templates (document library)
+	3.	Power Automate Flow
+	•	“Activity Log - Process Documents”
 
---------------------------------------------------
-2. SHAREPOINT STRUCTURE
---------------------------------------------------
+⸻
+
+📱 POWER APP DETAILS
+
+Form: SharePointForm1
+
+Key Fields:
+	•	Activity Type
+	•	Activity Date
+	•	Duration
+	•	Client
+	•	Generate Conceptualization (toggle)
+	•	Notes
+
+⸻
+
+⏱️ DATE/TIME CONFIGURATION (FIXED)
+
+Update Property (Activity Date):
+
+DateValue1.SelectedDate +
+Time(
+    Value(HourValue1.Selected.Value),
+    Value(MinuteValue1.Selected.Value),
+    0
+)
+
+Default Values:
+	•	DateValue1.DefaultDate:
+
+Today()
+
+	•	HourValue1.Default:
+
+Hour(Now())
+
+	•	MinuteValue1.Default:
+
+Minute(Now())
+
+❗ Important
+	•	DO NOT use TimeZoneOffset()
+	•	SharePoint handles timezone automatically
+
+⸻
+
+🗂️ SHAREPOINT STRUCTURE
 
 Site:
-- Practice Operations
 
-Main components:
-1. Clients list
-2. Activity Log list
-3. Clinical Documents library
-4. Templates library
-5. Internship Tracking.xlsx
+https://branchpointco.sharepoint.com/sites/PracticeOperations
 
-Excel workbook:
-- Internship Tracking.xlsx
 
-Excel tables:
-- Direct_Hours
-- Indirect_Hours
-- Supervision
+⸻
 
---------------------------------------------------
-3. CLIENTS LIST — CURRENT STATE
---------------------------------------------------
+📄 Activity Log (List)
 
-Current visible/useful columns include:
-- Display Name
-- First Name
-- Last Initial
-- Active
-- Folder Name
-- Folder Path
-- Folder Created
-- Folder URL
+Key Columns:
+	•	Activity Type
+	•	Client
+	•	Duration
+	•	Activity Date (DateTime)
+	•	Notes
+	•	SOAP Link (Hyperlink)
+	•	Conceptualization Link (Hyperlink)
+	•	Excel Logged (Yes/No)
+	•	Generate Conceptualization (Yes/No)
 
-Important notes:
-- Folder URL is the correct usable link column
-- Folder Link / older hyperlink logic is deprecated
-- Client ID exists as a column but is not being used and may be deleted
-- IDScore is not needed if Client ID is not being used
+⸻
 
-Current design decision:
-- Do not add separate client numbering logic unless there is a strong future need
-- Using SharePoint ID as a fake client number was rejected as pointless
-- Client ID may be removed entirely
+📁 Clinical Documents (Library)
 
---------------------------------------------------
-4. CLIENT FLOW — CURRENT STATE
---------------------------------------------------
+Structure:
 
-Flow name:
-- Client - Create Folder
+Clinical Documents/
+    Client Name/
+        SOAP - [Client] - [Date] - ID [ID].docx
+        Conceptualization - ...
 
-Purpose:
-- when a new client is created, create the matching client folder and write folder details back to the Clients list
 
-Current working behavior:
-1. Trigger on new client item
-2. Build standardized display/folder name
-3. Create folder in Clinical Documents
-4. Save folder-related fields back to the client record
+⸻
 
-Key outputs stored on client:
-- Folder Name
-- Folder Path
-- Folder Created
-- Folder URL
+📁 Templates (Library)
 
-Important:
-- The client folder system is working
-- Activity Log depends on this client folder data already existing
+Contains:
+	•	SOAP Template.docx
+	•	Conceptualization Template.docx
 
---------------------------------------------------
-5. ACTIVITY LOG LIST — CURRENT STATE
---------------------------------------------------
+⸻
 
-Current columns in use:
-- Activity ID
-- Client
-- Activity Type
-- Duration
-- Notes
-- SOAP Link
-- Conceptualization Link
-- Workflow Status
-- Activity Date
-- Excel Logged
-- Generate Conceptualization
+🔄 POWER AUTOMATE FLOW
 
-Removed columns:
-- SOAP Status
-- Conceptualization Status
-- New Client logic
-- new-client-related fields
+Name:
 
-Important note about Activity ID:
-- Activity ID is the renamed SharePoint Title column
-- It is not the real SharePoint ID
-- The real SharePoint ID is used for unique file naming and Excel logging
-- The renamed Title/Activity ID column can remain, but it is not the true system ID
+Activity Log - Process Documents
 
-Important design rule:
-- Client is now allowed to be blank for activities like Indirect Service
-- Client should only be selected when needed
+⸻
 
---------------------------------------------------
-6. POWER APPS — CURRENT STATE
---------------------------------------------------
+🔹 TRIGGER
+	•	When item is created (Activity Log)
 
-The Activity Log Power Apps customized form has been cleaned up.
+⸻
 
-Completed changes:
-- removed old new-client fields
-- removed broken visibility references tied to deleted controls
-- fixed the save logic by replacing old OnSave code with a direct form submit
-- form now saves correctly again
+🔹 SOAP BRANCH
 
-Important fix:
-Old SharePointIntegration.OnSave logic still contained deleted-control references and old new-client branching.
-That was replaced with:
+Steps:
+	1.	Get File Content – SOAP Template
+	•	Source: Templates library
 
-SubmitForm(SharePointForm1)
+⸻
 
-Important lesson:
-- if fields are removed from the form, check Visible formulas and OnSave logic for broken references
+	2.	Create File – SOAP
+	•	Location: Clinical Documents
+	•	Folder: Based on Client
+	•	File Name:
 
---------------------------------------------------
-7. ACTIVITY LOG FLOW — CURRENT LIVE FLOW
---------------------------------------------------
+SOAP - [Client] - [Date] - ID [ID].docx
 
-Flow name:
-- Activity Log - Process Documents
 
-Purpose:
-- process new Activity Log entries
-- create docs when applicable
-- write links back
-- log to Excel
 
-Current high-level order:
-1. Trigger - When an item is created
-2. Get Item - Activity Log
-3. Initialize Variable - SOAP URL
-4. Initialize Variable - Concept URL
-5. Condition - Client selected check
-6. If client exists:
-   - Get Item - Client
-   - Update Item - Workflow Processing
-   - Compose - Client Display Name
-   - Compose - Client Folder Path
-   - Compose - Activity Date
-   - Compose - Activity ID
-   - Compose - SOAP File Name
-   - Compose - Concept File Name
-   - Condition - Is Direct Service
-   - Condition - Generate Conceptualization
-7. Excel logging conditions
-8. Update Item - Activity Log Final
+⸻
 
---------------------------------------------------
-8. CLIENT-SELECTION CONDITION — IMPORTANT FINAL FIX
---------------------------------------------------
+	3.	Compose – SOAP URL
 
-This was the key troubleshooting breakthrough.
-
-Working condition:
-- Client Value
-- is not equal to
-- null
-
-Important:
-- using blank checks was unreliable
-- numeric comparisons were unreliable
-- this exact null-based check was the solution that worked
-
-Purpose:
-- if a client is selected, run client-dependent/document steps
-- if no client is selected, skip those steps and continue the rest of the flow
-
-This is critical for:
-- Indirect Service entries with no client selected
-- avoiding Get Item - Client failures on blank client records
-
---------------------------------------------------
-9. DOCUMENT GENERATION LOGIC — CURRENT STATE
---------------------------------------------------
-
-SOAP:
-- only generated when Activity Type = Direct Service
-
-Conceptualization:
-- only generated when Generate Conceptualization = Yes
-
-Important:
-- file names are built before conditions
-- actual file creation only happens inside the relevant condition branches
-
-SOAP file name pattern:
-- SOAP - [Client Display Name] - [yyyy-MM-dd] - ID [SharePoint ID].docx
-
-Concept file name pattern:
-- Conceptualization - [Client Display Name] - [yyyy-MM-dd] - ID [SharePoint ID].docx
-
-Real unique ID source:
-- SharePoint item ID from Activity Log
-- not the renamed Activity ID/Title column
-
---------------------------------------------------
-10. FOLDER PATH FIX — IMPORTANT
---------------------------------------------------
-
-The key folder-path issue in the new flow was:
-
-Wrong:
-- using Get Item - Client body/path
-
-That returned the SharePoint list-item path, something like:
-- Lists/Clients/
-
-Correct:
-- use the actual custom folder path value for the client
-- or otherwise use the properly derived client folder path
-
-This fix was required for successful file creation in the correct client folder.
-
---------------------------------------------------
-11. SOAP / CONCEPT LINK FIX — IMPORTANT
---------------------------------------------------
-
-Another major working fix:
-
-The original saved document links were wrong and produced 404 errors.
-
-Bad link example:
-- missing /sites/PracticeOperations
-
-Correct solution:
-- build the document URL using:
-  - https://branchpointco.sharepoint.com/sites/PracticeOperations
-  - plus the correct metadata Path from the created file
-
-Correct SOAP URL compose expression:
+CURRENT EXPRESSION:
 
 replace(
   concat(
     'https://branchpointco.sharepoint.com/sites/PracticeOperations',
-    outputs('Get_File_Metadata_-SOAP')?['body/Path']
+    outputs('Create_File_-_SOAP')?['body/Path']
   ),
   ' ',
   '%20'
 )
 
-Correct Concept URL compose expression:
+
+⸻
+
+	4.	Set Variable – SOAP URL
+
+⸻
+
+	5.	Update Item (Activity Log)
+	•	SOAP Link = variable
+
+⸻
+
+🔹 CONCEPTUALIZATION BRANCH
+
+Condition:
+	•	Generate Conceptualization = TRUE
+
+Steps mirror SOAP:
+	1.	Get File Content – Concept Template
+	2.	Create File – Concept
+	3.	Compose – Concept URL
 
 replace(
   concat(
     'https://branchpointco.sharepoint.com/sites/PracticeOperations',
-    outputs('Get_File_Metadata-_Concept')?['body/Path']
+    outputs('Create_File_-_Concept')?['body/Path']
   ),
   ' ',
   '%20'
 )
 
-Important result:
-- SOAP link now works
-- Conceptualization link now works
+	4.	Set Variable
+	5.	Update Item
 
---------------------------------------------------
-12. TABLET / MOBILE FINDINGS
---------------------------------------------------
+⸻
 
-Key findings:
-- files were being created correctly
-- links were initially wrong because of bad URL construction
-- once corrected, document creation worked
-- on tablet, opening behavior may differ depending on whether SharePoint/browser or Word app is used
-- Word app opening was confirmed to work
+❌ CURRENT PROBLEM
 
-Important conclusion:
-- document generation itself is fine
-- bad links were the real issue, not file corruption
+🚨 Activity Log Links Do NOT Work Properly
 
---------------------------------------------------
-13. EXCEL LOGGING — CURRENT STATE
---------------------------------------------------
+Behavior:
+	•	Clicking link opens:
+	•	File explorer / save dialog
+	•	NOT browser (Word Online)
 
-Excel workbook:
-- Internship Tracking.xlsx
+Previously:
+	•	Sometimes caused 404 errors
+	•	Now opens file picker/download
 
-Tables:
-- Direct_Hours
-- Indirect_Hours
-- Supervision
+⸻
 
-Table columns:
+✅ WHAT WORKS
+	•	Files generate correctly
+	•	Files stored in correct folders
+	•	Files open correctly from SharePoint library
+	•	Flow runs successfully (no failures)
 
-Direct_Hours
-- Activity ID
-- Activity Date
-- Client
-- Duration
-- SOAP Status
-- Conceptualization Status
+⸻
 
-Indirect_Hours
-- Activity ID
-- Activity Date
-- Notes
-- Duration
+🔍 ROOT ISSUE
 
-Supervision
-- Activity ID
-- Activity Date
-- Supervisor
-- Notes
-- Duration
+Problem Source:
 
-Routing logic:
-- Direct Service -> Direct_Hours
-- Indirect Service -> Indirect_Hours
-- Supervision -> Supervision
+Using:
 
-Supervision mapping:
-- Supervisor column uses the selected Client value from Activity Log
+outputs('Create_File_-_SOAP')?['body/Path']
 
-Important Excel fix:
-- Excel Activity ID columns should use the real SharePoint ID from Get Item - Activity Log
-- not the renamed Activity ID / Title field
+This returns:
+	•	Server-relative path
+	•	NOT a proper SharePoint web URL
 
-Direct_Hours Conceptualization Status fix:
-Use actual creation result, not the toggle alone.
+⸻
 
-Working expression:
-if(
-  empty(variables('varConceptUrl')),
-  'Not Created',
-  'Created'
-)
+❗ Result
 
-Current final behavior:
-- Direct Service logs to Direct_Hours
-- Indirect Service logs to Indirect_Hours
-- Supervision logs to Supervision
-- Excel Logged is set to Yes in the final update
+Links behave like:
+	•	Direct file download paths
+	•	Not browser-accessible document URLs
 
---------------------------------------------------
-14. FINAL UPDATE STEP — CURRENT STATE
---------------------------------------------------
+⸻
 
-Update Item - Activity Log Final should occur after:
-- document generation logic
-- Excel logging conditions
+⚠️ ATTEMPTED FIXES (HISTORY)
 
-Final update sets:
-- SOAP Link
-- Conceptualization Link
-- Workflow Status = Completed
-- Excel Logged = Yes
+Tried:
+	•	{Link} from metadata → FAILED (null issues)
+	•	Get file metadata → misconfigured
+	•	Get file metadata using path → timing/null issues
+	•	Removing /sites/... → caused 404
+	•	Re-adding /sites/... → stopped 404 but still wrong behavior
 
-Important:
-- final update should use values that are safe even when no client was selected
-- URL variables are initialized before the client-selection condition so the final step can still run safely
+⸻
 
---------------------------------------------------
-15. OLD FLOW STATUS
---------------------------------------------------
+🧠 CURRENT STATE
 
-The old Activity Log flow has been turned off.
+Component	Status
+Power App	✅ Working
+Time handling	✅ Fixed
+File creation	✅ Working
+Flow execution	✅ Working
+Links	❌ Incorrect behavior
 
-Current live flow:
-- Activity Log - Process Documents
 
-Important:
-- keep using the new flow only
-- the old flow is no longer active
+⸻
 
---------------------------------------------------
-16. CURRENT LIVE RULES TO PRESERVE
---------------------------------------------------
+🎯 WHAT NEEDS TO BE SOLVED
 
-Do not reintroduce:
-- new vs old client logic in Activity Log
-- folder creation in Activity Log
-- folder existence checks in Activity Log
-- broken blank-check logic for client selection
-- old hand-built document links that omit /sites/PracticeOperations
+Key Question:
 
-Preserve these working rules:
-- client-dependent steps only run when client is selected
-- use Client Value is not equal to null for the client-selection condition
-- use SharePoint item ID for unique file naming
-- use corrected Compose - SOAP URL and Compose - Concept URL logic
-- use real Activity Log SharePoint ID in Excel rows
-- use Concept URL variable to determine whether Conceptualization was actually created
+How to generate a SharePoint document URL that:
+	•	Opens in browser (Word Online)
+	•	Works from SharePoint list column
+	•	Does NOT trigger download/file picker
+	•	Does NOT rely on unstable metadata timing
 
---------------------------------------------------
-17. CURRENT SYSTEM STATUS
---------------------------------------------------
+⸻
 
-Working now:
-- Client folder creation
-- SOAP generation
-- Conceptualization generation
-- SOAP link writing
-- Conceptualization link writing
-- Direct Excel logging
-- Indirect Excel logging
-- Supervision Excel logging
-- Final Activity Log updating
-- indirect/no-client path after null-condition fix
+📌 IMPORTANT CONSTRAINTS
+	•	System must remain stable (no breaking working parts)
+	•	Avoid unreliable {Link} unless properly fixed
+	•	Avoid race conditions (metadata timing issues)
+	•	Must work from SharePoint list hyperlink column
 
-Open design choice:
-- likely delete Client ID column from Clients list because it adds no real value right now
+⸻
+
+🚀 READY FOR NEXT STEP
+
+System is stable except for URL generation method
+
+Next solution should focus ONLY on:
+
+Generating correct SharePoint web URLs after file creation
+
+⸻
 
 END OF EXPORT
+
+:::
+
+⸻
+
+If you paste that into a new chat, it will have everything needed to pick up exactly where we left off.
