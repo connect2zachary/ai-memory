@@ -1,1 +1,134 @@
-
+{
+  "CreeksideClinicalDocumentationSystem": {
+    "globals": [
+      {
+        "id": "GL-0001",
+        "name": "System Purpose",
+        "description": "Translate therapist stream-of-consciousness session notes into Creekside-compliant progress notes while preserving original meaning and maintaining HIPAA compliance.",
+        "created_date": "2026-06-01",
+        "active": true
+      },
+      {
+        "id": "GL-0002",
+        "name": "HIPAA Compliance Requirement",
+        "description": "All client information, exports, storage, and generated documentation must comply with HIPAA privacy and security standards.",
+        "created_date": "2026-06-01",
+        "active": true
+      },
+      {
+        "id": "GL-0003",
+        "name": "Translation Engine Philosophy",
+        "description": "The system functions primarily as a translator of therapist notes rather than a content generator. Meaning may be clarified and organized, but not materially altered.",
+        "created_date": "2026-06-01",
+        "active": true
+      }
+    ],
+    "rules": [
+      {
+        "id": "RL-0001",
+        "name": "No PHI In Generated Notes",
+        "category": "documentation_compliance",
+        "description": "Generated progress notes may not contain names, addresses, phone numbers, employers, schools, locations, or other identifiable information."
+      },
+      {
+        "id": "RL-0002",
+        "name": "Client Reference Standardization",
+        "category": "documentation_language",
+        "description": "Generated documentation must refer to the individual only as 'client'."
+      },
+      {
+        "id": "RL-0003",
+        "name": "Strategic Vagueness",
+        "category": "documentation_style",
+        "description": "Document themes, interventions, responses, and clinical relevance without excessive personal detail."
+      },
+      {
+        "id": "RL-0004",
+        "name": "No Assumptions Rule",
+        "category": "documentation_integrity",
+        "description": "Symptoms, relevant content, and future planning may not contain information not supplied by the therapist."
+      },
+      {
+        "id": "RL-0005",
+        "name": "Clinical Documentation Mode",
+        "category": "documentation_integrity",
+        "description": "Assumptions are permitted only for Interventions and Progress Toward Goals when strongly supported by supplied session content."
+      },
+      {
+        "id": "RL-0006",
+        "name": "Medical Necessity Enhancement",
+        "category": "documentation_quality",
+        "description": "The system may strengthen clinical wording to support medical necessity without introducing new facts."
+      },
+      {
+        "id": "RL-0007",
+        "name": "Treatment Goal Mapping",
+        "category": "goal_tracking",
+        "description": "Session content should be automatically linked to active treatment goals whenever possible."
+      },
+      {
+        "id": "RL-0008",
+        "name": "Progress Note Structure",
+        "category": "output_format",
+        "description": "All notes shall follow Creekside format: Symptom Description & Subjective Report, Relevant Content, Interventions & Response, Progress Toward Goals, Plan."
+      },
+      {
+        "id": "RL-0009",
+        "name": "Future Planning Language",
+        "category": "documentation_language",
+        "description": "Use non-committal future language such as may explore, intends to continue, plans to consider."
+      },
+      {
+        "id": "RL-0010",
+        "name": "Duplicate Initial Conflict Detection",
+        "category": "identity_management",
+        "description": "Duplicate initials require user-defined differentiation."
+      },
+      {
+        "id": "RL-0011",
+        "name": "Permanent Client ID Policy",
+        "category": "identity_management",
+        "description": "Client IDs are never reused."
+      }
+    ],
+    "note_generation_engine": {
+      "input_type": "stream_of_consciousness",
+      "output_type": "creekside_progress_note",
+      "sections": [
+        "Symptom Description & Subjective Report",
+        "Relevant Content",
+        "Interventions & Response",
+        "Progress Toward Goals",
+        "Plan"
+      ],
+      "assumption_rules": {
+        "symptoms": false,
+        "relevant_content": false,
+        "interventions": true,
+        "progress_toward_goals": true,
+        "plan": false
+      }
+    },
+    "quality_control": {
+      "required_checks": [
+        "HIPAA compliance",
+        "Treatment goal linkage",
+        "Medical necessity support",
+        "Client response documented",
+        "Progress documented",
+        "Future plan documented",
+        "Creekside formatting compliance"
+      ]
+    },
+    "commands": {
+      "print_system": "Output complete system configuration.",
+      "print_index": "Output client ID and initials only.",
+      "export_system": "Export full system.json.",
+      "export_clients": "Export full clients.json."
+    },
+    "metadata": {
+      "version": "3.0",
+      "created_date": "2026-06-01"
+    }
+  }
+}
