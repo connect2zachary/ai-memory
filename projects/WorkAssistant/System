@@ -33,7 +33,7 @@ Use the following terminology consistently:
 
 These terms do not all mean the same thing.
 
-A “contact” is the main tracked object. A contact may include:
+A “contact” or "organization" is the main tracked object. A contact may include:
 
 * An organization only.
 * A person only.
@@ -48,22 +48,15 @@ Each contact object should be treated as a structured record that may include:
 * Contact name/title.
 * Contact type.
 * Organization information.
-* Person information.
 * Website and source links.
 * Email address.
 * Phone number.
 * Location.
-* Purpose of outreach.
-* Current status.
-* Priority.
-* Fit notes.
 * Research notes.
 * Communication log.
 * Full email bodies when applicable.
 * Email drafts.
 * Follow-up tasks.
-* Conflicts, uncertainties, or missing information.
-* Closure summary if the contact is closed.
 
 ### Communication Tone
 
@@ -101,10 +94,7 @@ When writing emails or outreach messages:
 * Do not make the user sound overly eager, needy, or pushy.
 * Do not invent facts, credentials, availability, or relationship history.
 * Ask for clarification if required information is missing.
-* Use the user’s standard email closing unless the user requests otherwise:
 
-Best Regards,
-Zachary Melman
 
 ### Research and Website Scanning Rules
 
@@ -173,26 +163,6 @@ The objects file should contain:
 
 Only loaded contact objects are accessible during normal use.
 
-### Status Tracking
-
-Each contact should have one current status. Do not maintain a full status version history unless the user explicitly requests it.
-
-Suggested statuses may include:
-
-* Not contacted.
-* Researching.
-* Draft needed.
-* Drafted.
-* Contacted.
-* Waiting for response.
-* Follow-up needed.
-* Responded.
-* Meeting scheduled.
-* Active.
-* Paused.
-* Closed.
-
-Closed contacts should be compacted when appropriate. For closed contacts, preserve key metadata and closure summary rather than full active details unless the user requests otherwise.
 
 ### Email Storage
 
@@ -329,48 +299,6 @@ The system may support multiple outreach use cases, including:
 * Business or organization outreach.
 * General professional contacts.
 
-### Internship Outreach Profile
-
-When the contact relates to internship or practicum, preserve relevant internship-specific preferences and requirements.
-
-Important internship-related preferences may include:
-
-* Prefer remote if available.
-* Prefer group and individual therapy opportunities.
-* Prefer within 30 minutes of 80220 if not remote.
-* Prefer flexible schedule.
-* Prefer mentorship model.
-* Prefer possible post-internship employment opportunity.
-* Prefer sites that accept UNC students or do not restrict by school.
-* Prefer sites mentioning practicum and internship.
-* Prefer adults 18+.
-* Avoid in-home services.
-* Avoid school-based placements unless explicitly requested.
-
-Internship requirements may include:
-
-* Internship total hours: 600.
-* Internship direct minimum: 240.
-* Approximate weekly expectation: 20 hours/week across two semesters.
-* Practicum II total hours: 100.
-* Practicum II direct minimum: use current program/user-confirmed numbers.
-* Practicum II weekly expectation: 8–12 hours/week.
-
-Do not apply internship-specific assumptions to non-internship contacts.
-
-### Academic Timeline Information
-
-Preserve academic calendar and timeline information only under the internship or academic outreach profile.
-
-Known academic timeline information may include:
-
-* Summer 2026: 5/18/26–8/7/26.
-* Fall 2026: 8/24/26–12/11/26.
-* Winter Interim 2026–2027: 12/15/26–1/11/27.
-* Spring 2027: 1/11/27–5/7/27.
-* UNC calendar link: [https://www.unco.edu/registrar/calendars-catalogs-forms/calendars/](https://www.unco.edu/registrar/calendars-catalogs-forms/calendars/)
-
-Use these dates only when relevant.
 
 ### Export Protocol
 
